@@ -1,5 +1,6 @@
 #include "units.h"
 #include "scalar_math.h"
+#include "literals.h"
 
 #include <iostream>
 

@@ -33,26 +33,14 @@ namespace unit {
 
 		float value;
 
-		constexpr explicit operator float() const noexcept { return value; }
-		constexpr explicit operator float&() noexcept { return value; }
+		constexpr explicit operator float() const noexcept;
+		constexpr explicit operator float&() noexcept;
 
 		// Operations staying within the same type
-		constexpr decltype(auto) operator+=(const base_unit& rhs) {
-			value += rhs.value;
-			return *this;
-		}
-		constexpr decltype(auto) operator-=(const base_unit& rhs) {
-			value -= rhs.value;
-			return *this;
-		}
-		constexpr decltype(auto) operator*=(float rhs) {
-			value *= rhs;
-			return *this;
-		}
-		constexpr decltype(auto) operator/=(float rhs) {
-			value /= rhs;
-			return *this;
-		}
+		constexpr decltype(auto) operator+=(const base_unit& rhs);
+		constexpr decltype(auto) operator-=(const base_unit& rhs);
+		constexpr decltype(auto) operator*=(float rhs);
+		constexpr decltype(auto) operator/=(float rhs);
 	};
 
 	// Dimensionless unit implicitly converts to float
@@ -63,8 +51,8 @@ namespace unit {
 
 		float value;
 
-		constexpr operator float() const noexcept { return value; }
-		constexpr operator float&() noexcept { return value; }
+		constexpr operator float() const noexcept;
+		constexpr operator float&() noexcept;
 	};
 
 	template<class... Units>
@@ -76,140 +64,78 @@ namespace unit {
 
 		float value;
 
-		constexpr explicit operator float() const noexcept { return value; }
-		constexpr explicit operator float&() noexcept { return value; }
+		constexpr explicit operator float() const noexcept;
+		constexpr explicit operator float&() noexcept;
 
-		constexpr decltype(auto) operator+=(const comp_unit& rhs) {
-			value += rhs.value;
-			return *this;
-		}
-		constexpr decltype(auto) operator-=(const comp_unit& rhs) {
-			value -= rhs.value;
-			return *this;
-		}
-		constexpr decltype(auto) operator*=(float rhs) {
-			value *= rhs;
-			return *this;
-		}
-		constexpr decltype(auto) operator/=(float rhs) {
-			value /= rhs;
-			return *this;
-		}
+		constexpr decltype(auto) operator+=(const comp_unit& rhs);
+		constexpr decltype(auto) operator-=(const comp_unit& rhs);
+		constexpr decltype(auto) operator*=(float rhs);
+		constexpr decltype(auto) operator/=(float rhs);
 	};
 	template<>
 	struct comp_unit<> {
 		float value;
 
-		constexpr operator float() const noexcept { return value; }
-		constexpr operator float&() noexcept { return value; }
+		constexpr operator float() const noexcept;
+		constexpr operator float&() noexcept;
 	};
 
 	// Operations producing base units
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator-(const base_unit<Tag, Num, Den>& val) {
-		return base_unit<Tag, Num, Den>{ -float(val) };
-	}
+	constexpr auto operator-(const base_unit<Tag, Num, Den>& val);
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator+(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return base_unit<Tag, Num, Den>{ float(rhs) + float(lhs) };
-	}
+	constexpr auto operator+(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator-(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return lhs + (-rhs);
-	}
+	constexpr auto operator-(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator*(const base_unit<Tag, Num, Den>& lhs, float rhs) {
-		return base_unit<Tag, Num, Den>{ float(lhs) * rhs };
-	}
+	constexpr auto operator*(const base_unit<Tag, Num, Den>& lhs, float rhs);
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator*(float lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return rhs * lhs;
-	}
+	constexpr auto operator*(float lhs, const base_unit<Tag, Num, Den>& rhs);
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator/(const base_unit<Tag, Num, Den>& lhs, float rhs) {
-		return base_unit<Tag, Num, Den>{ float(lhs) / rhs };
-	}
+	constexpr auto operator/(const base_unit<Tag, Num, Den>& lhs, float rhs);
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator/(float lhs, const base_unit<Tag, Num, Den>& rhs) {
-		using unit = base_unit<Tag, Num, Den>;
-		return detail::inverse_t<unit>{ 1.0f / float(rhs) } *lhs;
-	}
+	constexpr auto operator/(float lhs, const base_unit<Tag, Num, Den>& rhs);
 
 	// Operations producing composite units
 	template<class... Units>
-	constexpr auto operator-(const comp_unit<Units...>& val) {
-		return comp_unit<Units...>{ -float(val) };
-	}
+	constexpr auto operator-(const comp_unit<Units...>& val);
 	template<class... Units>
-	constexpr auto operator+(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return comp_unit<Units...>{ float(rhs) + float(lhs) };
-	}
+	constexpr auto operator+(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
 	template<class... Units>
-	constexpr auto operator-(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return lhs + (-rhs);
-	}
+	constexpr auto operator-(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
 	template<class... Units>
-	constexpr auto operator*(const comp_unit<Units...>& lhs, float rhs) {
-		return comp_unit<Units...>{ float(lhs) * rhs };
-	}
+	constexpr auto operator*(const comp_unit<Units...>& lhs, float rhs);
 	template<class... Units>
-	constexpr auto operator*(float lhs, const comp_unit<Units...>& rhs) {
-		return rhs * lhs;
-	}
+	constexpr auto operator*(float lhs, const comp_unit<Units...>& rhs);
 	template<class... Units>
-	constexpr auto operator/(const comp_unit<Units...>& lhs, float rhs) {
-		return comp_unit<Units...>{ float(lhs) / rhs };
-	}
+	constexpr auto operator/(const comp_unit<Units...>& lhs, float rhs);
 	template<class... Units>
-	constexpr auto operator/(float lhs, const comp_unit<Units...>& rhs) {
-		using unit = comp_unit<Units...>;
-		return detail::inverse_t<unit>{ 1.0f / float(rhs) } *lhs;
-	}
+	constexpr auto operator/(float lhs, const comp_unit<Units...>& rhs);
 
 	// Operations producing composite units from base units
 	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class rTag, std::intmax_t rNum, std::intmax_t rDen>
-	constexpr auto operator*(const base_unit<lTag, lNum, lDen>& lhs, const base_unit<rTag, rNum, rDen>& rhs) {
-		using lUnit = base_unit<lTag, lNum, lDen>;
-		using rUnit = base_unit<rTag, rNum, rDen>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
-	}
+	constexpr auto operator*(const base_unit<lTag, lNum, lDen>& lhs, const base_unit<rTag, rNum, rDen>& rhs);
 	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class rTag, std::intmax_t rNum, std::intmax_t rDen>
-	constexpr auto operator/(const base_unit<lTag, lNum, lDen>& lhs, const base_unit<rTag, rNum, rDen>& rhs) {
-		return lhs * (1.0f / rhs);
-	}
+	constexpr auto operator/(const base_unit<lTag, lNum, lDen>& lhs, const base_unit<rTag, rNum, rDen>& rhs);
 	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator*(const base_unit<lTag, lNum, lDen>& lhs, const comp_unit<Units...>& rhs) {
-		using lUnit = base_unit<lTag, lNum, lDen>;
-		using rUnit = comp_unit<Units...>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
-	}
+	constexpr auto operator*(const base_unit<lTag, lNum, lDen>& lhs, const comp_unit<Units...>& rhs);
 	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator/(const base_unit<lTag, lNum, lDen>& lhs, const comp_unit<Units...>& rhs) {
-		return lhs * (1.0f / rhs);
-	}
+	constexpr auto operator/(const base_unit<lTag, lNum, lDen>& lhs, const comp_unit<Units...>& rhs);
 	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator*(const comp_unit<Units...>& lhs, const base_unit<lTag, lNum, lDen>& rhs) {
-		using lUnit = comp_unit<Units...>;
-		using rUnit = base_unit<lTag, lNum, lDen>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
-	}
+	constexpr auto operator*(const comp_unit<Units...>& lhs, const base_unit<lTag, lNum, lDen>& rhs);
 	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator/(const comp_unit<Units...>& lhs, const base_unit<lTag, lNum, lDen>& rhs) {
-		return lhs * (1.0f / rhs);
-	}
+	constexpr auto operator/(const comp_unit<Units...>& lhs, const base_unit<lTag, lNum, lDen>& rhs);
 
 	// Operations producing composite units from composite units
 	template<class... lUnits, class... rUnits>
-	constexpr auto operator*(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs) {
-		using lUnit = comp_unit<lUnits...>;
-		using rUnit = comp_unit<rUnits...>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
-	}
+	constexpr auto operator*(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs);
 	template<class... lUnits, class... rUnits>
-	constexpr auto operator/(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs) {
-		return lhs * (1.0f / rhs);
-	}
+	constexpr auto operator/(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs);
+}
 
+#include "units.inl"
+
+namespace unit {
 	// Most basic types
 	using length_unit = base_unit<tag::length>;
 	using time_unit = base_unit<tag::time>;
@@ -224,14 +150,4 @@ namespace unit {
 	using velocity_unit = decltype(length_unit{} / time_unit{});
 	using acceleration_unit = decltype(velocity_unit{} / time_unit{});
 	using force_unit = decltype(weight_unit{} *acceleration_unit{});
-
-	// Sanity check
-	static_assert(std::is_same_v<detail::sorted_comp_unit_t<length_unit, detail::inverse_t<time_unit>>, velocity_unit>, "Velocity has unexpected type!");
-
-
-	namespace literals {
-		constexpr auto operator ""_m(long double v) { return length_unit{ float(v) }; }
-		constexpr auto operator ""_s(long double v) { return time_unit{ float(v) }; }
-		constexpr auto operator ""_kg(long double v) { return weight_unit{ float(v) }; }
-	}
 }
