@@ -97,6 +97,11 @@ namespace unit {
 		template<class T>
 		using inverse_t = typename inverse<T>::type;
 
+		template<class... T>
+		struct always_false : std::false_type {};
+		template<class... T>
+		inline constexpr bool always_false_v = always_false<T...>::value;
+
 		template<class T, class U>
 		struct multiply;
 		template<class Tag, std::intmax_t lNum, std::intmax_t lDen, std::intmax_t rNum, std::intmax_t rDen>
@@ -200,10 +205,27 @@ namespace unit {
 		public:
 			using type = typename iterative_multiply<lUnit, rUnits...>::type;
 		};
+		template<class T, std::intmax_t pNum, std::intmax_t pDen>
+		struct power {
+			static_assert(always_false_v<T>, "T needs to be base_unit or comp_unit");
+		};
+		template<class Tag, std::intmax_t Num, std::intmax_t Den, std::intmax_t pNum, std::intmax_t pDen>
+		struct power<base_unit<Tag, Num, Den>, pNum, pDen> {
+		private:
+			using result_ratio = std::ratio_multiply<std::ratio<Num, Den>, std::ratio<pNum, pDen>>;
+		public:
+			using type = base_unit<Tag, result_ratio::num, result_ratio::den>;
+		};
+		template<class... Units, std::intmax_t pNum, std::intmax_t pDen>
+		struct power<comp_unit<Units...>, pNum, pDen> {
+			using type = comp_unit<typename power<Units, pNum, pDen>::type...>;
+		};
 
 		template<class T, class U>
 		using multiply_t = typename multiply<T, U>::type;
 		template<class T, class U>
 		using divide_t = multiply_t<T, inverse_t<U>>;
+		template<class T, std::intmax_t pNum, std::intmax_t pDen>
+		using power_t = typename power<T, pNum, pDen>::type;
 	}
 }

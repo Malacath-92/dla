@@ -1,4 +1,5 @@
 #include "units.h"
+#include "scalar_math.h"
 
 #include <iostream>
 
@@ -61,4 +62,10 @@ int main() {
 	static_assert(std::is_same_v<std::decay_t<decltype(dim_less)>, float>);
 	static_assert(std::is_same_v<std::decay_t<decltype(other_dim_less)>, float>);
 	static_assert(std::is_same_v<std::decay_t<decltype(more_dim_less)>, float>);
+
+	auto length_sqrt = math::sqrt(length);
+	auto length_cbrt = math::cbrt(length);
+	auto length_full = math::pow<2>(length_sqrt);
+	length_full = math::pow<3>(length_cbrt);
+	static_assert(std::is_same_v<std::decay_t<decltype(length_full)>, length_unit>);
 }
