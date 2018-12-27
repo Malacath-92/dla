@@ -1,4 +1,5 @@
 #include "detail.h"
+#include "vector_math.h"
 
 namespace unit::vector {
 
@@ -7,6 +8,19 @@ namespace unit::vector {
 #else
     inline constexpr bool vec_index_nothrow = true;
 #endif
+
+#define MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(op) \
+    template<class U> \
+    constexpr decltype(auto) operator op(const U& rhs) noexcept { \
+        *this = std::move(*this op rhs); \
+        return *this; \
+    }
+#define MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(op) \
+    template<class U> \
+    constexpr decltype(auto) operator op(const vec<U, length>& rhs) noexcept { \
+        *this = std::move(*this op rhs); \
+        return *this; \
+    }
 
     template<class T, std::size_t N>
     struct vec : detail::vec_elements<T, N> {
@@ -45,6 +59,16 @@ namespace unit::vector {
         constexpr reference operator[](std::size_t idx) noexcept(vec_index_nothrow) {
             return const_cast<reference>(static_cast<const vec*>(this)->operator[](idx));
         }
+
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(+)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(-)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(*)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(/)
+
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(+)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(-)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(*)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(/)
 
 		constexpr iterator begin() noexcept { return { *this, 0 }; }
 		constexpr const_iterator begin() const noexcept { return { *this, 0 }; }
@@ -93,6 +117,16 @@ namespace unit::vector {
             return const_cast<reference>(static_cast<const vec*>(this)->operator[](idx));
         }
 
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(+)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(-)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(*)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(/)
+
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(+)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(-)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(*)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(/)
+
         constexpr operator value_type() const noexcept { return this->x; }
         constexpr operator reference() noexcept { return this->x; }
 
@@ -111,6 +145,9 @@ namespace unit::vector {
 		constexpr const_reverse_iterator crbegin() noexcept { return { *this, 0 }; }
 		constexpr const_reverse_iterator crend() noexcept { return { *this, -1 }; }
     };
+
+#undef MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND
+#undef MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND
 
     template<class T>
     using vec1 = vec<T, 1>;
