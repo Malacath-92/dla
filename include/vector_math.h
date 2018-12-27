@@ -9,7 +9,7 @@ namespace unit::vector {
     template<class T, std::size_t N>
     struct vec;
 
-#define MAKE_VECTOR_VECTOR_BINARY_OPERAND(op) \
+#define MAKE_VECTOR_VECTOR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N> \
     constexpr auto operator op(const vector::vec<T, N>& lhs, const vector::vec<U, N>& rhs) noexcept { \
         vector::vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
@@ -25,13 +25,13 @@ namespace unit::vector {
         } \
         return res; \
     }
-    MAKE_VECTOR_VECTOR_BINARY_OPERAND(+)
-    MAKE_VECTOR_VECTOR_BINARY_OPERAND(-)
-    MAKE_VECTOR_VECTOR_BINARY_OPERAND(*)
-    MAKE_VECTOR_VECTOR_BINARY_OPERAND(/)
-#undef MAKE_VECTOR_VECTOR_BINARY_OPERAND
+    MAKE_VECTOR_VECTOR_BINARY_OPERATOR(+)
+    MAKE_VECTOR_VECTOR_BINARY_OPERATOR(-)
+    MAKE_VECTOR_VECTOR_BINARY_OPERATOR(*)
+    MAKE_VECTOR_VECTOR_BINARY_OPERATOR(/)
+#undef MAKE_VECTOR_VECTOR_BINARY_OPERATOR
 
-#define MAKE_VECTOR_SCALAR_BINARY_OPERAND(op) \
+#define MAKE_VECTOR_SCALAR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N> \
     constexpr auto operator op(const vector::vec<T, N>& lhs, const U& rhs) noexcept { \
         vector::vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
@@ -45,13 +45,13 @@ namespace unit::vector {
         } \
         return res; \
     }
-    MAKE_VECTOR_SCALAR_BINARY_OPERAND(+)
-    MAKE_VECTOR_SCALAR_BINARY_OPERAND(-)
-    MAKE_VECTOR_SCALAR_BINARY_OPERAND(*)
-    MAKE_VECTOR_SCALAR_BINARY_OPERAND(/)
-#undef MAKE_VECTOR_SCALAR_BINARY_OPERAND
+    MAKE_VECTOR_SCALAR_BINARY_OPERATOR(+)
+    MAKE_VECTOR_SCALAR_BINARY_OPERATOR(-)
+    MAKE_VECTOR_SCALAR_BINARY_OPERATOR(*)
+    MAKE_VECTOR_SCALAR_BINARY_OPERATOR(/)
+#undef MAKE_VECTOR_SCALAR_BINARY_OPERATOR
 
-#define MAKE_SCALAR_VECTOR_BINARY_OPERAND(op) \
+#define MAKE_SCALAR_VECTOR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N> \
     constexpr auto operator op(const T& lhs, const vector::vec<U, N>& rhs) noexcept { \
         vector::vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
@@ -65,9 +65,9 @@ namespace unit::vector {
         } \
         return res; \
     }
-    MAKE_SCALAR_VECTOR_BINARY_OPERAND(+)
-    MAKE_SCALAR_VECTOR_BINARY_OPERAND(-)
-    MAKE_SCALAR_VECTOR_BINARY_OPERAND(*)
-    MAKE_SCALAR_VECTOR_BINARY_OPERAND(/)
-#undef MAKE_SCALAR_VECTOR_BINARY_OPERAND
+    MAKE_SCALAR_VECTOR_BINARY_OPERATOR(+)
+    MAKE_SCALAR_VECTOR_BINARY_OPERATOR(-)
+    MAKE_SCALAR_VECTOR_BINARY_OPERATOR(*)
+    MAKE_SCALAR_VECTOR_BINARY_OPERATOR(/)
+#undef MAKE_SCALAR_VECTOR_BINARY_OPERATOR
 }

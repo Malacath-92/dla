@@ -4,18 +4,18 @@
 namespace unit::vector {
 
 #ifdef INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
-    inline constexpr bool vec_index_nothrow = false;
+    inline constexpr bool vec_index_operator_is_noexcept = false;
 #else
-    inline constexpr bool vec_index_nothrow = true;
+    inline constexpr bool vec_index_operator_is_noexcept = true;
 #endif
 
-#define MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(op) \
+#define MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(op) \
     template<class U> \
     constexpr decltype(auto) operator op(const U& rhs) noexcept { \
         *this = std::move(*this op rhs); \
         return *this; \
     }
-#define MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(op) \
+#define MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(op) \
     template<class U> \
     constexpr decltype(auto) operator op(const vec<U, length>& rhs) noexcept { \
         *this = std::move(*this op rhs); \
@@ -40,7 +40,7 @@ namespace unit::vector {
         using vec_elements = detail::vec_elements<T, N>;
         using vec_elements::vec_elements;
 
-        constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_nothrow) {
+        constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
             if (idx == 0) return this->x;
             else if constexpr (N > 1) {
                 if (idx == 1) return this->y;
@@ -51,24 +51,24 @@ namespace unit::vector {
                     }
                 }
             }
-            if constexpr (!vec_index_nothrow) {
+            if constexpr (!vec_index_operator_is_noexcept) {
                 throw std::out_of_range("Vector index out of rance!");
             }
             declare_unreachable();
         }
-        constexpr reference operator[](std::size_t idx) noexcept(vec_index_nothrow) {
+        constexpr reference operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept) {
             return const_cast<reference>(static_cast<const vec*>(this)->operator[](idx));
         }
 
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(+)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(-)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(*)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(/)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(+)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(-)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(*)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(/)
 
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(+)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(-)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(*)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(/)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(+)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(-)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(*)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(/)
 
 		constexpr iterator begin() noexcept { return { *this, 0 }; }
 		constexpr const_iterator begin() const noexcept { return { *this, 0 }; }
@@ -106,26 +106,26 @@ namespace unit::vector {
         using vec_elements = detail::vec_elements<T, 1>;
         using vec_elements::vec_elements;
 
-        constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_nothrow) {
+        constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
             if (idx == 0) return this->x;
-            if constexpr (!vec_index_nothrow) {
+            if constexpr (!vec_index_operator_is_noexcept) {
                 throw std::out_of_range("Vector index out of rance!");
             }
             declare_unreachable();
         }
-        constexpr reference operator[](std::size_t idx) noexcept(vec_index_nothrow) {
+        constexpr reference operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept) {
             return const_cast<reference>(static_cast<const vec*>(this)->operator[](idx));
         }
 
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(+)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(-)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(*)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND(/)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(+)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(-)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(*)
+        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(/)
 
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(+)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(-)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(*)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND(/)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(+)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(-)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(*)
+        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(/)
 
         constexpr operator value_type() const noexcept { return this->x; }
         constexpr operator reference() noexcept { return this->x; }
@@ -146,8 +146,8 @@ namespace unit::vector {
 		constexpr const_reverse_iterator crend() noexcept { return { *this, -1 }; }
     };
 
-#undef MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERAND
-#undef MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERAND
+#undef MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR
+#undef MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR
 
     template<class T>
     using vec1 = vec<T, 1>;
