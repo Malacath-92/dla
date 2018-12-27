@@ -150,8 +150,8 @@ namespace unit {
 	using velocity_unit = decltype(length_unit{} / time_unit{});
 	using acceleration_unit = decltype(velocity_unit{} / time_unit{});
 	using force_unit = decltype(weight_unit{} * acceleration_unit{});
-	using density_unit = decltype(weight_unit{} / volume_unit{});
 	using impulse_unit = decltype(weight_unit{} * velocity_unit{});
+	using density_unit = decltype(weight_unit{} / volume_unit{});
 	using energy_unit = decltype(force_unit{} * length_unit{});
 	using power_unit = decltype(energy_unit{} / time_unit{});
 	using pressure_unit = decltype(force_unit{} / area_unit{});
