@@ -2,7 +2,6 @@
 #include "scalar_math.h"
 #include "literals.h"
 #include "vector.h"
-#include "vector_math.h"
 
 #include <iostream>
 
@@ -75,14 +74,12 @@ int main() {
 	length_full = math::pow<3>(length_cbrt);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(length_full)>, length_unit>);
 
-	using namespace vector;
-	using namespace math;
-	constexpr auto gravity = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
+	constexpr auto gravity = vector::vec(0_m_s2, 0_m_s2, -9.81_m_s2);
 	constexpr auto double_gravity = gravity + gravity;
 	constexpr auto square_gravity = gravity * gravity;
 	constexpr auto no_gravity = gravity / gravity.z;
-	static_assert(std::is_same_v<std::remove_const_t<decltype(gravity)>, vec<acceleration_unit, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(double_gravity)>, vec<acceleration_unit, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(square_gravity)>, vec<detail::power_t<acceleration_unit, 2, 1>, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(no_gravity)>, vec<float, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(gravity)>, vector::vec<acceleration_unit, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(double_gravity)>, vector::vec<acceleration_unit, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(square_gravity)>, vector::vec<detail::power_t<acceleration_unit, 2, 1>, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(no_gravity)>, vector::vec<float, 3>>);
 }
