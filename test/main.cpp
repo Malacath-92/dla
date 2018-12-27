@@ -1,6 +1,8 @@
 #include "units.h"
 #include "scalar_math.h"
 #include "literals.h"
+#include "vector.h"
+#include "vector_math.h"
 
 #include <iostream>
 
@@ -14,6 +16,7 @@ struct descending {
 int main() {
 	using namespace unit;
 	using namespace literals;
+	using namespace int_literals;
 
 	using input_tuple_t = std::tuple<char, int, char, double, char, float>;
 	using expected_tuple_t = std::tuple<double, int, float, char, char, char>;
@@ -60,13 +63,27 @@ int main() {
 	constexpr auto dim_less = length / length;
 	constexpr auto other_dim_less = velocity / same_velocity;
 	constexpr auto more_dim_less = time * acceleration / length / frequency;
+	constexpr auto last_dim_less = acceleration / acceleration;
 	static_assert(std::is_same_v<std::remove_const_t<decltype(dim_less)>, float>);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(other_dim_less)>, float>);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(more_dim_less)>, float>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(last_dim_less)>, float>);
 
 	auto length_sqrt = math::sqrt(length);
 	auto length_cbrt = math::cbrt(length);
 	auto length_full = math::pow<2>(length_sqrt);
 	length_full = math::pow<3>(length_cbrt);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(length_full)>, length_unit>);
+
+	using namespace vector;
+	using namespace math;
+	constexpr auto gravity = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
+	constexpr auto double_gravity = gravity + gravity;
+	constexpr auto square_gravity = gravity * gravity;
+	constexpr auto acc = vec(2.1_m_s2, 0.1_m_s2, 1.1_m_s2);
+	constexpr auto no_acc = acc / acc;
+	static_assert(std::is_same_v<std::remove_const_t<decltype(gravity)>, vec<acceleration_unit, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(double_gravity)>, vec<acceleration_unit, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(square_gravity)>, vec<detail::power_t<acceleration_unit, 2, 1>, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(no_acc)>, vec<float, 3>>);
 }
