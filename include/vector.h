@@ -180,13 +180,13 @@ namespace unit::vector {
 #undef MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR
 
     template<class T>
-    using vec1 = vec<T, 1>;
+    using tvec1 = vec<T, 1>;
     template<class T>
-    using vec2 = vec<T, 2>;
+    using tvec2 = vec<T, 2>;
     template<class T>
-    using vec3 = vec<T, 3>;
+    using tvec3 = vec<T, 3>;
     template<class T>
-    using vec4 = vec<T, 4>;
+    using tvec4 = vec<T, 4>;
 
     template<class T> vec(const T&, const T&) -> vec<T, 2>;
     template<class T> vec(const T&, const T&, const T&) -> vec<T, 3>;
