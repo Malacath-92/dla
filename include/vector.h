@@ -11,13 +11,13 @@ namespace unit::vector {
 
 #define MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(op) \
     template<class U> \
-    constexpr decltype(auto) operator op(const U& rhs) noexcept { \
+    constexpr decltype(auto) operator op##=(const U& rhs) noexcept { \
         *this = std::move(*this op rhs); \
         return *this; \
     }
 #define MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(op) \
     template<class U> \
-    constexpr decltype(auto) operator op(const vec<U, length>& rhs) noexcept { \
+    constexpr decltype(auto) operator op##=(const vec<U, length>& rhs) noexcept { \
         *this = std::move(*this op rhs); \
         return *this; \
     }

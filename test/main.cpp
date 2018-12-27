@@ -85,6 +85,9 @@ int main() {
 	static_assert(std::is_same_v<std::remove_const_t<decltype(square_gravity)>, vec<detail::power_t<acceleration_unit, 2, 1>, 3>>);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(no_gravity)>, vec<float, 3>>);
 
+	auto gravity_not_const = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
+	gravity_not_const *= 1.0f;
+
 	constexpr auto dim_less_vec_double = vec(1.0, 1.0, 1.0);
 	[[maybe_unused]] constexpr auto dim_less_vec_float = vec<float, 3>(dim_less_vec_double);
 }
