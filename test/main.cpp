@@ -88,6 +88,8 @@ int main() {
 	auto gravity_not_const = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
 	gravity_not_const *= 1.0f;
 
-	constexpr auto dim_less_vec_double = vec(1.0, 1.0, 1.0);
-	[[maybe_unused]] constexpr auto dim_less_vec_float = vec<float, 3>(dim_less_vec_double);
+	using vector::dvec3;
+	using vector::vec3;
+	constexpr auto dim_less_vec_double = dvec3(1.0);
+	[[maybe_unused]] constexpr auto dim_less_vec_float = vec3(dim_less_vec_double);
 }

@@ -194,4 +194,29 @@ namespace unit::vector {
     template<class T> vec(T&&, T&&) -> vec<T, 2>;
     template<class T> vec(T&&, T&&, T&&) -> vec<T, 3>;
     template<class T> vec(T&&, T&&, T&&, T&&) -> vec<T, 4>;
+
+    using vec1 = tvec1<float>;
+    using vec2 = tvec2<float>;
+    using vec3 = tvec3<float>;
+    using vec4 = tvec4<float>;
+
+    using dvec1 = tvec1<double>;
+    using dvec2 = tvec2<double>;
+    using dvec3 = tvec3<double>;
+    using dvec4 = tvec4<double>;
+
+    using ivec1 = tvec1<int32_t>;
+    using ivec2 = tvec2<int32_t>;
+    using ivec3 = tvec3<int32_t>;
+    using ivec4 = tvec4<int32_t>;
+
+    using uvec1 = tvec1<uint32_t>;
+    using uvec2 = tvec2<uint32_t>;
+    using uvec3 = tvec3<uint32_t>;
+    using uvec4 = tvec4<uint32_t>;
+
+    using bvec1 = tvec1<bool>;
+    using bvec2 = tvec2<bool>;
+    using bvec3 = tvec3<bool>;
+    using bvec4 = tvec4<bool>;
 }
