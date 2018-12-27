@@ -80,10 +80,9 @@ int main() {
 	constexpr auto gravity = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
 	constexpr auto double_gravity = gravity + gravity;
 	constexpr auto square_gravity = gravity * gravity;
-	constexpr auto acc = vec(2.1_m_s2, 0.1_m_s2, 1.1_m_s2);
-	constexpr auto no_acc = acc / acc;
+	constexpr auto no_gravity = gravity / gravity.z;
 	static_assert(std::is_same_v<std::remove_const_t<decltype(gravity)>, vec<acceleration_unit, 3>>);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(double_gravity)>, vec<acceleration_unit, 3>>);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(square_gravity)>, vec<detail::power_t<acceleration_unit, 2, 1>, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(no_acc)>, vec<float, 3>>);
+	static_assert(std::is_same_v<std::remove_const_t<decltype(no_gravity)>, vec<float, 3>>);
 }
