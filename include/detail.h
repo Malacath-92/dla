@@ -245,6 +245,10 @@ namespace unit {
 			constexpr vec_elements(vec_elements&&) = default;
 			constexpr vec_elements& operator=(const vec_elements&) = default;
 			constexpr vec_elements& operator=(vec_elements&&) = default;
+
+			template<class U>
+			constexpr explicit vec_elements(const vec_elements<U, 1>& val) :
+				x(static_cast<T>(val.x)) {}
 			
 			constexpr explicit vec_elements(const T& pX) :
 				x(pX) {}
@@ -263,6 +267,11 @@ namespace unit {
 			constexpr vec_elements(vec_elements&&) = default;
 			constexpr vec_elements& operator=(const vec_elements&) = default;
 			constexpr vec_elements& operator=(vec_elements&&) = default;
+
+			template<class U>
+			constexpr explicit vec_elements(const vec_elements<U, 2>& val) :
+				x(static_cast<T>(val.x)),
+				y(static_cast<T>(val.y)) {}
 			
 			template<class U>
 			constexpr explicit vec_elements(const U& val) :
@@ -288,6 +297,12 @@ namespace unit {
 			constexpr vec_elements(vec_elements&&) = default;
 			constexpr vec_elements& operator=(const vec_elements&) = default;
 			constexpr vec_elements& operator=(vec_elements&&) = default;
+
+			template<class U>
+			constexpr explicit vec_elements(const vec_elements<U, 3>& val) :
+				x(static_cast<T>(val.x)),
+				y(static_cast<T>(val.y)),
+				z(static_cast<T>(val.z)) {}
 
 			template<class U>
 			constexpr explicit vec_elements(const U& val) :
@@ -317,6 +332,13 @@ namespace unit {
 			constexpr vec_elements(vec_elements&&) = default;
 			constexpr vec_elements& operator=(const vec_elements&) = default;
 			constexpr vec_elements& operator=(vec_elements&&) = default;
+
+			template<class U>
+			constexpr explicit vec_elements(const vec_elements<U, 4>& val) :
+				x(static_cast<T>(val.x)),
+				y(static_cast<T>(val.y)),
+				z(static_cast<T>(val.z)),
+				w(static_cast<T>(val.w)) {}
 
 			template<class U>
 			constexpr explicit vec_elements(const U& val) :

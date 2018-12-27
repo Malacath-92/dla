@@ -39,6 +39,9 @@ namespace unit::vector {
 
         using vec_elements = detail::vec_elements<T, N>;
         using vec_elements::vec_elements;
+        template<class U>
+        constexpr explicit vec(const vec<U, N>& val) :
+            vec_elements(static_cast<const detail::vec_elements<U, N>&>(val)) {}
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
             if (idx == 0) return this->x;
@@ -117,6 +120,9 @@ namespace unit::vector {
 
         using vec_elements = detail::vec_elements<T, 1>;
         using vec_elements::vec_elements;
+        template<class U>
+        constexpr explicit vec(const vec<U, 1>& val) :
+            vec_elements(static_cast<const detail::vec_elements<U, 1>&>(val)) {}
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
             if (idx == 0) return this->x;
