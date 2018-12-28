@@ -234,6 +234,7 @@ namespace unit {
 		template<class T, std::intmax_t pNum, std::intmax_t pDen>
 		using power_t = typename power<T, pNum, pDen>::type;
 
+		// TODO: Members should not be zero-initialized, not doing this causes some constexpr problems
 		template<class T, std::size_t N>
 		struct vec_elements {
 	        static_assert(N > 0 && N <= 5, "Vectors only supported for sizes 1, 2, 3 and 4!");
@@ -258,7 +259,7 @@ namespace unit {
 			constexpr explicit vec_elements(T&& pX) :
 				x(std::forward<decltype(pX)>(pX)) {}
 
-			T x;
+			T x{};
 		};
 		template<class T>
 		struct vec_elements<T, 2> {
@@ -288,7 +289,7 @@ namespace unit {
 				x(std::forward<decltype(pX)>(pX)),
 				y(std::forward<decltype(pY)>(pY)) {}
 			
-			T x, y;
+			T x{}, y{};
 		};
 		template<class T>
 		struct vec_elements<T, 3> {
@@ -323,7 +324,7 @@ namespace unit {
 				y(std::forward<decltype(pY)>(pY)),
 				z(std::forward<decltype(pZ)>(pZ)) {}
 			
-			T x, y, z;
+			T x{}, y{}, z{};
 		};
 		template<class T>
 		struct vec_elements<T, 4> {
@@ -363,7 +364,7 @@ namespace unit {
 				z(std::forward<decltype(pZ)>(pZ)),
 				w(std::forward<decltype(pZ)>(pW)) {}
 			
-			T x, y, z, w;
+			T x{}, y{}, z{}, w{};
 		};
 
 		template<class T, std::size_t N>
