@@ -89,6 +89,25 @@ namespace unit::vector {
     MAKE_SCALAR_VECTOR_BINARY_OPERATOR(>>)
 #undef MAKE_SCALAR_VECTOR_BINARY_OPERATOR
 
+#define MAKE_VECTOR_UNARY_OPERATOR(op) \
+    template<class T, std::size_t N> \
+    constexpr auto operator op(const T& val) noexcept { \
+        vector::vec<decltype(op std::declval<T>()), N> res{}; \
+        auto val_it = val.begin(); \
+        auto it = res.begin(); \
+        const auto it_end = res.end(); \
+        for (; it != it_end;) { \
+            *it = op *val_it; \
+            ++val_it; \
+            ++it; \
+        } \
+        return res; \
+    }
+    MAKE_VECTOR_UNARY_OPERATOR(+)
+    MAKE_VECTOR_UNARY_OPERATOR(-)
+    MAKE_VECTOR_UNARY_OPERATOR(~)
+#undef MAKE_VECTOR_UNARY_OPERATOR
+
     template<class T, class U, std::size_t N>
     constexpr auto operator==(const vector::vec<T, N>& lhs, const vector::vec<U, N>& rhs) noexcept {
         auto res = lhs[0] == rhs[0];
