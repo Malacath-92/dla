@@ -99,4 +99,8 @@ int main() {
 	constexpr auto three_two_one = ivec3(3, 2, 1);
 	constexpr auto false_true_false = one_two_three.compare(three_two_one);
 	static_assert(false_true_false == bvec3(false, true, false));
+
+	using vector::vec1;
+	constexpr auto only_one_element = vec1(1.0f);
+	[[maybe_unused]] constexpr float just_that_element = only_one_element;
 }
