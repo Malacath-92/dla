@@ -413,5 +413,26 @@ namespace unit {
 			T& mVec;
 			std::size_t mIdx;
 		};
+		
+		// TODO: Proper implementation for this
+		template<class T, std::size_t N>
+		constexpr auto operator+(const vec_iterator<T, N>& lhs, int rhs) noexcept {
+			auto res = lhs;
+			if (rhs > 0) {
+				for (int i = 0; i < rhs; i++) {
+					++res;
+				}
+			}
+			else {
+				for (int i = rhs; i < 0; i++) {
+					--res;
+				}
+			}
+			return res;
+		}
+		template<class T, std::size_t N>
+		constexpr auto operator-(const vec_iterator<T, N>& lhs, int rhs) noexcept {
+			lhs + (-rhs);
+		}
 	}
 }

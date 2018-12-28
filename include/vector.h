@@ -85,6 +85,11 @@ namespace unit::vector {
         MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(<<)
         MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(>>)
 
+        template<class U>
+        constexpr auto compare(const vec<U, N>& rhs) const {
+            return vector::compare(*this, rhs);
+        }
+
 		constexpr iterator begin() noexcept { return { *this, 0 }; }
 		constexpr const_iterator begin() const noexcept { return { *this, 0 }; }
 		constexpr iterator end() noexcept { return { *this, N }; }
@@ -156,6 +161,11 @@ namespace unit::vector {
         MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(^)
         MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(<<)
         MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(>>)
+
+        template<class U>
+        constexpr auto compare(const vec<U, 1>& rhs) const {
+            return vector::compare(*this, rhs);
+        }
 
         constexpr operator value_type() const noexcept { return this->x; }
         constexpr operator reference() noexcept { return this->x; }

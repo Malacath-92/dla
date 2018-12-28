@@ -88,4 +88,40 @@ namespace unit::vector {
     MAKE_SCALAR_VECTOR_BINARY_OPERATOR(<<)
     MAKE_SCALAR_VECTOR_BINARY_OPERATOR(>>)
 #undef MAKE_SCALAR_VECTOR_BINARY_OPERATOR
+
+    template<class T, class U, std::size_t N>
+    constexpr auto operator==(const vector::vec<T, N>& lhs, const vector::vec<U, N>& rhs) noexcept {
+        auto res = lhs[0] == rhs[0];
+        if constexpr (N > 1) {
+            auto lhs_it = lhs.begin() + 1;
+            auto rhs_it = rhs.begin() + 1;
+            const auto lhs_it_end = lhs.end();
+            for (; lhs_it != lhs_it_end;) {
+                res &= *lhs_it == *rhs_it;
+                ++lhs_it;
+                ++rhs_it;
+            }
+        }
+        return res;
+    }
+    template<class T, class U, std::size_t N>
+    constexpr auto operator!=(const vector::vec<T, N>& lhs, const vector::vec<U, N>& rhs) noexcept {
+        return !(lhs == rhs);
+    }
+
+    template<class T, class U, std::size_t N>
+    constexpr auto compare(const vector::vec<T, N>& lhs, const vector::vec<U, N>& rhs) noexcept {
+        vector::vec<decltype(std::declval<T>() == std::declval<U>()), N> res{};
+        auto lhs_it = lhs.begin();
+        auto rhs_it = rhs.begin();
+        auto it = res.begin();
+        const auto it_end = res.end();
+        for (; it != it_end;) {
+            *it = *lhs_it == *rhs_it;
+            ++lhs_it;
+            ++rhs_it;
+            ++it;
+        }
+        return res;
+    }
 }
