@@ -14,7 +14,6 @@ namespace unit {
     template<class Tag, std::intmax_t Num, std::intmax_t Den>
     constexpr base_unit<Tag, Num, Den>::operator float&() noexcept { return value; }
 
-    // Operations staying within the same type
     template<class Tag, std::intmax_t Num, std::intmax_t Den>
     constexpr decltype(auto) base_unit<Tag, Num, Den>::operator+=(const base_unit& rhs) {
         value += rhs.value;
