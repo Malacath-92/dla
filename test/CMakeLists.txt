@@ -1,3 +1,5 @@
 dlaAddTest(main)
 dlaAddTest(tuple_sort)
 dlaAddTest(tuple_find)
+dlaAddTest(units_literals)
+dlaAddTest(units_inverse)

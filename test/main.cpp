@@ -17,20 +17,6 @@ int main() {
 	using namespace literals;
 	using namespace int_literals;
 
-	using input_tuple_t = std::tuple<char, int, char, double, char, float>;
-	using expected_tuple_t = std::tuple<double, int, float, char, char, char>;
-	using result_tuple_t = detail::tuple_selection_sort_t<descending, input_tuple_t>;
-	static_assert(std::is_same_v<expected_tuple_t, result_tuple_t>, "Failed sorting tuple!");
-
-	constexpr std::size_t double_idx = detail::tuple_find_v<double, input_tuple_t>;
-	constexpr std::size_t char_idx = detail::tuple_find_v<char, input_tuple_t>;
-	constexpr std::size_t float_idx = detail::tuple_find_v<float, input_tuple_t>;
-	constexpr std::size_t char_star_idx = detail::tuple_find_v<char*, input_tuple_t>;
-	static_assert(double_idx == 3, "Failed finding type in tuple!");
-	static_assert(char_idx == 0, "Failed finding type in tuple!");
-	static_assert(float_idx == 5, "Failed finding type in tuple!");
-	static_assert(char_star_idx == detail::tuple_index_npos, "Found non-existant type in tuple!");
-
     constexpr auto length = 1.0_m;
     constexpr auto time = 1.0_s;
     constexpr auto weight = 1.0_kg;
