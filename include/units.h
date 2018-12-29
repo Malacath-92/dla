@@ -6,7 +6,7 @@
 
 #include "detail/units_combine.h"
 
-namespace unit {
+namespace dla {
 
 	template<class Unit, std::intmax_t Num = 1, std::intmax_t Den = 1>
 	struct base_unit;
@@ -135,7 +135,7 @@ namespace unit {
 
 #include "units.inl"
 
-namespace unit {
+namespace dla {
 	// Most basic types
 	using length_unit = base_unit<tag::length>;
 	using time_unit = base_unit<tag::time>;

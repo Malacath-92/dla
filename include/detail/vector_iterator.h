@@ -6,7 +6,7 @@
 
 // TODO: Conditional noexcept specifiers
 
-namespace unit::detail {
+namespace dla::detail {
     template<class T, std::size_t N>
     class vec_iterator {
     public:

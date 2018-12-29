@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace unit::vector {
+namespace dla {
     template<class T, std::size_t N>
     struct vec;
 

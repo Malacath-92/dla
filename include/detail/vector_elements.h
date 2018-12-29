@@ -6,7 +6,7 @@
 //          - zero-initialization of constexpr variables
 //          - uninitialized memory at runtime for better performance
 
-namespace unit::detail {
+namespace dla::detail {
     template<class T, std::size_t N>
     struct vec_elements {
         static_assert(N > 0 && N <= 5, "Vectors only supported for sizes 1, 2, 3 and 4!");

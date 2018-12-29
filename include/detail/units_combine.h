@@ -6,14 +6,14 @@
 
 #include "detail.h"
 
-namespace unit {
+namespace dla {
 	template<class Unit, std::intmax_t Num, std::intmax_t Den>
 	struct base_unit;
 	template<class... Units>
 	struct comp_unit;
 }
 
-namespace unit::detail {
+namespace dla::detail {
 	template<class U>
 	struct is_base_unit : std::false_type {};
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>

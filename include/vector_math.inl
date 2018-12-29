@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-namespace unit::vector {
+namespace dla {
 #define MAKE_VECTOR_VECTOR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N> \
     constexpr auto operator op(const vec<T, N>& lhs, const vec<U, N>& rhs) noexcept { \

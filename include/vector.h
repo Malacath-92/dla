@@ -5,7 +5,7 @@
 #include "detail/vector_elements.h"
 #include "detail/vector_iterator.h"
 
-namespace unit::vector {
+namespace dla {
 
 #ifdef INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
     inline constexpr bool vec_index_operator_is_noexcept = false;
@@ -98,7 +98,7 @@ namespace unit::vector {
 
         template<class U>
         constexpr auto compare(const vec<U, N>& rhs) const {
-            return vector::compare(*this, rhs);
+            return dla::compare(*this, rhs);
         }
 
         // Conversion only for size 1 vectors

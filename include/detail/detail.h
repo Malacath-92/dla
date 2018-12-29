@@ -9,7 +9,7 @@
 #include "tuple_sort.h"
 #include "tuple_index.h"
 
-namespace unit::detail {
+namespace dla::detail {
 	template<class charT>
 	constexpr size_t strlen(const charT* str) {
 		std::size_t size = 0;

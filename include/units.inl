@@ -8,7 +8,7 @@
 
 #include "detail/units_combine.h"
 
-namespace unit {
+namespace dla {
     template<class Tag, std::intmax_t Num, std::intmax_t Den>
     constexpr base_unit<Tag, Num, Den>::operator float() const noexcept { return value; }
     template<class Tag, std::intmax_t Num, std::intmax_t Den>

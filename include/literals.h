@@ -2,7 +2,7 @@
 
 #include "units.h"
 
-namespace unit::literals {
+namespace dla::literals {
     constexpr auto operator ""_m(long double v) { return length_unit{ float(v) }; }
     constexpr auto operator ""_s(long double v) { return time_unit{ float(v) }; }
     constexpr auto operator ""_kg(long double v) { return weight_unit{ float(v) }; }
@@ -20,7 +20,7 @@ namespace unit::literals {
     constexpr auto operator ""_W(long double v) { return power_unit{ float(v) }; }
     constexpr auto operator ""_Pa(long double v) { return pressure_unit{ float(v) }; }
 }
-namespace unit::int_literals {
+namespace dla::int_literals {
     constexpr auto operator ""_m(unsigned long long v) { return length_unit{ float(v) }; }
     constexpr auto operator ""_s(unsigned long long v) { return time_unit{ float(v) }; }
     constexpr auto operator ""_kg(unsigned long long v) { return weight_unit{ float(v) }; }

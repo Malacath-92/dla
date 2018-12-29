@@ -13,7 +13,7 @@ struct descending {
 };
 
 int main() {
-	using namespace unit;
+	using namespace dla;
 	using namespace literals;
 	using namespace int_literals;
 
@@ -74,8 +74,6 @@ int main() {
 	length_full = math::pow<3>(length_cbrt);
 	static_assert(std::is_same_v<std::remove_const_t<decltype(length_full)>, length_unit>);
 
-	using vector::vec;
-
 	constexpr auto gravity = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
 	constexpr auto double_gravity = gravity + gravity;
 	constexpr auto square_gravity = gravity * gravity;
@@ -88,23 +86,17 @@ int main() {
 	auto gravity_not_const = vec(0_m_s2, 0_m_s2, -9.81_m_s2);
 	gravity_not_const *= 1.0f;
 
-	using vector::dvec3;
-	using vector::vec3;
 	constexpr auto dim_less_vec_double = dvec3(1.0);
 	[[maybe_unused]] constexpr auto dim_less_vec_float = vec3(dim_less_vec_double);
 
-	using vector::ivec3;
-	using vector::bvec3;
 	constexpr auto one_two_three = ivec3(1, 2, 3);
 	constexpr auto three_two_one = ivec3(3, 2, 1);
 	constexpr auto false_true_false = one_two_three.compare(three_two_one);
 	static_assert(false_true_false == bvec3(false, true, false));
 
-	using vector::vec1;
 	constexpr auto only_one_element = vec1(1.0f);
 	[[maybe_unused]] constexpr float just_that_element = only_one_element;
 
-	using vector::uvec3;
 	constexpr auto float_vec = vec3(1.0f);
 	constexpr auto double_vec = dvec3(1.0f);
 	constexpr auto int_vec = ivec3(1);

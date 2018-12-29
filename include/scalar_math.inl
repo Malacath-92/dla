@@ -8,7 +8,7 @@
 
 #include "detail/detail.h"
 
-namespace unit::math {
+namespace dla::math {
 	template<std::intmax_t pNum, std::intmax_t pDen, class T>
     auto pow(const T& val) {
 		using result_type = detail::power_t<T, pNum, pDen>;

@@ -1,7 +1,7 @@
 #pragma once
 
 // Note: Without constexpr math functions we can not make constexpr functions here either
-namespace unit::math {
+namespace dla::math {
 	template<std::intmax_t pNum, std::intmax_t pDen = 1, class T>
     auto pow(const T& val);
 	template<class T>
