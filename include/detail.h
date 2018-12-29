@@ -36,17 +36,17 @@ namespace unit {
 							  const charT* rhs, std::size_t rhsLen) {
 		#ifdef _MSVC_LANG
 			if(lhs != rhs) {
-			#else
-				{ // gcc and clang do not allow comparison of charT* in a constant expression
-				#endif
-					const int result = traits::compare(lhs, rhs, std::min(lhsLen, rhsLen));
-					if(result != 0)
-						return result;
+		#else
+			{ // gcc and clang do not allow comparison of charT* in a constant expression
+		#endif
+				const int result = traits::compare(lhs, rhs, std::min(lhsLen, rhsLen));
+				if(result != 0)
+					return result;
 			}
-				if(lhsLen == rhsLen) {
-					return 0;
-				}
-				return lhsLen < rhsLen ? -1 : 1;
+			if(lhsLen == rhsLen) {
+				return 0;
+			}
+			return lhsLen < rhsLen ? -1 : 1;
 		}
 		template<class charT, class traits = std::char_traits<charT>>
 		constexpr int compare(const charT* lhs, const charT* rhs) {
@@ -402,6 +402,23 @@ namespace unit {
 				mIdx--;
 				return prev;
 			}
+		
+			constexpr auto operator+(int rhs) const noexcept {
+				auto res{ *this };
+				res.mIdx += rhs;
+				return res;
+			}
+			constexpr auto operator-(int rhs) const noexcept {
+				return *this + (-rhs);
+			}
+		
+			constexpr decltype(auto) operator+=(int rhs) noexcept {
+				*this = *this + rhs;
+				return *this;
+			}
+			constexpr decltype(auto) operator-=(int rhs) noexcept {
+				return *this += (-rhs);
+			}
 
 			constexpr auto operator==(const vec_iterator& rhs) noexcept {
 				return &mVec == &rhs.mVec && mIdx == rhs.mIdx;
@@ -414,26 +431,5 @@ namespace unit {
 			T& mVec;
 			std::size_t mIdx;
 		};
-		
-		// TODO: Proper implementation for this
-		template<class T, std::size_t N>
-		constexpr auto operator+(const vec_iterator<T, N>& lhs, int rhs) noexcept {
-			auto res = lhs;
-			if (rhs > 0) {
-				for (int i = 0; i < rhs; i++) {
-					++res;
-				}
-			}
-			else {
-				for (int i = rhs; i < 0; i++) {
-					--res;
-				}
-			}
-			return res;
-		}
-		template<class T, std::size_t N>
-		constexpr auto operator-(const vec_iterator<T, N>& lhs, int rhs) noexcept {
-			lhs + (-rhs);
-		}
 	}
 }
