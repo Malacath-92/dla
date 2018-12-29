@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <ratio>
 
-#include "detail.h"
+#include "detail/units_combine.h"
 
 namespace unit {
 

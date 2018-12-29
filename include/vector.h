@@ -1,5 +1,9 @@
-#include "detail.h"
+#pragma once
+
 #include "vector_math.h"
+
+#include "detail/vector_elements.h"
+#include "detail/vector_iterator.h"
 
 namespace unit::vector {
 

@@ -2,9 +2,6 @@
 
 #include <cmath>
 
-#include "units.h"
-#include "detail.h"
-
 namespace unit::vector {
     template<class T, std::size_t N>
     struct vec;

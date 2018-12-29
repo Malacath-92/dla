@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <ratio>
 
-#include "detail.h"
+#include "detail/units_combine.h"
 
 namespace unit {
     template<class Tag, std::intmax_t Num, std::intmax_t Den>

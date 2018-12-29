@@ -3,7 +3,8 @@
 #include <cmath>
 
 #include "units.h"
-#include "detail.h"
+
+#include "detail/detail.h"
 
 // Note: Without constexpr math functions we can not make constexpr functions here either
 namespace unit::math {
