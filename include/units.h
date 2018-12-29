@@ -13,11 +13,6 @@ namespace dla {
 	template<class... Units>
 	struct comp_unit;
 
-	template<class T>
-	using inverse_t = detail::inverse_t<T>;
-	template<class... Units>
-	using sorted_comp_unit_t = detail::sorted_comp_unit_t<Units...>;
-
 	namespace tag {
 	#define MAKE_TAG(tag) struct tag { static constexpr const char* id = #tag; }
 		MAKE_TAG(length);
@@ -144,7 +139,7 @@ namespace dla {
 	// Derived basic types
 	using area_unit = base_unit<tag::length, 2>;
 	using volume_unit = base_unit<tag::length, 3>;
-	using frequency_unit = inverse_t<time_unit>;
+	using frequency_unit = detail::inverse_t<time_unit>;
 
 	// Derived composite types
 	using velocity_unit = decltype(length_unit{} / time_unit{});
