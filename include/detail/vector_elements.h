@@ -2,7 +2,9 @@
 
 #include <cstdint>
 
-// TODO: Members should not be zero-initialized, not doing this causes some constexpr problems
+// Note: Default constructors are not declared constexpr to allow
+//          - zero-initialization of constexpr variables
+//          - uninitialized memory at runtime for better performance
 
 namespace unit::detail {
     template<class T, std::size_t N>
@@ -11,7 +13,7 @@ namespace unit::detail {
     };
     template<class T>
     struct vec_elements<T, 1> {
-        constexpr vec_elements() = default;
+        vec_elements() = default;
         constexpr vec_elements(const vec_elements&) = default;
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
@@ -29,11 +31,11 @@ namespace unit::detail {
         constexpr explicit vec_elements(T&& pX) :
             x(std::forward<decltype(pX)>(pX)) {}
 
-        T x{};
+        T x;
     };
     template<class T>
     struct vec_elements<T, 2> {
-        constexpr vec_elements() = default;
+        vec_elements() = default;
         constexpr vec_elements(const vec_elements&) = default;
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
@@ -59,11 +61,11 @@ namespace unit::detail {
             x(std::forward<decltype(pX)>(pX)),
             y(std::forward<decltype(pY)>(pY)) {}
         
-        T x{}, y{};
+        T x, y;
     };
     template<class T>
     struct vec_elements<T, 3> {
-        constexpr vec_elements() = default;
+        vec_elements() = default;
         constexpr vec_elements(const vec_elements&) = default;
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
@@ -94,11 +96,11 @@ namespace unit::detail {
             y(std::forward<decltype(pY)>(pY)),
             z(std::forward<decltype(pZ)>(pZ)) {}
         
-        T x{}, y{}, z{};
+        T x, y, z;
     };
     template<class T>
     struct vec_elements<T, 4> {
-        constexpr vec_elements() = default;
+        vec_elements() = default;
         constexpr vec_elements(const vec_elements&) = default;
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
@@ -134,6 +136,6 @@ namespace unit::detail {
             z(std::forward<decltype(pZ)>(pZ)),
             w(std::forward<decltype(pZ)>(pW)) {}
         
-        T x{}, y{}, z{}, w{};
+        T x, y, z, w;
     };
 }
