@@ -49,7 +49,12 @@ namespace unit::vector {
             if constexpr (!vec_index_operator_is_noexcept) {
                 throw std::out_of_range("Vector index out of rance!");
             }
-            declare_unreachable();
+
+#	    ifdef _MSVC_LANG
+		    __assume(false);
+#	    else
+		    __builtin_unreachable();
+#	    endif
         }
         constexpr reference operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept) {
             return const_cast<reference>(static_cast<const vec*>(this)->operator[](idx));

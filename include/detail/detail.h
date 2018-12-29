@@ -9,14 +9,6 @@
 #include "tuple_sort.h"
 #include "tuple_index.h"
 
-#ifndef declare_unreachable
-#	ifdef _MSVC_LANG
-#		define declare_unreachable() __assume(false)
-#	else
-#		define declare_unreachable() __builtin_unreachable()
-#	endif
-#endif
-
 namespace unit::detail {
 	template<class charT>
 	constexpr size_t strlen(const charT* str) {
