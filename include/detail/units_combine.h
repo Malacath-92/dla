@@ -5,6 +5,8 @@
 #include <ratio>
 
 #include "detail.h"
+#include "tuple_sort.h"
+#include "tuple_find.h"
 
 namespace dla {
 	template<class Unit, std::intmax_t Num, std::intmax_t Den>
