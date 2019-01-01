@@ -1,4 +1,4 @@
-#include "detail/tuple_index.h"
+#include "detail/tuple_find.h"
 
 int main() {
 	using input_tuple_t = std::tuple<char, int, char, double, char, float>;
@@ -10,5 +10,5 @@ int main() {
 	static_assert(double_idx == 3);
 	static_assert(char_idx == 0);
 	static_assert(float_idx == 5);
-	static_assert(char_star_idx == dla::detail::tuple_index_npos);
+	static_assert(char_star_idx == dla::detail::tuple_find_npos);
 }

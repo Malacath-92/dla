@@ -100,7 +100,7 @@ namespace dla::detail {
 		template<class T, class Tuple, std::size_t index>
 		struct indexed_multiply;
 		template<class T, class... Ts>
-		struct indexed_multiply<T, std::tuple<Ts...>, tuple_index_npos> {
+		struct indexed_multiply<T, std::tuple<Ts...>, tuple_find_npos> {
 			using type = sorted_comp_unit_t<T, Ts...>;
 		};
 		template<class T, class... Ts, std::size_t index>
