@@ -23,7 +23,7 @@ namespace dla::detail {
 	}
 	template<class charT, class traits = std::char_traits<charT>>
 	constexpr int compare(const charT* lhs, std::size_t lhsLen,
-							const charT* rhs, std::size_t rhsLen) {
+						  const charT* rhs, std::size_t rhsLen) {
 #	ifdef _MSVC_LANG
 		if(lhs != rhs) {
 #	else
@@ -51,16 +51,38 @@ namespace dla::detail {
 	constexpr int sqrt_iterations = 3;
 	template<class T>
 	constexpr auto sqrt(T m) {
-		T i{};
-		while (i * i <= m)
-			i += static_cast<T>(0.1f);
-		T x1 = i;
-		T x2 = m;
+		T x1{};
+		{
+			const T guess_prec = m / 20.0f;
+			while (x1 * x1 <= m)
+				x1 += guess_prec;
+		}
+		T x2{};
 		for (int j = 0; j < detail::sqrt_iterations; j++) {
 			x2 = m;
 			x2 /= x1;
 			x2 += x1;
 			x2 /= 2;
+			x1 = x2;
+		}
+		return x2;
+	}
+	// Halley's Method
+	// Quick and dirty implementation, only run in constexpr context
+	constexpr int cbrt_iterations = 9;
+	template<class T>
+	constexpr auto cbrt(T m) {
+		T x1{};
+		{
+			const T guess_prec = m / 50.0f;
+			while (x1 * x1 <= m)
+				x1 += guess_prec;
+		}
+		T x2{};
+		for (int j = 0; j < detail::cbrt_iterations; j++) {
+			x2 = x1 * x1 * x1 + 2.0f * m;
+			x2 /= 2.0f * x1 * x1 * x1 + m;
+			x2 *= x1;
 			x1 = x2;
 		}
 		return x2;

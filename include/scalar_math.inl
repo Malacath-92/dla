@@ -34,8 +34,12 @@ namespace dla::math {
         struct cbrt_impl {
             constexpr auto operator()(const T& val) {
                 using result_type = detail::power_t<T, 1, 3>;
-                // TODO: constexpr version of cbrt
-                return result_type{ std::cbrt(float(val)) };
+                // if (std::is_constexpr_evaluated()) {
+                    return result_type{ detail::cbrt(float(val)) };
+                // }
+                // else {
+                //     return result_type{ std::cbrt(float(val)) };
+                // }
             }
         };
         template<class T>
