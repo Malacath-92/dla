@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 #include "vector_math.h"
 
 #include "detail/vector_elements.h"
