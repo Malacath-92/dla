@@ -18,13 +18,13 @@ namespace dla::detail {
 		static constexpr std::size_t next = tuple_index<T, std::tuple<Types...>>::value;
 
 	public:
-	#ifdef _MSVC_LANG
-	#pragma warning(disable : 4307) // MSVC emits integer overflow on this line
+#	ifdef _MSVC_LANG
+#	pragma warning(disable : 4307) // MSVC emits integer overflow on this line
 		static constexpr std::size_t value = (next == tuple_index_npos) ? (next) : (1 + next);
-	#pragma warning(default : 4307)
-	#else
+#	pragma warning(default : 4307)
+#	else
 		static constexpr std::size_t value = (next == tuple_index_npos) ? (next) : (1 + next);
-	#endif
+#	endif
 	};
 	template<class T, class Tuple>
 	inline constexpr std::size_t tuple_find_v = tuple_index<T, Tuple>::value;
