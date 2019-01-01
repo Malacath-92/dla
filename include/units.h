@@ -8,7 +8,7 @@
 
 namespace dla {
 
-	template<class Unit, std::intmax_t Num = 1, std::intmax_t Den = 1>
+	template<class Tag, std::intmax_t Num = 1, std::intmax_t Den = 1>
 	struct base_unit;
 	template<class... Units>
 	struct comp_unit;
