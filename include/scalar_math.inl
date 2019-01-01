@@ -29,4 +29,13 @@ namespace dla::math {
 		using result_type = detail::power_t<T, 1, 3>;
         return result_type{ std::cbrt(float(val)) };
     }
+
+    template<class Tag, std::intmax_t Num, std::intmax_t Den>
+    constexpr auto abs(const base_unit<Tag, Num, Den>& val) {
+        return float(val) > 0.0f ? val : -val;
+    }
+    template<class... Units>
+    constexpr auto abs(const comp_unit<Units...>& val) {
+        return float(val) > 0.0f ? val : -val;
+    }
 }
