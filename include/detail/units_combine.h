@@ -16,12 +16,20 @@ namespace dla {
 }
 
 namespace dla::detail {
-	template<class U>
+	template<class T>
 	struct is_base_unit : std::false_type {};
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
 	struct is_base_unit<base_unit<Tag, Num, Den>> : std::true_type {};
-	template<class U>
-	inline constexpr bool is_base_unit_v = is_base_unit<U>::value;
+	template<class T>
+	struct is_comp_unit : std::false_type {};
+	template<class... Units>
+	struct is_comp_unit<comp_unit<Units...>> : std::true_type {};
+	template<class T>
+	inline constexpr bool is_base_unit_v = is_base_unit<T>::value;
+	template<class T>
+	inline constexpr bool is_comp_unit_v = is_comp_unit<T>::value;
+	template<class T>
+	inline constexpr bool is_unit_type_v = is_base_unit_v<T> || is_comp_unit_v<T>;
 
 	template<class... Units>
 	struct sorted_comp_unit {
@@ -63,11 +71,6 @@ namespace dla::detail {
 	};
 	template<class T>
 	using inverse_t = typename inverse<T>::type;
-
-	template<class... T>
-	struct always_false : std::false_type {};
-	template<class... T>
-	inline constexpr bool always_false_v = always_false<T...>::value;
 
 	template<class T, class U>
 	struct multiply;
@@ -174,7 +177,7 @@ namespace dla::detail {
 	};
 	template<class T, std::intmax_t pNum, std::intmax_t pDen>
 	struct power {
-		static_assert(always_false_v<T>, "T needs to be base_unit or comp_unit");
+		using type = T;
 	};
 	template<class Tag, std::intmax_t Num, std::intmax_t Den, std::intmax_t pNum, std::intmax_t pDen>
 	struct power<base_unit<Tag, Num, Den>, pNum, pDen> {

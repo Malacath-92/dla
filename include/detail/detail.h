@@ -7,6 +7,11 @@
 #include <algorithm>
 
 namespace dla::detail {
+	template<class... T>
+	struct always_false : std::false_type {};
+	template<class... T>
+	inline constexpr bool always_false_v = always_false<T...>::value;
+
 	template<class charT>
 	constexpr size_t strlen(const charT* str) {
 		std::size_t size = 0;

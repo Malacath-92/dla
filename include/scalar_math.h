@@ -7,19 +7,16 @@ namespace dla {
 	struct comp_unit;
 }
 
-// Note: Without constexpr math functions we can not make constexpr functions here either
 namespace dla::math {
 	template<std::intmax_t pNum, std::intmax_t pDen = 1, class T>
-    auto pow(const T& val);
+    constexpr auto pow(const T& val);
 	template<class T>
     constexpr auto sqrt(const T& val);
 	template<class T>
-    auto cbrt(const T& val);
+    constexpr auto cbrt(const T& val);
 
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr auto abs(const base_unit<Tag, Num, Den>& val);
-    template<class... Units>
-    constexpr auto abs(const comp_unit<Units...>& val);
+    template<class T>
+    constexpr auto abs(const T& val);
 }
 
 #include "scalar_math.inl"
