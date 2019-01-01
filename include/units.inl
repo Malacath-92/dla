@@ -174,4 +174,54 @@ namespace dla {
 	constexpr auto operator/(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs) {
 		return lhs * (1.0f / rhs);
 	}
+
+	// Comparison and relational operations
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator==(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+		return float(lhs) == float(rhs);
+	}
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator!=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+		return float(lhs) != float(rhs);
+	}
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator>(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+		return float(lhs) > float(rhs);
+	}
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator<(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+		return float(lhs) < float(rhs);
+	}
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator>=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+		return float(lhs) >= float(rhs);
+	}
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator<=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+		return float(lhs) <= float(rhs);
+	}
+	template<class... Units>
+	constexpr auto operator==(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+		return float(lhs) == float(rhs);
+	}
+	template<class... Units>
+	constexpr auto operator!=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+		return float(lhs) != float(rhs);
+	}
+	template<class... Units>
+	constexpr auto operator>(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+		return float(lhs) > float(rhs);
+	}
+	template<class... Units>
+	constexpr auto operator<(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+		return float(lhs) < float(rhs);
+	}
+	template<class... Units>
+	constexpr auto operator>=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+		return float(lhs) >= float(rhs);
+	}
+	template<class... Units>
+	constexpr auto operator<=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+		return float(lhs) <= float(rhs);
+	}
 }

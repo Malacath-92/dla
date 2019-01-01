@@ -126,6 +126,32 @@ namespace dla {
 	constexpr auto operator*(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs);
 	template<class... lUnits, class... rUnits>
 	constexpr auto operator/(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs);
+
+	// Comparison and relational operations
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator==(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator!=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator>(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator<(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator>=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
+	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	constexpr auto operator<=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs);
+	template<class... Units>
+	constexpr auto operator==(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
+	template<class... Units>
+	constexpr auto operator!=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
+	template<class... Units>
+	constexpr auto operator>(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
+	template<class... Units>
+	constexpr auto operator<(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
+	template<class... Units>
+	constexpr auto operator>=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
+	template<class... Units>
+	constexpr auto operator<=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs);
 }
 
 #include "units.inl"
