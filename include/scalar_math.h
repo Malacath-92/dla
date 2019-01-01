@@ -5,7 +5,7 @@ namespace dla::math {
 	template<std::intmax_t pNum, std::intmax_t pDen = 1, class T>
     auto pow(const T& val);
 	template<class T>
-    auto sqrt(const T& val);
+    constexpr auto sqrt(const T& val);
 	template<class T>
     auto cbrt(const T& val);
 }

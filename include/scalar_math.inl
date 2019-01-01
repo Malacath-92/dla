@@ -15,9 +15,14 @@ namespace dla::math {
 		return result_type{ std::pow(float(val), float(pNum) / float(pDen)) };
     }
 	template<class T>
-    auto sqrt(const T& val) {
+    constexpr auto sqrt(const T& val) {
 		using result_type = detail::power_t<T, 1, 2>;
-        return result_type{ std::sqrt(float(val)) };
+        // if (std::is_constexpr_evaluated()) {
+            return result_type{ detail::sqrt(float(val)) };
+        // }
+        // else {
+        //     return result_type{ std::sqrt(float(val)) };
+        // }
     }
 	template<class T>
     auto cbrt(const T& val) {

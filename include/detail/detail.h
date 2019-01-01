@@ -39,4 +39,25 @@ namespace dla::detail {
 		std::size_t rhsLen = strlen(rhs);
 		return compare(lhs, lhsLen, rhs, rhsLen);
 	}
+
+	// Babylonian Method
+	// Quick and dirty implementation, only run in constexpr context
+	// TODO: C++20 use consteval
+	constexpr int sqrt_iterations = 3;
+	template<class T>
+	constexpr auto sqrt(T m) {
+		T i{};
+		while (i * i <= m)
+			i += static_cast<T>(0.1f);
+		T x1 = i;
+		T x2 = m;
+		for (int j = 0; j < detail::sqrt_iterations; j++) {
+			x2 = m;
+			x2 /= x1;
+			x2 += x1;
+			x2 /= 2;
+			x1 = x2;
+		}
+		return x2;
+	}
 }
