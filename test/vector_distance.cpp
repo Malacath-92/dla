@@ -15,12 +15,8 @@ int main() {
 	constexpr auto diag = vec(1_m, 1_m, 1_m);
 
 	auto almost_same = [](auto&& lhs, auto&& rhs) {
-		auto abs = [](auto&& val) {
-			using T = std::remove_reference_t<decltype(val)>;
-			return val > T{ 0.0f } ? val : -val;
-		};
 		using T = std::remove_reference_t<decltype(lhs)>;
-		return abs(lhs - rhs) <= T{ 0.0001f };
+		return math::abs(lhs - rhs) <= T{ 0.0001f };
 	};
 	
 	constexpr auto one_meter = right.length();

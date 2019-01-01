@@ -60,4 +60,17 @@ namespace dla::detail {
 		}
 		return x2;
 	}
+
+	template<class InputIt, class T, class F>
+	constexpr T accumulate(InputIt first, const InputIt last, T&& init, F&& reduce) {
+		while (first != last) {
+			init = reduce(std::move(init), *first);
+			++first;
+		}
+		return std::move(init);
+	}
+	template<class InputIt, class T>
+	constexpr T accumulate(InputIt first, const InputIt last, T&& init) {
+		return accumulate(first, last, std::move(init), std::plus<>());
+	}
 }

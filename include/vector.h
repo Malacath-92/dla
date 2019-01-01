@@ -28,7 +28,7 @@ namespace dla {
 		using reverse_iterator = std::reverse_iterator<iterator>;
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-        static constexpr std::size_t length = N;
+        static constexpr std::size_t size = N;
 
         vec() = default;
         using vec_elements = detail::vec_elements<T, N>;
@@ -82,7 +82,7 @@ namespace dla {
 
     #define MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(op) \
         template<class U> \
-        constexpr decltype(auto) operator op##=(const vec<U, length>& rhs) noexcept { \
+        constexpr decltype(auto) operator op##=(const vec<U, size>& rhs) noexcept { \
             *this = std::move(*this op rhs); \
             return *this; \
         }
@@ -101,6 +101,14 @@ namespace dla {
         template<class U>
         constexpr auto compare(const vec<U, N>& rhs) const {
             return dla::compare(*this, rhs);
+        }
+        template<class U, class Distance = distances::euclidean<T, U>>
+        constexpr auto distance(const vec<U, size>& rhs, Distance&& metric = {}) const {
+            return dla::distance(*this, rhs, std::move(metric));
+        }
+        template<class Distance = distances::euclidean<T>>
+        constexpr auto length(Distance&& metric = {}) const {
+            return dla::length(*this, std::move(metric));
         }
 
         // Conversion only for size 1 vectors
