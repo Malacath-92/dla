@@ -16,18 +16,22 @@ int main() {
 
 	auto almost_same = [](auto&& lhs, auto&& rhs) {
 		using T = std::remove_reference_t<decltype(lhs)>;
-		return math::abs(lhs - rhs) <= T{ 0.0001f };
+		return math::abs(lhs - rhs) <= T{ 0.000001f };
 	};
+
+	int error = 0;
 	
-	constexpr auto one_meter = right.length();
-	constexpr auto one_other_meter = left.length();
-	constexpr auto two_meter = left.distance(right);
-	static_assert(almost_same(one_meter, 1_m));
-	static_assert(almost_same(one_other_meter, 1_m));
-	static_assert(almost_same(two_meter, 2_m));
+	auto one_meter = right.length();
+	auto one_other_meter = left.length();
+	auto two_meter = left.distance(right);
+	error += !almost_same(one_meter, 1_m);
+	error += !almost_same(one_other_meter, 1_m);
+	error += !almost_same(two_meter, 2_m);
 	
-	constexpr auto two_other_meter = right.distance(up, manhattan{});
-	constexpr auto three_meter = diag.length(manhattan{});
-	static_assert(almost_same(two_other_meter, 2_m));
-	static_assert(almost_same(three_meter, 3_m));
+	auto two_other_meter = right.distance(up, manhattan{});
+	auto three_meter = diag.length(manhattan{});
+	error += !almost_same(two_other_meter, 2_m);
+	error += !almost_same(three_meter, 3_m);
+
+	return error;
 }
