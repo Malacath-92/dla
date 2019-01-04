@@ -103,11 +103,11 @@ namespace dla {
             return dla::compare(*this, rhs);
         }
         template<class U, class Distance = distances::euclidean<T, U>>
-        constexpr auto distance(const vec<U, size>& rhs, Distance&& metric = {}) const {
+        DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<U, size>& rhs, Distance&& metric = {}) const {
             return dla::distance(*this, rhs, std::move(metric));
         }
         template<class Distance = distances::euclidean<T>>
-        constexpr auto length(Distance&& metric = {}) const {
+        DLA_OPTIMISTIC_CONSTEXPR auto length(Distance&& metric = {}) const {
             return dla::length(*this, std::move(metric));
         }
 

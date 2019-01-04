@@ -105,11 +105,11 @@ namespace dla {
     }
 
     template<class T, class U, std::size_t N, class Distance = distances::euclidean<T, U>>
-    constexpr auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric = {}) noexcept {
+    DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric = {}) noexcept {
         return metric(lhs, rhs);
     }
     template<class T, std::size_t N, class Distance = distances::euclidean<T>>
-    constexpr auto length(const vec<T, N>& val, Distance&& metric = {}) noexcept {
+    DLA_OPTIMISTIC_CONSTEXPR auto length(const vec<T, N>& val, Distance&& metric = {}) noexcept {
         constexpr vec<T, N> zero{};
         return distance(val, zero, std::move(metric));
     }

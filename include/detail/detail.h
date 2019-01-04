@@ -6,6 +6,9 @@
 #include <string>
 #include <algorithm>
 
+// Note: Functions marked optimistic constexpr can not portably be evaluated in a constant expression
+#define DLA_OPTIMISTIC_CONSTEXPR constexpr
+
 namespace dla::detail {
 	template<class... T>
 	struct always_false : std::false_type {};
@@ -44,10 +47,11 @@ namespace dla::detail {
 		std::size_t rhsLen = strlen(rhs);
 		return compare(lhs, lhsLen, rhs, rhsLen);
 	}
-
-	// Babylonian Method
+	
 	// Quick and dirty implementation, only run in constexpr context
 	// TODO: C++20 use consteval
+	// TODO: C++20 use std::bit_cast and other tricks for more efficient solutions
+	// Babylonian Method
 	constexpr int sqrt_iterations = 3;
 	template<class T>
 	constexpr auto sqrt(T m) {
@@ -68,7 +72,6 @@ namespace dla::detail {
 		return x2;
 	}
 	// Halley's Method
-	// Quick and dirty implementation, only run in constexpr context
 	constexpr int cbrt_iterations = 9;
 	template<class T>
 	constexpr auto cbrt(T m) {
