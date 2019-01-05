@@ -1,5 +1,9 @@
 #pragma once
 
+#include "detail/detail.h"
+
+#include <cstdint>
+
 namespace dla {
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
 	struct base_unit;
