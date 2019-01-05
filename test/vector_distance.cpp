@@ -1,8 +1,8 @@
+#include "common.h"
+
 #include "units.h"
 #include "literals.h"
 #include "vector.h"
-
-#include <type_traits>
 
 int main() {
 	using namespace dla;
@@ -13,11 +13,6 @@ int main() {
 	constexpr auto left = vec(0_m, -1_m, 0_m);
 	constexpr auto up = vec(0_m, 0_m, 1_m);
 	constexpr auto diag = vec(1_m, 1_m, 1_m);
-
-	auto almost_same = [](auto&& lhs, auto&& rhs) {
-		using T = std::remove_reference_t<decltype(lhs)>;
-		return math::abs(lhs - rhs) <= T{ 0.000001f };
-	};
 
 	int error = 0;
 	

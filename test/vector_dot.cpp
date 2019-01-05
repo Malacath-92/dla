@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include <vector.h>
 
 #include <type_traits>
@@ -9,16 +11,6 @@ int main() {
 	constexpr auto up_f = vec3(0.0f, 0.0f, 1.0f);
 	constexpr auto diag_f = vec3(1.0f, 1.0f, 1.0f);
 	constexpr auto other_diag_f = vec3(0.0f, 1.0f, 1.0f);
-
-	auto almost_same = [](auto&& lhs, auto&& rhs) {
-		using T = std::remove_reference_t<decltype(lhs)>;
-        if constexpr (std::is_integral_v<T>) {
-            return lhs - rhs == T{ 0 };
-        }
-        else {
-    		return math::abs(lhs - rhs) <= T{ 0.000001 };
-        }
-	};
 
 	int error = 0;
 	
