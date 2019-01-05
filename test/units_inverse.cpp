@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include "units.h"
 #include "literals.h"
 
@@ -14,7 +16,7 @@ int main() {
 	constexpr auto inverse_time = 1.0f / time;
 	constexpr auto inverse_velocity = 1.0f / velocity;
 	constexpr auto inverse_force = 1.0f / force;
-	static_assert(std::is_same_v<std::remove_const_t<decltype(inverse_time)>, inverse_time_t>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(inverse_velocity)>, inverse_velocity_t>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(inverse_force)>, inverse_force_t>);
+	static_assert(is_similar<inverse_time_t>(inverse_time));
+	static_assert(is_similar<inverse_velocity_t>(inverse_velocity));
+	static_assert(is_similar<inverse_force_t>(inverse_force));
 }

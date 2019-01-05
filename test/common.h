@@ -13,3 +13,8 @@ auto almost_same = [](auto&& lhs, auto&& rhs) {
         return dla::math::abs(lhs - rhs) <= T{ 0.000001 };
     }
 };
+
+template<class T, class U>
+constexpr auto is_similar(U&& val) noexcept {
+    return std::is_same_v<std::decay_t<decltype(val)>, T>;
+}

@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include "vector.h"
 
 int main() {
@@ -13,7 +15,7 @@ int main() {
 	constexpr auto fd_prod_vec = float_vec * double_vec;
 	constexpr auto id_prod_vec = int_vec * double_vec;
 	constexpr auto iu_prod_vec = int_vec * uint_vec;
-	static_assert(std::is_same_v<std::remove_const_t<decltype(fd_prod_vec)>, dvec3>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(id_prod_vec)>, dvec3>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(iu_prod_vec)>, uvec3>);
+	static_assert(is_similar<dvec3>(fd_prod_vec));
+	static_assert(is_similar<dvec3>(id_prod_vec));
+	static_assert(is_similar<uvec3>(iu_prod_vec));
 }

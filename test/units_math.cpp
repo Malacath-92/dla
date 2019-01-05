@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include "units.h"
 #include "scalar_math.h"
 #include "literals.h"
@@ -25,6 +27,6 @@ int main() {
 	auto force_cbrt = math::cbrt(force);
 	auto force_full = math::pow<2>(force_sqrt);
 	force_full = math::pow<3>(force_cbrt);
-	error += !std::is_same_v<std::remove_const_t<decltype(length_full)>, length_unit>;
-	error += !std::is_same_v<std::remove_const_t<decltype(force_full)>, force_unit>;
+	error += !is_similar<length_unit>(length_full);
+	error += !is_similar<force_unit>(force_full);
 }

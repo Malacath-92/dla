@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include "units.h"
 #include "literals.h"
 
@@ -21,15 +23,15 @@ int main() {
 	constexpr auto more_dim_less = time * acceleration / length / frequency;
 	constexpr auto last_dim_less = acceleration / acceleration;
 
-	static_assert(std::is_same_v<std::remove_const_t<decltype(volume)>, volume_unit>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(velocity)>, velocity_unit>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(velocity)>, std::remove_const_t<decltype(same_velocity)>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(acceleration)>, acceleration_unit>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(acceleration)>, std::remove_const_t<decltype(same_acceleration)>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(force)>, force_unit>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(force)>, std::remove_const_t<decltype(same_force)>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(dim_less)>, float>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(other_dim_less)>, float>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(more_dim_less)>, float>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(last_dim_less)>, float>);
+	static_assert(is_similar<volume_unit>(volume));
+	static_assert(is_similar<velocity_unit>(velocity));
+	static_assert(is_similar<velocity_unit>(same_velocity));
+	static_assert(is_similar<acceleration_unit>(acceleration));
+	static_assert(is_similar<acceleration_unit>(same_acceleration));
+	static_assert(is_similar<force_unit>(force));
+	static_assert(is_similar<force_unit>(same_force));
+	static_assert(is_similar<float>(dim_less));
+	static_assert(is_similar<float>(other_dim_less));
+	static_assert(is_similar<float>(more_dim_less));
+	static_assert(is_similar<float>(last_dim_less));
 }

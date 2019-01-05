@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include "units.h"
 #include "literals.h"
 #include "vector.h"
@@ -12,8 +14,8 @@ int main() {
 	constexpr auto double_gravity = vector_gravity + vector_gravity;
 	constexpr auto square_gravity = vector_gravity * vector_gravity;
 	constexpr auto no_gravity = vector_gravity / vector_gravity.z;
-	static_assert(std::is_same_v<std::remove_const_t<decltype(vector_gravity)>, vec<acceleration_unit, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(double_gravity)>, vec<acceleration_unit, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(square_gravity)>, vec<detail::power_t<acceleration_unit, 2, 1>, 3>>);
-	static_assert(std::is_same_v<std::remove_const_t<decltype(no_gravity)>, vec<float, 3>>);
+	static_assert(is_similar<vec<acceleration_unit, 3>>(vector_gravity));
+	static_assert(is_similar<vec<acceleration_unit, 3>>(double_gravity));
+	static_assert(is_similar<vec<detail::power_t<acceleration_unit, 2, 1>, 3>>(square_gravity));
+	static_assert(is_similar<vec3>(no_gravity));
 }

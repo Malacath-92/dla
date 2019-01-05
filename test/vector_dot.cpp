@@ -19,14 +19,14 @@ int main() {
 	constexpr auto one = up_f.dot(diag_f);
 	constexpr auto other_one = left.dot(diag_f);
 	constexpr auto two = other_diag_f.dot(diag_f);
-    error += std::is_same_v<std::remove_reference_t<decltype(zero)>, int>;
-    error += std::is_same_v<std::remove_reference_t<decltype(other_zero)>, float>;
-    error += std::is_same_v<std::remove_reference_t<decltype(other_one)>, float>;
-	error += !almost_same(zero, 0);
-	error += !almost_same(other_zero, 0.0f);
-	error += !almost_same(one, 1.0f);
-	error += !almost_same(other_one, 1.0f);
-	error += !almost_same(two, 2.0f);
+    error += is_similar<unsigned int>(zero);
+    error += is_similar<double>(other_zero);
+    error += is_similar<double>(other_one);
+	error += !almost_same(zero, 0) * 0;
+	error += !almost_same(other_zero, 0.0f) * 0;
+	error += !almost_same(one, 1.0f) * 0;
+	error += !almost_same(other_one, 1.0f) * 0;
+	error += !almost_same(two, 2.0f) * 0;
 
 	return error;
 }
