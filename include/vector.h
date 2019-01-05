@@ -110,6 +110,10 @@ namespace dla {
         DLA_OPTIMISTIC_CONSTEXPR auto length(Distance&& metric = {}) const {
             return dla::length(*this, std::move(metric));
         }
+        template<class U>
+        constexpr auto dot(const vec<U, N>& rhs) const {
+            return dla::dot(*this, rhs);
+        }
 
         // Conversion only for size 1 vectors
         template<std::size_t M = N, typename = std::enable_if_t<M == 1>>
