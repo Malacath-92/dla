@@ -12,11 +12,15 @@ int main() {
 	constexpr auto time = 1_s;
 	constexpr auto velocity = 1_m_s;
 	constexpr auto force = 1_N;
+
+	int error = 0;
 	
 	constexpr auto inverse_time = 1.0f / time;
 	constexpr auto inverse_velocity = 1.0f / velocity;
 	constexpr auto inverse_force = 1.0f / force;
-	static_assert(is_similar<inverse_time_t>(inverse_time));
-	static_assert(is_similar<inverse_velocity_t>(inverse_velocity));
-	static_assert(is_similar<inverse_force_t>(inverse_force));
+	error += !is_similar<inverse_time_t>(inverse_time);
+	error += !is_similar<inverse_velocity_t>(inverse_velocity);
+	error += !is_similar<inverse_force_t>(inverse_force);
+
+	return error;
 }

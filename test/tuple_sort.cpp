@@ -17,8 +17,12 @@ int main() {
 	using expected_descending_tuple_t = std::tuple<double, int, float, char, char, char>;
 	using expected_ascending_tuple_t = std::tuple<char, char, char, int, float, double>;
 
+	int error = 0;
+
 	using result_descending_tuple_t = detail::tuple_selection_sort_t<sort_by_sizeof_in_descending_order, input_tuple_t>;
 	using result_aescending_tuple_t = detail::tuple_selection_sort_t<sort_by_sizeof_in_ascending_order, input_tuple_t>;
-	static_assert(std::is_same_v<expected_descending_tuple_t, result_descending_tuple_t>, "Failed sorting in descending order tuple!");
-	static_assert(std::is_same_v<expected_ascending_tuple_t, result_aescending_tuple_t>, "Failed sorting in ascending order tuple!");
+	error += !std::is_same_v<expected_descending_tuple_t, result_descending_tuple_t>;
+	error += !std::is_same_v<expected_ascending_tuple_t, result_aescending_tuple_t>;
+
+	return error;
 }

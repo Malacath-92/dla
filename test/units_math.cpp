@@ -29,4 +29,6 @@ int main() {
 	force_full = math::pow<3>(force_cbrt);
 	error += !is_similar<length_unit>(length_full);
 	error += !is_similar<force_unit>(force_full);
+
+	return error;
 }
