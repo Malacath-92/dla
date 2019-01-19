@@ -10,6 +10,13 @@
 
 namespace dla::math {
     namespace custom {
+        template<class T>
+        struct zero {
+            static constexpr auto value = T{};
+        };
+        template<class T>
+        inline constexpr auto zero_v = zero<T>::value;
+
         template<std::intmax_t pNum, std::intmax_t pDen, class T>
         struct pow_impl {
             static constexpr auto call(const T& val) {
@@ -47,7 +54,7 @@ namespace dla::math {
         template<class T>
         struct abs_impl {
             static constexpr auto call(const T& val) {
-                return val > T{} ? val : -val;
+                return val > zero_v<T> ? val : -val;
             }
         };
     }
