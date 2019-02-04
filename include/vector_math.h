@@ -91,42 +91,15 @@ namespace dla {
     constexpr auto compare(const vec<T, N>& lhs, const vec<U, N>& rhs) noexcept;
 
     template<class T, std::size_t N>
-    constexpr auto abs(const vec<T, N>& val) noexcept {
-        vec<T, N> res{};
-        auto val_it = val.begin();
-        auto it = res.begin();
-        const auto it_end = res.end();
-        for (; it != it_end;) {
-            *it = math::abs(*val_it);
-            ++val_it;
-            ++it;
-        }
-        return res;
-    }
+    constexpr auto abs(const vec<T, N>& val) noexcept;
 
     template<class T, class U, std::size_t N, class Distance = distances::euclidean<T, U>>
-    DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric = {}) noexcept {
-        return metric(lhs, rhs);
-    }
+    DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric = {}) noexcept;
     template<class T, std::size_t N, class Distance = distances::euclidean<T>>
-    DLA_OPTIMISTIC_CONSTEXPR auto length(const vec<T, N>& val, Distance&& metric = {}) noexcept {
-        constexpr vec<T, N> zero{};
-        return distance(val, zero, std::move(metric));
-    }
+    DLA_OPTIMISTIC_CONSTEXPR auto length(const vec<T, N>& val, Distance&& metric = {}) noexcept;
 
     template<class T, class U, std::size_t N>
-    constexpr auto dot(const vec<T, N>& lhs, const vec<U, N>& rhs) {
-        decltype(std::declval<T>() * std::declval<U>()) res{};
-        auto lhs_it = lhs.begin();
-        auto rhs_it = rhs.begin();
-        const auto lhs_it_end = lhs.end();
-        for (; lhs_it != lhs_it_end;) {
-            res += *lhs_it * *rhs_it;
-            ++lhs_it;
-            ++rhs_it;
-        }
-        return res;
-    }
+    constexpr auto dot(const vec<T, N>& lhs, const vec<U, N>& rhs);
 }
 
 #include "vector_math.inl"
