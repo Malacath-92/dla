@@ -10,7 +10,7 @@ auto almost_same = [](auto&& lhs, auto&& rhs) {
         return lhs - rhs == T{ 0 };
     }
     else {
-        return dla::math::abs(lhs - rhs) <= T{ 0.000001 };
+        return dla::math::abs(lhs - rhs) <= T{ 0.000001f };
     }
 };
 
