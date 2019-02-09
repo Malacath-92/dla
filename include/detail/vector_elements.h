@@ -35,7 +35,11 @@ namespace dla::detail {
         constexpr explicit vec_elements(T&& ps, init_tex_t);
 
         template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 1>& val);
+        constexpr explicit vec_elements(const vec_elements<U, 1>& val, init_coord_t = {});
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 1>& val, init_color_t);
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 1>& val, init_tex_t);
 
         union { T x, r, s; };
     };
@@ -62,7 +66,11 @@ namespace dla::detail {
         constexpr vec_elements(T&& ps, T&& pt, init_tex_t);
 
         template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 2>& val);
+        constexpr explicit vec_elements(const vec_elements<U, 2>& val, init_coord_t = {});
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 2>& val, init_color_t);
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 2>& val, init_tex_t);
         
         union { T x, r, s; };
         union { T y, g, t; };
@@ -90,7 +98,11 @@ namespace dla::detail {
         constexpr vec_elements(T&& ps, T&& pt, T&& pp, init_tex_t);
 
         template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 3>& val);
+        constexpr explicit vec_elements(const vec_elements<U, 3>& val, init_coord_t = {});
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 3>& val, init_color_t);
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 3>& val, init_tex_t);
         
         union { T x, r, s; };
         union { T y, g, t; };
@@ -119,7 +131,11 @@ namespace dla::detail {
         constexpr vec_elements(T&& ps, T&& pt, T&& pp, T&& pq, init_tex_t);
 
         template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 4>& val);
+        constexpr explicit vec_elements(const vec_elements<U, 4>& val, init_coord_t = {});
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 4>& val, init_color_t);
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr vec_elements(const vec_elements<U, 4>& val, init_tex_t);
         
         union { T x, r, s; };
         union { T y, g, t; };
