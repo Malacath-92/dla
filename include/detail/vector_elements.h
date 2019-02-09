@@ -1,10 +1,17 @@
 #pragma once
 
 #include <cstdint>
+#include <type_traits>
 
 // Note: Default constructors are not declared constexpr to allow
 //          - zero-initialization of constexpr variables
 //          - uninitialized memory at runtime for better performance
+
+namespace dla {
+    struct init_coord_t {};
+    struct init_color_t {};
+    struct init_tex_t {};
+}
 
 namespace dla::detail {
     template<class T, std::size_t N>
@@ -18,20 +25,19 @@ namespace dla::detail {
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
         constexpr vec_elements& operator=(vec_elements&&) = default;
-
-        template<class U>
-        constexpr explicit vec_elements(const vec_elements<U, 1>& val) :
-            x(static_cast<T>(val.x)) {}
         
-        constexpr explicit vec_elements(const T& pX) :
-            x(pX) {}
-        template<class U>
-        constexpr explicit vec_elements(const U& val) : 
-            x(static_cast<T>(val)) {}
-        constexpr explicit vec_elements(T&& pX) :
-            x(std::forward<decltype(pX)>(pX)) {}
+        constexpr explicit vec_elements(const T& px, init_coord_t = {});
+        constexpr explicit vec_elements(const T& pr, init_color_t);
+        constexpr explicit vec_elements(const T& ps, init_tex_t);
 
-        T x;
+        constexpr explicit vec_elements(T&& px, init_coord_t = {});
+        constexpr explicit vec_elements(T&& pr, init_color_t);
+        constexpr explicit vec_elements(T&& ps, init_tex_t);
+
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr explicit vec_elements(const vec_elements<U, 1>& val);
+
+        union { T x, r, s; };
     };
     template<class T>
     struct vec_elements<T, 2> {
@@ -40,28 +46,26 @@ namespace dla::detail {
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
         constexpr vec_elements& operator=(vec_elements&&) = default;
+        
+        constexpr explicit vec_elements(const T& val);
+        
+        constexpr vec_elements(const T& val, init_coord_t);
+        constexpr vec_elements(const T& val, init_color_t);
+        constexpr vec_elements(const T& val, init_tex_t);
+        
+        constexpr vec_elements(const T& px, const T& py, init_coord_t = {});
+        constexpr vec_elements(const T& pr, const T& pg, init_color_t);
+        constexpr vec_elements(const T& ps, const T& pt, init_tex_t);
 
-        template<class U>
-        constexpr explicit vec_elements(const vec_elements<U, 2>& val) :
-            x(static_cast<T>(val.x)),
-            y(static_cast<T>(val.y)) {}
+        constexpr vec_elements(T&& px, T&& py, init_coord_t = {});
+        constexpr vec_elements(T&& pr, T&& pg, init_color_t);
+        constexpr vec_elements(T&& ps, T&& pt, init_tex_t);
+
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr explicit vec_elements(const vec_elements<U, 2>& val);
         
-        template<class U>
-        constexpr explicit vec_elements(const U& val) :
-            x(static_cast<T>(val)),
-            y(static_cast<T>(val)) {}
-        constexpr vec_elements(const T& pX, const T& pY) :
-            x(pX),
-            y(pY) {}
-        template<class U>
-        constexpr vec_elements(const U& pX, const U& pY) :
-            x(static_cast<T>(pX)),
-            y(static_cast<T>(pY)) {}
-        constexpr vec_elements(T&& pX, T&& pY) :
-            x(std::forward<decltype(pX)>(pX)),
-            y(std::forward<decltype(pY)>(pY)) {}
-        
-        T x, y;
+        union { T x, r, s; };
+        union { T y, g, t; };
     };
     template<class T>
     struct vec_elements<T, 3> {
@@ -70,33 +74,27 @@ namespace dla::detail {
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
         constexpr vec_elements& operator=(vec_elements&&) = default;
-
-        template<class U>
-        constexpr explicit vec_elements(const vec_elements<U, 3>& val) :
-            x(static_cast<T>(val.x)),
-            y(static_cast<T>(val.y)),
-            z(static_cast<T>(val.z)) {}
-
-        template<class U>
-        constexpr explicit vec_elements(const U& val) :
-            x(static_cast<T>(val)),
-            y(static_cast<T>(val)),
-            z(static_cast<T>(val)) {}
-        constexpr vec_elements(const T& pX, const T& pY, const T& pZ) :
-            x(pX),
-            y(pY),
-            z(pZ) {}
-        template<class U>
-        constexpr vec_elements(const U& pX, const U& pY, const U& pZ) : 
-            x(static_cast<T>(pX)),
-            y(static_cast<T>(pY)),
-            z(static_cast<T>(pZ)) {}
-        constexpr vec_elements(T&& pX, T&& pY, T&& pZ) :
-            x(std::forward<decltype(pX)>(pX)),
-            y(std::forward<decltype(pY)>(pY)),
-            z(std::forward<decltype(pZ)>(pZ)) {}
         
-        T x, y, z;
+        constexpr explicit vec_elements(const T& val);
+        
+        constexpr vec_elements(const T& val, init_coord_t);
+        constexpr vec_elements(const T& val, init_color_t);
+        constexpr vec_elements(const T& val, init_tex_t);
+        
+        constexpr vec_elements(const T& px, const T& py, const T& pz, init_coord_t = {});
+        constexpr vec_elements(const T& pr, const T& pg, const T& pb, init_color_t);
+        constexpr vec_elements(const T& ps, const T& pt, const T& pp, init_tex_t);
+
+        constexpr vec_elements(T&& px, T&& py, T&& pz, init_coord_t = {});
+        constexpr vec_elements(T&& pr, T&& pg, T&& pb, init_color_t);
+        constexpr vec_elements(T&& ps, T&& pt, T&& pp, init_tex_t);
+
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr explicit vec_elements(const vec_elements<U, 3>& val);
+        
+        union { T x, r, s; };
+        union { T y, g, t; };
+        union { T z, b, p; };
     };
     template<class T>
     struct vec_elements<T, 4> {
@@ -106,36 +104,28 @@ namespace dla::detail {
         constexpr vec_elements& operator=(const vec_elements&) = default;
         constexpr vec_elements& operator=(vec_elements&&) = default;
 
-        template<class U>
-        constexpr explicit vec_elements(const vec_elements<U, 4>& val) :
-            x(static_cast<T>(val.x)),
-            y(static_cast<T>(val.y)),
-            z(static_cast<T>(val.z)),
-            w(static_cast<T>(val.w)) {}
+        constexpr explicit vec_elements(const T& val);
 
-        template<class U>
-        constexpr explicit vec_elements(const U& val) :
-            x(static_cast<T>(val)),
-            y(static_cast<T>(val)),
-            z(static_cast<T>(val)),
-            w(static_cast<T>(val)) {}
-        constexpr vec_elements(const T& pX, const T& pY, const T& pZ, const T& pW) :
-            x(pX),
-            y(pY),
-            z(pZ), 
-            w(pW) {}
-        template<class U>
-        constexpr vec_elements(const U& pX, const U& pY, const U& pZ, const U& pW) :
-            x(static_cast<T>(pX)),
-            y(static_cast<T>(pY)),
-            z(static_cast<T>(pZ)), 
-            w(static_cast<T>(pW)) {}
-        constexpr vec_elements(T&& pX, T&& pY, T&& pZ, T&& pW) :
-            x(std::forward<decltype(pX)>(pX)),
-            y(std::forward<decltype(pY)>(pY)),
-            z(std::forward<decltype(pZ)>(pZ)),
-            w(std::forward<decltype(pZ)>(pW)) {}
+        constexpr vec_elements(const T& val, init_coord_t);
+        constexpr vec_elements(const T& val, init_color_t);
+        constexpr vec_elements(const T& val, init_tex_t);
         
-        T x, y, z, w;
+        constexpr vec_elements(const T& px, const T& py, const T& pz, const T& pw, init_coord_t = {});
+        constexpr vec_elements(const T& pr, const T& pg, const T& pb, const T& pa, init_color_t);
+        constexpr vec_elements(const T& ps, const T& pt, const T& pp, const T& pq, init_tex_t);
+
+        constexpr vec_elements(T&& px, T&& py, T&& pz, T&& pw, init_coord_t = {});
+        constexpr vec_elements(T&& pr, T&& pg, T&& pb, T&& pa, init_color_t);
+        constexpr vec_elements(T&& ps, T&& pt, T&& pp, T&& pq, init_tex_t);
+
+        template<class U, class = std::enable_if_t<std::is_convertible_v<U, T>>>
+        constexpr explicit vec_elements(const vec_elements<U, 4>& val);
+        
+        union { T x, r, s; };
+        union { T y, g, t; };
+        union { T z, b, p; };
+        union { T w, a, q; };
     };
 }
+
+#include "vector_elements.inl"
