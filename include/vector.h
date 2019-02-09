@@ -37,107 +37,82 @@ namespace dla {
         using vec_elements = detail::vec_elements<T, N>;
         using vec_elements::vec_elements;
         template<class U>
-        constexpr explicit vec(const vec<U, N>& val) :
-            vec_elements(static_cast<const detail::vec_elements<U, N>&>(val)) {}
+        constexpr explicit vec(const vec<U, N>& val);
 
-        constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
-            if (idx == 0) return this->x;
-            else if constexpr (N > 1) {
-                if (idx == 1) return this->y;
-                else if constexpr (N > 2) {
-                    if (idx == 2) return this->z;
-                    else if constexpr (N > 3) {
-                        if (idx == 3) return this->w;
-                    }
-                }
-            }
-            if constexpr (!vec_index_operator_is_noexcept) {
-                throw std::out_of_range("Vector index out of rance!");
-            }
-
-#	    ifdef _MSVC_LANG
-		    __assume(false);
-#	    else
-		    __builtin_unreachable();
-#	    endif
-        }
-        constexpr reference operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept) {
-            return const_cast<reference>(static_cast<const vec*>(this)->operator[](idx));
-        }
-
-    #define MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(op) \
-        template<class U> \
-        constexpr decltype(auto) operator op##=(const U& rhs) noexcept { \
-            *this = std::move(*this op rhs); \
-            return *this; \
-        }
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(+)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(-)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(*)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(/)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(%)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(&)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(|)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(^)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(<<)
-        MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR(>>)
-    #undef MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR
-
-    #define MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(op) \
-        template<class U> \
-        constexpr decltype(auto) operator op##=(const vec<U, size>& rhs) noexcept { \
-            *this = std::move(*this op rhs); \
-            return *this; \
-        }
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(+)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(-)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(*)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(/)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(%)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(&)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(|)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(^)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(<<)
-        MAKE_VECTOR_VECTOR_BINARY_ASSIGNEMT_OPERATOR(>>)
-    #undef MAKE_VECTOR_SCALAR_BINARY_ASSIGNEMT_OPERATOR
+        constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept);
+        constexpr reference operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept);
 
         template<class U>
-        constexpr auto compare(const vec<U, N>& rhs) const {
-            return dla::compare(*this, rhs);
-        }
+        constexpr decltype(auto) operator+=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator-=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator*=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator/=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator%=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator&=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator|=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator^=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator<<=(const U& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator>>=(const U& rhs) noexcept;
+
+        template<class U>
+        constexpr decltype(auto) operator+=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator-=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator*=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator/=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator%=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator&=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator|=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator^=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator<<=(const vec<U, size>& rhs) noexcept;
+        template<class U>
+        constexpr decltype(auto) operator>>=(const vec<U, size>& rhs) noexcept;
+
+        template<class U>
+        constexpr auto compare(const vec<U, N>& rhs) const;
         template<class U, class Distance = distances::euclidean<T, U>>
-        DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<U, size>& rhs, Distance&& metric = {}) const {
-            return dla::distance(*this, rhs, std::move(metric));
-        }
+        DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<U, size>& rhs, Distance&& metric = {}) const;
         template<class Distance = distances::euclidean<T>>
-        DLA_OPTIMISTIC_CONSTEXPR auto length(Distance&& metric = {}) const {
-            return dla::length(*this, std::move(metric));
-        }
+        DLA_OPTIMISTIC_CONSTEXPR auto length(Distance&& metric = {}) const;
         template<class U>
-        constexpr auto dot(const vec<U, N>& rhs) const {
-            return dla::dot(*this, rhs);
-        }
+        constexpr auto dot(const vec<U, N>& rhs) const;
 
         // Conversion only for size 1 vectors
         template<std::size_t M = N, typename = std::enable_if_t<M == 1>>
-        constexpr operator const_reference() const noexcept { return this->x; }
+        constexpr operator const_reference() const noexcept;
         template<std::size_t M = N, typename = std::enable_if_t<M == 1>>
-        constexpr operator reference() noexcept { return this->x; }
+        constexpr operator reference() noexcept;
 
-		constexpr iterator begin() noexcept { return { *this, 0 }; }
-		constexpr const_iterator begin() const noexcept { return { *this, 0 }; }
-		constexpr iterator end() noexcept { return { *this, N }; }
-		constexpr const_iterator end() const noexcept { return { *this, N }; }
+		constexpr iterator begin() noexcept;
+		constexpr const_iterator begin() const noexcept;
+		constexpr iterator end() noexcept;
+		constexpr const_iterator end() const noexcept;
 
-		constexpr reverse_iterator rbegin() noexcept { return { *this, N - 1 }; }
-		constexpr const_reverse_iterator rbegin() const noexcept { return { *this, N - 1 }; }
-		constexpr reverse_iterator rend() noexcept { return { *this, -1 }; }
-		constexpr const_reverse_iterator rend() const noexcept { return { *this, -1 }; }
+		constexpr reverse_iterator rbegin() noexcept;
+		constexpr const_reverse_iterator rbegin() const noexcept;
+		constexpr reverse_iterator rend() noexcept;
+		constexpr const_reverse_iterator rend() const noexcept;
 
-		constexpr const_iterator cbegin() noexcept { return { *this, 0 }; }
-		constexpr const_iterator cend() const noexcept { return { *this, N }; }
-		constexpr const_reverse_iterator crbegin() noexcept { return { *this, N - 1 }; }
-		constexpr const_reverse_iterator crend() noexcept { return { *this, -1 }; }
+		constexpr const_iterator cbegin() noexcept;
+		constexpr const_iterator cend() const noexcept;
+		constexpr const_reverse_iterator crbegin() noexcept;
+		constexpr const_reverse_iterator crend() noexcept;
     };
 
     template<class T>
@@ -181,3 +156,5 @@ namespace dla {
     using bvec3 = tvec3<bool>;
     using bvec4 = tvec4<bool>;
 }
+
+#include "vector.inl"
