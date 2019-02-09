@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vector_elements.h"
+
 namespace dla::detail {
     template<class T>
     constexpr vec_elements<T, 1>::vec_elements(const T& px) noexcept(std::is_nothrow_copy_constructible_v<T>) :
@@ -26,15 +28,15 @@ namespace dla::detail {
         s(std::move(ps)) {}
 
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 1>::vec_elements(const vec_elements<U, 1>& val, init_coord_t) :
         x(static_cast<T>(val.x)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 1>::vec_elements(const vec_elements<U, 1>& val, init_color_t) :
         r(static_cast<T>(val.r)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 1>::vec_elements(const vec_elements<U, 1>& val, init_tex_t) :
         s(static_cast<T>(val.s)) {}
 
@@ -74,15 +76,15 @@ namespace dla::detail {
         s(std::move(ps)), t(std::move(pt)) {}
 
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 2>::vec_elements(const vec_elements<U, 2>& val, init_coord_t) :
         x(static_cast<T>(val.x)), y(static_cast<T>(val.y)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 2>::vec_elements(const vec_elements<U, 2>& val, init_color_t) :
         r(static_cast<T>(val.r)), g(static_cast<T>(val.y)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 2>::vec_elements(const vec_elements<U, 2>& val, init_tex_t) :
         s(static_cast<T>(val.s)), t(static_cast<T>(val.t)) {}
 
@@ -122,15 +124,15 @@ namespace dla::detail {
         s(std::move(ps)), t(std::move(pt)), p(std::move(pp)) {}
 
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val, init_coord_t) :
         x(static_cast<T>(val.x)), y(static_cast<T>(val.y)), z(static_cast<T>(val.z)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val, init_color_t) :
         r(static_cast<T>(val.r)), g(static_cast<T>(val.g)), b(static_cast<T>(val.b)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val, init_tex_t) :
         s(static_cast<T>(val.s)), t(static_cast<T>(val.t)), p(static_cast<T>(val.p)) {}
 
@@ -170,15 +172,15 @@ namespace dla::detail {
         s(std::move(ps)), t(std::move(pt)), p(std::move(pp)), q(std::move(pq)) {}
 
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 4>::vec_elements(const vec_elements<U, 4>& val, init_coord_t) :
         x(static_cast<T>(val.x)), y(static_cast<T>(val.y)), z(static_cast<T>(val.z)), w(static_cast<T>(val.w)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 4>::vec_elements(const vec_elements<U, 4>& val, init_color_t) :
         r(static_cast<T>(val.r)), g(static_cast<T>(val.g)), b(static_cast<T>(val.b)), a(static_cast<T>(val.a)) {}
     template<class T>
-    template<class U, class>
+    template<class U, typename>
     constexpr vec_elements<T, 4>::vec_elements(const vec_elements<U, 4>& val, init_tex_t) :
         s(static_cast<T>(val.s)), t(static_cast<T>(val.t)), p(static_cast<T>(val.p)), q(static_cast<T>(val.q)) {}
 }
