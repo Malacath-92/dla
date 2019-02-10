@@ -5,8 +5,10 @@
 #include "vector.h"
 #include "matrix_math.h"
 
-namespace dla {
+#include "detail/vector_elements.h"
+#include "detail/vector_iterator.h"
 
+namespace dla {
 #ifdef INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
     inline constexpr bool mat_index_operator_is_noexcept = false;
 #else
