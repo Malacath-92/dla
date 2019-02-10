@@ -82,11 +82,16 @@ namespace dla {
         return dla::compare(*this, rhs);
     }
 
-    // template<class T, std::size_t N, std::size_t M>
-    // template<class U>
-    // constexpr auto mat<T, N, M>::dot(const vec<U, N>& rhs) const {
-    //     return dla::dot(*this, rhs);
-    // }
+    template<class T, std::size_t N, std::size_t M>
+    template<class U, size_t L>
+    constexpr auto mat<T, N, M>::dot(const mat<U, M, L>& rhs) const {
+        return dla::dot(*this, rhs);
+    }
+    template<class T, std::size_t N, std::size_t M>
+    template<class U>
+    constexpr auto mat<T, N, M>::dot(const vec<U, M>& rhs) const {
+        return dla::dot(*this, rhs);
+    }
 
     // Conversion only for size 1 MATRIXs
     template<class T, std::size_t N, std::size_t M>

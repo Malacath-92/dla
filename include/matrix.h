@@ -89,6 +89,10 @@ namespace dla {
 
         template<class U>
         constexpr auto compare(const mat<U, N, M>& rhs) const;
+        template<class U, size_t L>
+        constexpr auto dot(const mat<U, M, L>& rhs) const;
+        template<class U>
+        constexpr auto dot(const vec<U, M>& rhs) const;
 
         // Conversion only for size 1x1 matrices
         template<std::size_t L = N * M, typename = std::enable_if_t<L == 1>>
