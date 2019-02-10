@@ -8,10 +8,6 @@
 #include "detail/vector_iterator.h"
 
 namespace dla {
-    inline constexpr init_coord_t init_coord = {};
-    inline constexpr init_color_t init_color = {};
-    inline constexpr init_tex_t init_tex = {};
-
 #ifdef INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
     inline constexpr bool vec_index_operator_is_noexcept = false;
 #else

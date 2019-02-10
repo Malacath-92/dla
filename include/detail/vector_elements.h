@@ -7,12 +7,6 @@
 //          - zero-initialization of constexpr variables
 //          - uninitialized memory at runtime for better performance
 
-namespace dla {
-    struct init_coord_t {};
-    struct init_color_t {};
-    struct init_tex_t {};
-}
-
 namespace dla::detail {
     template<class T, std::size_t N>
     struct vec_elements {
@@ -26,22 +20,12 @@ namespace dla::detail {
         constexpr vec_elements& operator=(const vec_elements&) = default;
         constexpr vec_elements& operator=(vec_elements&&) = default;
 
-        constexpr explicit vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
+        constexpr explicit vec_elements(const T& px) noexcept(std::is_nothrow_copy_constructible_v<T>);
         
-        constexpr explicit vec_elements(const T& px, init_coord_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr explicit vec_elements(const T& pr, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr explicit vec_elements(const T& ps, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-
-        constexpr explicit vec_elements(T&& px, init_coord_t = {}) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr explicit vec_elements(T&& pr, init_color_t) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr explicit vec_elements(T&& ps, init_tex_t) noexcept(std::is_nothrow_move_constructible_v<T>);
+        constexpr explicit vec_elements(T&& px) noexcept(std::is_nothrow_move_constructible_v<T>);
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 1>& val, init_coord_t = {});
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 1>& val, init_color_t);
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 1>& val, init_tex_t);
+        constexpr explicit vec_elements(const vec_elements<U, 1>& val);
 
         union { T x, r, s; };
     };
@@ -55,24 +39,12 @@ namespace dla::detail {
         
         constexpr explicit vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
         
-        constexpr vec_elements(const T& val, init_coord_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& val, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& val, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        
-        constexpr vec_elements(const T& px, const T& py, init_coord_t = {}) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& pr, const T& pg, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& ps, const T& pt, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
+        constexpr vec_elements(const T& px, const T& py) noexcept(std::is_nothrow_copy_constructible_v<T>);
 
-        constexpr vec_elements(T&& px, T&& py, init_coord_t = {}) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr vec_elements(T&& pr, T&& pg, init_color_t) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr vec_elements(T&& ps, T&& pt, init_tex_t) noexcept(std::is_nothrow_move_constructible_v<T>);
+        constexpr vec_elements(T&& px, T&& py) noexcept(std::is_nothrow_move_constructible_v<T>);
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 2>& val, init_coord_t = {});
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 2>& val, init_color_t);
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 2>& val, init_tex_t);
+        constexpr explicit vec_elements(const vec_elements<U, 2>& val);
         
         union { T x, r, s; };
         union { T y, g, t; };
@@ -87,24 +59,12 @@ namespace dla::detail {
         
         constexpr explicit vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
         
-        constexpr vec_elements(const T& val, init_coord_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& val, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& val, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        
-        constexpr vec_elements(const T& px, const T& py, const T& pz, init_coord_t = {}) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& pr, const T& pg, const T& pb, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& ps, const T& pt, const T& pp, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
+        constexpr vec_elements(const T& px, const T& py, const T& pz) noexcept(std::is_nothrow_copy_constructible_v<T>);
 
-        constexpr vec_elements(T&& px, T&& py, T&& pz, init_coord_t = {}) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr vec_elements(T&& pr, T&& pg, T&& pb, init_color_t) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr vec_elements(T&& ps, T&& pt, T&& pp, init_tex_t) noexcept(std::is_nothrow_move_constructible_v<T>);
+        constexpr vec_elements(T&& px, T&& py, T&& pz) noexcept(std::is_nothrow_move_constructible_v<T>);
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 3>& val, init_coord_t = {});
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 3>& val, init_color_t);
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 3>& val, init_tex_t);
+        constexpr explicit vec_elements(const vec_elements<U, 3>& val);
         
         union { T x, r, s; };
         union { T y, g, t; };
@@ -119,25 +79,13 @@ namespace dla::detail {
         constexpr vec_elements& operator=(vec_elements&&) = default;
 
         constexpr explicit vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
-
-        constexpr vec_elements(const T& val, init_coord_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& val, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& val, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
         
-        constexpr vec_elements(const T& px, const T& py, const T& pz, const T& pw, init_coord_t = {}) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& pr, const T& pg, const T& pb, const T& pa, init_color_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        constexpr vec_elements(const T& ps, const T& pt, const T& pp, const T& pq, init_tex_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
+        constexpr vec_elements(const T& px, const T& py, const T& pz, const T& pw) noexcept(std::is_nothrow_copy_constructible_v<T>);
 
-        constexpr vec_elements(T&& px, T&& py, T&& pz, T&& pw, init_coord_t = {}) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr vec_elements(T&& pr, T&& pg, T&& pb, T&& pa, init_color_t) noexcept(std::is_nothrow_move_constructible_v<T>);
-        constexpr vec_elements(T&& ps, T&& pt, T&& pp, T&& pq, init_tex_t) noexcept(std::is_nothrow_move_constructible_v<T>);
+        constexpr vec_elements(T&& px, T&& py, T&& pz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>);
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr explicit vec_elements(const vec_elements<U, 4>& val, init_coord_t = {});
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 4>& val, init_color_t);
-        template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-        constexpr vec_elements(const vec_elements<U, 4>& val, init_tex_t);
+        constexpr explicit vec_elements(const vec_elements<U, 4>& val);
         
         union { T x, r, s; };
         union { T y, g, t; };
