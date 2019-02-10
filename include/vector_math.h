@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 #include "vector_distance.h"
 
 namespace dla {
