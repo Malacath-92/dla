@@ -16,8 +16,8 @@ namespace dla {
 #endif
 
     template<class T, std::size_t N, std::size_t M>
-    struct mat : detail::vec_elements<vec<T, N>, M> {
-        using value_type = vec<T, N>;
+    struct mat : detail::vec_elements<vec<T, M>, N> {
+        using value_type = vec<T, M>;
         using size_type = std::size_t;
         using difference_type = std::ptrdiff_t;
         using reference = value_type&;
@@ -28,21 +28,21 @@ namespace dla {
 		using reverse_iterator = std::reverse_iterator<iterator>;
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-        using col_type = value_type;
-        using row_type = vec<T, M>;
+        using row_type = value_type;
+        using col_type = vec<T, N>;
 
         static constexpr std::size_t num_row = N;
         static constexpr std::size_t num_col = M;
-        static constexpr std::size_t col_size = N;
         static constexpr std::size_t row_size = M;
-        static constexpr std::size_t size = M;
+        static constexpr std::size_t col_size = N;
+        static constexpr std::size_t size = N;
 
         mat() = default;
-        using vec_elements = detail::vec_elements<vec<T, N>, M>;
+        using vec_elements = detail::vec_elements<vec<T, M>, N>;
         using vec_elements::vec_elements;
         constexpr explicit mat(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
         template<class U>
-        constexpr explicit mat(const mat<U, num_row, num_col>& val);
+        constexpr explicit mat(const mat<U, N, M>& val);
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
         constexpr reference operator[](std::size_t idx) noexcept(mat_index_operator_is_noexcept);
@@ -69,25 +69,25 @@ namespace dla {
         constexpr decltype(auto) operator>>=(const U& rhs) noexcept;
 
         template<class U>
-        constexpr decltype(auto) operator+=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator+=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator-=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator-=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator*=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator*=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator/=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator/=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator%=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator%=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator&=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator&=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator|=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator|=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator^=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator^=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator<<=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator<<=(const mat<U, N, M>& rhs) noexcept;
         template<class U>
-        constexpr decltype(auto) operator>>=(const mat<U, num_row, num_col>& rhs) noexcept;
+        constexpr decltype(auto) operator>>=(const mat<U, N, M>& rhs) noexcept;
 
         template<class U>
         constexpr auto compare(const mat<U, N, M>& rhs) const;
@@ -117,6 +117,51 @@ namespace dla {
 		constexpr const_reverse_iterator crbegin() noexcept;
 		constexpr const_reverse_iterator crend() noexcept;
     };
+
+    template<class T>
+    using tmat1 = mat<T, 1, 1>;
+    template<class T>
+    using tmat2 = mat<T, 2, 2>;
+    template<class T>
+    using tmat3 = mat<T, 3, 3>;
+    template<class T>
+    using tmat4 = mat<T, 4, 4>;
+
+    template<class T>
+    using tmat1x1 = mat<T, 1, 1>;
+    template<class T>
+    using tmat1x2 = mat<T, 1, 2>;
+    template<class T>
+    using tmat1x3 = mat<T, 1, 3>;
+    template<class T>
+    using tmat1x4 = mat<T, 1, 4>;
+
+    template<class T>
+    using tmat2x1 = mat<T, 2, 1>;
+    template<class T>
+    using tmat2x2 = mat<T, 2, 2>;
+    template<class T>
+    using tmat2x3 = mat<T, 2, 3>;
+    template<class T>
+    using tmat2x4 = mat<T, 2, 4>;
+
+    template<class T>
+    using tmat3x1 = mat<T, 3, 1>;
+    template<class T>
+    using tmat3x2 = mat<T, 3, 2>;
+    template<class T>
+    using tmat3x3 = mat<T, 3, 3>;
+    template<class T>
+    using tmat3x4 = mat<T, 3, 4>;
+
+    template<class T>
+    using tmat4x1 = mat<T, 4, 1>;
+    template<class T>
+    using tmat4x2 = mat<T, 4, 2>;
+    template<class T>
+    using tmat4x3 = mat<T, 4, 3>;
+    template<class T>
+    using tmat4x4 = mat<T, 4, 4>;
 }
 
 #include "matrix.inl"

@@ -8,17 +8,17 @@ namespace dla {
         vec_elements(col_type{val}) {}
     template<class T, std::size_t N, std::size_t M>
     template<class U>
-    constexpr mat<T, N, M>::mat(const mat<U, num_row, num_col>& val) :
+    constexpr mat<T, N, M>::mat(const mat<U, N, M>& val) :
         vec_elements(static_cast<const detail::vec_elements<vec<U, N>, M>&>(val)) {}
 
     template<class T, std::size_t N, std::size_t M>
     constexpr typename mat<T, N, M>::const_reference mat<T, N, M>::operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept) {
         if (idx == 0) return this->x;
-        else if constexpr (M > 1) {
+        else if constexpr (N > 1) {
             if (idx == 1) return this->y;
-            else if constexpr (M > 2) {
+            else if constexpr (N > 2) {
                 if (idx == 2) return this->z;
-                else if constexpr (M > 3) {
+                else if constexpr (N > 3) {
                     if (idx == 3) return this->w;
                 }
             }
@@ -60,7 +60,7 @@ namespace dla {
 #define MAKE_MATRIX_MATRIX_BINARY_ASSIGNEMT_OPERATOR(op) \
     template<class T, std::size_t N, std::size_t M> \
     template<class U> \
-    constexpr decltype(auto) mat<T, N, M>::operator op##=(const mat<U, num_row, num_col>& rhs) noexcept { \
+    constexpr decltype(auto) mat<T, N, M>::operator op##=(const mat<U, N, M>& rhs) noexcept { \
         *this = std::move(*this op rhs); \
         return *this; \
     }

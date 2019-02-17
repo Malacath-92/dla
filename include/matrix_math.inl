@@ -172,7 +172,7 @@ namespace dla {
         for (std::size_t i = 0; i < res_t::row_size; i++) {
             for (std::size_t j = 0; j < res_t::col_size; j++) {
                 for (std::size_t k = 0; k < M; k++) {
-                    res[i][j] += rhs[i][k] * lhs[k][j];
+                    res[i][j] += lhs[i][k] * rhs[k][j];
                 }                
             }
         }
@@ -183,9 +183,7 @@ namespace dla {
         using res_t = vec<decltype(std::declval<T>() * std::declval<U>()), N>;
         res_t res{};
         for (std::size_t i = 0; i < res_t::size; i++) {
-            for (std::size_t k = 0; k < M; k++) {
-                res[i] += lhs[k][i] * rhs[k];
-            }                
+            res[i] = dla::dot(lhs[i], rhs);
         }
         return res;
     }
@@ -194,7 +192,9 @@ namespace dla {
         using res_t = vec<decltype(std::declval<T>() * std::declval<U>()), M>;
         res_t res{};
         for (std::size_t i = 0; i < res_t::size; i++) {
-            res[i] = dla::dot(rhs[i], lhs);
+            for (std::size_t k = 0; k < N; k++) {
+                res[i] += lhs[k] * rhs[k][i];
+            }                
         }
         return res;
     }
