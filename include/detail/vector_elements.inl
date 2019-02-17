@@ -52,6 +52,7 @@ namespace dla::detail {
     constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val) :
         x(static_cast<T>(val.x)), y(static_cast<T>(val.y)), z(static_cast<T>(val.z)) {}
     
+    
     template<class T>
     constexpr vec_elements<T, 4>::vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
         x(val), y(val), z(val), w(val) {}
