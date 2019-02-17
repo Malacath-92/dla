@@ -1,4 +1,3 @@
-dlaAddTest(main)
 dlaAddTest(tuple_sort)
 dlaAddTest(tuple_find)
 
@@ -12,3 +11,5 @@ dlaAddTest(vector_compare)
 dlaAddTest(vector_conversion)
 dlaAddTest(vector_distance)
 dlaAddTest(vector_dot)
+
+dlaAddTest(matrix_dot)
