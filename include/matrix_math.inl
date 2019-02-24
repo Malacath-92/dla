@@ -169,11 +169,9 @@ namespace dla {
     constexpr auto dot(const mat<T, N, M>& lhs, const mat<U, M, L>& rhs) {
         using res_t = mat<decltype(std::declval<T>() * std::declval<U>()), N, L>;
         res_t res{};
-        for (std::size_t i = 0; i < res_t::row_size; i++) {
+		for (std::size_t i = 0; i < res_t::row_size; i++) {
             for (std::size_t j = 0; j < res_t::col_size; j++) {
-                for (std::size_t k = 0; k < M; k++) {
-                    res[i][j] += lhs[i][k] * rhs[k][j];
-                }                
+				res[i][j] = dla::dot(lhs[i], rhs.get_col(j));
             }
         }
         return res;
@@ -192,9 +190,7 @@ namespace dla {
         using res_t = vec<decltype(std::declval<T>() * std::declval<U>()), M>;
         res_t res{};
         for (std::size_t i = 0; i < res_t::size; i++) {
-            for (std::size_t k = 0; k < N; k++) {
-                res[i] += lhs[k] * rhs[k][i];
-            }                
+            res[i] = dla::dot(lhs, rhs.get_col(i));
         }
         return res;
     }
