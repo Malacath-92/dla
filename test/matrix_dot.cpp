@@ -15,7 +15,8 @@ int main() {
 	constexpr auto vector3 = ivec3(1, -3, 5);
 	constexpr auto vector4 = ivec4(-1, 3, -5, 7);
 
-	constexpr auto matrix3_dot_expected = imat3({33, 39, 47}, {429, 536, 675}, {-134, -169, -214});
+	constexpr auto matrix3_dot_expected = imat3({3, 6, 11}, {69, 140, 243}, {-24, -48, -82});
+	constexpr auto matrix3_other_dot_expected = imat3({33, 39, 47}, {429, 536, 675}, {-134, -169, -214});
 	constexpr auto matrix4_dot_expected = imat4({3, 6, 11, 14}, {69, 140, 243, 328}, {-24, -48, -82, -112}, {63, 126, 211, 294});
 	constexpr auto mat3_vec3_dot_expected = dla::ivec3(7, 86, -23);
 	constexpr auto vec3_mat3_dot_expected = dla::ivec3(-42, -72, -108);
@@ -29,7 +30,8 @@ int main() {
 	error += !std::is_same_v<imat3, decltype(dla::dot(imat3x4{}, imat4x3{}))>;
 	error += !std::is_same_v<imat4, decltype(dla::dot(imat4x3{}, imat3x4{}))>;
 
-	constexpr auto matrix3_dot = dla::dot(matrix3x4, matrix4x3);
+	constexpr auto matrix3_dot = dla::dot(matrix3, matrix3);
+	constexpr auto matrix3_other_dot = dla::dot(matrix3x4, matrix4x3);
 	constexpr auto matrix4_dot = dla::dot(matrix4x3, matrix3x4);
 	constexpr auto mat3_vec3_dot = dla::dot(matrix3, vector3);
 	constexpr auto vec3_mat3_dot = dla::dot(vector3, matrix3);
@@ -39,6 +41,7 @@ int main() {
 	constexpr auto vec4_mat_dot = dla::dot(vector4, matrix4x3);
 
 	error += matrix3_dot != matrix3_dot_expected;
+	error += matrix3_other_dot != matrix3_other_dot_expected;
 	error += matrix4_dot != matrix4_dot_expected;
 	error += mat3_vec3_dot != mat3_vec3_dot_expected;
 	error += vec3_mat3_dot != vec3_mat3_dot_expected;
