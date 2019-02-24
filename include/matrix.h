@@ -46,6 +46,8 @@ namespace dla {
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
         constexpr reference operator[](std::size_t idx) noexcept(mat_index_operator_is_noexcept);
+        constexpr const col_type get_col(std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
+        constexpr col_type get_col(std::size_t idx) noexcept(mat_index_operator_is_noexcept);
 
         template<class U>
         constexpr decltype(auto) operator+=(const U& rhs) noexcept;
