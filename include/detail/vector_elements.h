@@ -32,6 +32,8 @@ namespace dla::detail {
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
         constexpr explicit vec_elements(const vec_elements<U, 1>& val);
+        template<class U, typename = std::enable_if_t<std::is_assignable_v<T, U>>>
+        constexpr vec_elements& operator=(const vec_elements<U, 1>& val);
 
         union { value_type x, r, s; };
     };
@@ -54,6 +56,8 @@ namespace dla::detail {
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
         constexpr explicit vec_elements(const vec_elements<U, 2>& val);
+        template<class U, typename = std::enable_if_t<std::is_assignable_v<T, U>>>
+        constexpr vec_elements& operator=(const vec_elements<U, 2>& val);
         
         union { value_type x, r, s; };
         union { value_type y, g, t; };
@@ -67,7 +71,7 @@ namespace dla::detail {
         constexpr vec_elements(vec_elements&&) = default;
         constexpr vec_elements& operator=(const vec_elements&) = default;
         constexpr vec_elements& operator=(vec_elements&&) = default;
-        
+
         constexpr explicit vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
         
         constexpr vec_elements(const T& px, const T& py, const T& pz) noexcept(std::is_nothrow_copy_constructible_v<T>);
@@ -77,6 +81,8 @@ namespace dla::detail {
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
         constexpr explicit vec_elements(const vec_elements<U, 3>& val);
+        template<class U, typename = std::enable_if_t<std::is_assignable_v<T, U>>>
+        constexpr vec_elements& operator=(const vec_elements<U, 3>& val);
         
         union { value_type x, r, s; };
         union { value_type y, g, t; };
@@ -101,6 +107,8 @@ namespace dla::detail {
 
         template<class U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
         constexpr explicit vec_elements(const vec_elements<U, 4>& val);
+        template<class U, typename = std::enable_if_t<std::is_assignable_v<T, U>>>
+        constexpr vec_elements& operator=(const vec_elements<U, 4>& val);
         
         union { value_type x, r, s; };
         union { value_type y, g, t; };

@@ -10,7 +10,7 @@ namespace dla::detail {
 	public:
 		using type = T;
 
-		constexpr reference_wrapper(T& val) noexcept
+		constexpr explicit reference_wrapper(T& val) noexcept
 			: mPtr(std::addressof(val)) {}
 		constexpr reference_wrapper(const reference_wrapper&) noexcept = default;
 		

@@ -17,6 +17,14 @@ namespace dla::detail {
     constexpr vec_elements<T, 1>::vec_elements(const vec_elements<U, 1>& val) :
         x(static_cast<T>(val.x)) {}
 
+	template<class T>
+	template<class U, typename>
+	constexpr vec_elements<T, 1>& vec_elements<T, 1>::operator=(const vec_elements<U, 1>& val) {
+		static_cast<T>(x) = val.x;
+		return *this;
+	}
+
+
     
     template<class T>
     constexpr vec_elements<T, 2>::vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
@@ -36,6 +44,14 @@ namespace dla::detail {
     constexpr vec_elements<T, 2>::vec_elements(const vec_elements<U, 2>& val) :
         x(static_cast<T>(val.x)), y(static_cast<T>(val.y)) {}
 
+	template<class T>
+	template<class U, typename>
+	constexpr vec_elements<T, 2>& vec_elements<T, 2>::operator=(const vec_elements<U, 2>& val) {
+		static_cast<T>(x) = val.x;
+		static_cast<T>(y) = val.y;
+		return *this;
+	}
+
     
     template<class T>
     constexpr vec_elements<T, 3>::vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
@@ -50,10 +66,19 @@ namespace dla::detail {
 	constexpr vec_elements<T, 3>::vec_elements(T&& px, T&& py, T&& pz) noexcept(std::is_nothrow_move_constructible_v<T>) :
         x(std::move(px)), y(std::move(py)), z(std::move(pz)) {}
 
-    template<class T>
-    template<class U, typename>
-    constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val) :
-        x(static_cast<T>(val.x)), y(static_cast<T>(val.y)), z(static_cast<T>(val.z)) {}
+	template<class T>
+	template<class U, typename>
+	constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val) :
+		x(static_cast<T>(val.x)), y(static_cast<T>(val.y)), z(static_cast<T>(val.z)) {}
+
+	template<class T>
+	template<class U, typename>
+	constexpr vec_elements<T, 3>& vec_elements<T, 3>::operator=(const vec_elements<U, 3>& val) {
+		static_cast<T>(x) = val.x;
+		static_cast<T>(y) = val.y;
+		static_cast<T>(z) = val.z;
+		return *this;
+	}
     
     
     template<class T>
@@ -73,4 +98,14 @@ namespace dla::detail {
     template<class U, typename>
     constexpr vec_elements<T, 4>::vec_elements(const vec_elements<U, 4>& val) :
         x(static_cast<T>(val.x)), y(static_cast<T>(val.y)), z(static_cast<T>(val.z)), w(static_cast<T>(val.w)) {}
+
+	template<class T>
+	template<class U, typename>
+	constexpr vec_elements<T, 4>& vec_elements<T, 4>::operator=(const vec_elements<U, 4>& val) {
+		static_cast<T>(x) = val.x;
+		static_cast<T>(y) = val.y;
+		static_cast<T>(z) = val.z;
+		static_cast<T>(w) = val.w;
+		return *this;
+	}
 }
