@@ -102,6 +102,13 @@ namespace dla {
 	template<std::size_t M, typename>
     constexpr vec<T, N>::operator reference() noexcept { return this->x; }
 
+    // Decay only for vectors of references
+    template<class T, std::size_t N>
+    template<class U, typename>
+    constexpr vec<U, N> vec<T, N>::decay() const {
+        return vec<U, N>{ *this };
+    }
+
     template<class T, std::size_t N>
     constexpr typename vec<T, N>::iterator vec<T, N>::begin() noexcept { return { *this, 0 }; }
     template<class T, std::size_t N>

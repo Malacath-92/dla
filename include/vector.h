@@ -98,6 +98,10 @@ namespace dla {
         template<std::size_t M = N, typename = std::enable_if_t<M == 1>>
         constexpr operator reference() noexcept;
 
+        // Decay only for vectors of references
+        template<class U = value_type, typename = std::enable_if_t<!std::is_same_v<U, T>>>
+        constexpr vec<U, N> decay() const;
+
 		constexpr iterator begin() noexcept;
 		constexpr const_iterator begin() const noexcept;
 		constexpr iterator end() noexcept;
