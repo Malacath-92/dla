@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdexcept>
+#include <cstddef>
+#include <type_traits>
 
 #include "vector_math.h"
 
@@ -16,7 +18,7 @@ namespace dla {
 
     template<class T, std::size_t N>
     struct vec : detail::vec_elements<T, N> {
-        using value_type = T;
+        using value_type = std::remove_reference_t<T>;
         using size_type = std::size_t;
         using difference_type = std::ptrdiff_t;
         using reference = value_type&;

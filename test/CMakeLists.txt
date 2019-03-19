@@ -11,5 +11,6 @@ dlaAddTest(vector_compare)
 dlaAddTest(vector_conversion)
 dlaAddTest(vector_distance)
 dlaAddTest(vector_dot)
+dlaAddTest(vector_reference)
 
 dlaAddTest(matrix_dot)
