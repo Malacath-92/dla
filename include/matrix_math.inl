@@ -169,9 +169,10 @@ namespace dla {
     constexpr auto dot(const mat<T, N, M>& lhs, const mat<U, M, L>& rhs) {
         using res_t = mat<decltype(std::declval<T>() * std::declval<U>()), N, L>;
         res_t res{};
-		for (std::size_t i = 0; i < res_t::row_size; i++) {
-            for (std::size_t j = 0; j < res_t::col_size; j++) {
-				res[i][j] = dla::dot(lhs[i], rhs.get_col(j));
+        for (std::size_t j = 0; j < res_t::col_size; j++) {
+            const auto col = rhs.get_col(j);
+    		for (std::size_t i = 0; i < res_t::row_size; i++) {
+				res[i][j] = dla::dot(lhs[i], col);
             }
         }
         return res;
