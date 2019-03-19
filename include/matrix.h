@@ -31,6 +31,9 @@ namespace dla {
         using row_type = value_type;
         using col_type = vec<T, N>;
 
+        using const_col_reference = vec<const T&, N>;
+        using col_reference = vec<T&, N>;
+
         static constexpr std::size_t num_row = N;
         static constexpr std::size_t num_col = M;
         static constexpr std::size_t row_size = M;
@@ -46,8 +49,8 @@ namespace dla {
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
         constexpr reference operator[](std::size_t idx) noexcept(mat_index_operator_is_noexcept);
-        constexpr const col_type get_col(std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
-        constexpr col_type get_col(std::size_t idx) noexcept(mat_index_operator_is_noexcept);
+        constexpr const_col_reference get_col(std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
+        constexpr col_reference get_col(std::size_t idx) noexcept(mat_index_operator_is_noexcept);
 
         template<class U>
         constexpr decltype(auto) operator+=(const U& rhs) noexcept;

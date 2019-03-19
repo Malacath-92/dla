@@ -24,11 +24,11 @@ namespace dla {
             throw std::out_of_range("Vector index out of rance!");
         }
 
-#	    ifdef _MSVC_LANG
+#   ifdef _MSVC_LANG
         __assume(false);
-#	    else
+#   else
         __builtin_unreachable();
-#	    endif
+#   endif
     }
     template<class T, std::size_t N>
     constexpr typename vec<T, N>::reference vec<T, N>::operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept) {
