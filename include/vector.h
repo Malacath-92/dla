@@ -34,6 +34,7 @@ namespace dla {
         vec() = default;
         using vec_elements = detail::vec_elements<T, N>;
         using vec_elements::vec_elements;
+        using vec_elements::operator=;
         template<class U>
         constexpr explicit vec(const vec<U, N>& val);
 
