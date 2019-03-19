@@ -20,7 +20,7 @@ namespace dla::detail {
 	template<class T>
 	template<class U, typename>
 	constexpr vec_elements<T, 1>& vec_elements<T, 1>::operator=(const vec_elements<U, 1>& val) {
-		static_cast<std::add_lvalue_reference_t<T>>(x) = val.x;
+		x = val.x;
 		return *this;
 	}
 
@@ -47,8 +47,8 @@ namespace dla::detail {
 	template<class T>
 	template<class U, typename>
 	constexpr vec_elements<T, 2>& vec_elements<T, 2>::operator=(const vec_elements<U, 2>& val) {
-		static_cast<std::add_lvalue_reference_t<T>>(x) = val.x;
-		static_cast<std::add_lvalue_reference_t<T>>(y) = val.y;
+		x = val.x;
+		y = val.y;
 		return *this;
 	}
 
@@ -74,9 +74,9 @@ namespace dla::detail {
 	template<class T>
 	template<class U, typename>
 	constexpr vec_elements<T, 3>& vec_elements<T, 3>::operator=(const vec_elements<U, 3>& val) {
-		static_cast<std::add_lvalue_reference_t<T>>(x) = val.x;
-		static_cast<std::add_lvalue_reference_t<T>>(y) = val.y;
-		static_cast<std::add_lvalue_reference_t<T>>(z) = val.z;
+		x = val.x;
+		y = val.y;
+		z = val.z;
 		return *this;
 	}
     
@@ -102,10 +102,10 @@ namespace dla::detail {
 	template<class T>
 	template<class U, typename>
 	constexpr vec_elements<T, 4>& vec_elements<T, 4>::operator=(const vec_elements<U, 4>& val) {
-		static_cast<std::add_lvalue_reference_t<T>>(x) = val.x;
-		static_cast<std::add_lvalue_reference_t<T>>(y) = val.y;
-		static_cast<std::add_lvalue_reference_t<T>>(z) = val.z;
-		static_cast<std::add_lvalue_reference_t<T>>(w) = val.w;
+		x = val.x;
+		y = val.y;
+		z = val.z;
+		w = val.w;
 		return *this;
 	}
 }

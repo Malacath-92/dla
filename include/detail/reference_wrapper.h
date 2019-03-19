@@ -3,21 +3,30 @@
 #include <type_traits>
 
 namespace dla::detail {
-	// Implementation for reference_wrapper directly from https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper
-	// Stripped off of the calling operator, magic and made into a literal type
+	// Dumbed down version of std::reference_wrapper which has better reference-semantics
+	// Required only to be able to use references in a union
 	template <class T>
 	class reference_wrapper {
 	public:
-		using type = T;
-
 		constexpr explicit reference_wrapper(T& val) noexcept
 			: mPtr(std::addressof(val)) {}
-		constexpr reference_wrapper(const reference_wrapper&) noexcept = default;
-		
-		constexpr reference_wrapper& operator=(const reference_wrapper& x) noexcept = default;
 
-		constexpr operator T& () const noexcept { return *mPtr; }
-		constexpr T& get() const noexcept { return *mPtr; }
+		constexpr reference_wrapper(reference_wrapper&&) noexcept = default;
+		constexpr reference_wrapper(const reference_wrapper&) noexcept = default;
+		constexpr reference_wrapper& operator=(reference_wrapper&&) noexcept = default;
+		constexpr reference_wrapper& operator=(const reference_wrapper&) noexcept = default;
+
+		constexpr reference_wrapper& operator=(T&& val) {
+			*mPtr = std::move(val);
+			return *this;
+		}
+		constexpr reference_wrapper& operator=(const T& val) {
+			*mPtr = val;
+			return *this;
+		}
+
+		constexpr operator T& () noexcept { return *mPtr; }
+		constexpr operator const T& () const noexcept { return *mPtr; }
 
 	private:
 		T* mPtr;
