@@ -9,7 +9,7 @@
 #include "detail/vector_iterator.h"
 
 namespace dla {
-#ifdef INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
+#ifdef DLA_INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
     inline constexpr bool mat_index_operator_is_noexcept = false;
 #else
     inline constexpr bool mat_index_operator_is_noexcept = true;
