@@ -1,4 +1,5 @@
 # Dimensional analysis and linear algebra (dla)
+[![Build status](https://ci.appveyor.com/api/projects/status/jh4oxlm6i85ltqbm?svg=true)](https://ci.appveyor.com/project/Malacath-92/dla)
 
 **The library is a work in progress.**
 
