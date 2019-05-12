@@ -13,6 +13,7 @@ matrix:
             - g++-8
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+        - GCOV_SCRIPT="bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8"
     
     - os: linux
       addons:
@@ -25,6 +26,7 @@ matrix:
             - g++-8 # Install g++ stdlibc++
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
+        - GCOV_SCRIPT="echo "GCov not available for clang"
 
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -32,6 +34,7 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. 
+  - cmake .. -DENABLE_CODE_COVERAGE=TRUE
   - cmake --build . -- -j2 
   - ctest
+  - eval "${GCOV_SCRIPT}"
