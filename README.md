@@ -1,6 +1,7 @@
 # Dimensional analysis and linear algebra (dla)
 [![Build status](https://ci.appveyor.com/api/projects/status/jh4oxlm6i85ltqbm?svg=true)](https://ci.appveyor.com/project/Malacath-92/dla)
 [![Build Status](https://travis-ci.org/Malacath-92/dla.svg?branch=master)](https://travis-ci.org/Malacath-92/dla)
+[![codecov](https://codecov.io/gh/Malacath-92/dla/branch/master/graph/badge.svg)](https://codecov.io/gh/Malacath-92/dla)
 
 **The library is a work in progress.**
 
