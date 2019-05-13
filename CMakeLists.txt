@@ -11,7 +11,7 @@ if(GNU)
 
   if(ENABLE_CODE_COVERAGE)
     link_libraries(gcov)
-    add_compile_options(--coverage -g -O0)
+    add_compile_options(--coverage -g -O0 -fno-elide-constructors -fno-inline -fno-inline-small-functions -fno-default-inline)
   endif()
 endif()
 
