@@ -10,8 +10,21 @@ if(GNU)
   option(ENABLE_CODE_COVERAGE "Enable code coverage for gcc" FALSE)
 
   if(ENABLE_CODE_COVERAGE)
-    link_libraries(gcov)
-    add_compile_options(--coverage -g -O0 -fno-elide-constructors -fno-inline -fno-inline-small-functions -fno-default-inline)
+    # Gather files to cover
+    file(GLOB_RECURSE COVERALLS_FILES "${CMAKE_SOURCE_DIR}/*.h" "${CMAKE_SOURCE_DIR}/*.inl")
+
+    # Download Coveralls setup script
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/Coveralls.cmake")
+      message(STATUS "Downloading Coveralls.cmake from https://github.com/JoakimSoderberg/coveralls-cmake")
+      file(DOWNLOAD "https://raw.githubusercontent.com/JoakimSoderberg/coveralls-cmake/master/cmake/Coveralls.cmake" "${CMAKE_BINARY_DIR}/Coveralls.cmake")
+      file(DOWNLOAD "https://raw.githubusercontent.com/JoakimSoderberg/coveralls-cmake/master/cmake/CoverallsClear.cmake" "${CMAKE_BINARY_DIR}/CoverallsClear.cmake")
+      file(DOWNLOAD "https://raw.githubusercontent.com/JoakimSoderberg/coveralls-cmake/master/cmake/CoverallsGenerateGcov.cmake" "${CMAKE_BINARY_DIR}/CoverallsGenerateGcov.cmake")
+    endif()
+
+    # Setup and enable Coveralls
+    include(${CMAKE_BINARY_DIR}/Coveralls.cmake)
+    coveralls_turn_on_coverage()
+    coveralls_setup("${COVERALLS_FILES}" ON ${CMAKE_BINARY_DIR})
   endif()
 endif()
 
