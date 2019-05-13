@@ -13,8 +13,6 @@ matrix:
             - g++-8
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
-        - CODECOV_SCRIPT="bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8"
-        - COVERALLS_SCRIPT="export COVERALLS_SERVICE_NAME=travis-ci && export COVERALLS_REPO_TOKEN=l6Q2xLZ3ZP4CegZ9oGtqKNgqHh2aXRkRK && cmake --build . --target coveralls"
     
     - os: linux
       addons:
@@ -27,8 +25,6 @@ matrix:
             - g++-8 # Install g++ stdlibc++
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
-        - CODECOV_SCRIPT="echo "Code coverage not available for clang"
-        - COVERALLS_SCRIPT="echo "Code coverage not available for clang"
 
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -39,5 +35,3 @@ script:
   - cmake .. -DENABLE_CODE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=Debug
   - cmake --build . -- -j2 
   - ctest
-  - eval "${CODECOV_SCRIPT}"
-  - eval "${COVERALLS_SCRIPT}"
