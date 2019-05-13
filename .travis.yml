@@ -34,7 +34,7 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DENABLE_CODE_COVERAGE=TRUE
+  - cmake .. -DENABLE_CODE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=Debug
   - cmake --build . -- -j2 
   - ctest
   - eval "${GCOV_SCRIPT}"
