@@ -106,18 +106,22 @@ namespace dla {
 
     template<class T, class U, std::size_t N, std::size_t M>
     constexpr auto operator==(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept {
-        auto res = lhs[0] == rhs[0];
+		if (lhs[0] != rhs[0]) {
+			return false;
+		}
         if constexpr (N > 1) {
             auto lhs_it = lhs.begin() + 1;
             auto rhs_it = rhs.begin() + 1;
             const auto lhs_it_end = lhs.end();
             for (; lhs_it != lhs_it_end;) {
-                res &= *lhs_it == *rhs_it;
+				if (*lhs_it != *rhs_it) {
+					return false;
+				}
                 ++lhs_it;
                 ++rhs_it;
             }
         }
-        return res;
+        return true;
     }
     template<class T, class U, std::size_t N, std::size_t M>
     constexpr auto operator!=(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept {
