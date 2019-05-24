@@ -11,16 +11,23 @@ image:
 
 clone_folder: c:/dla/
 
-build_script:
-- cmd: >-
+before_build:
+- ps: >-
+    if ($env:PLATFORM -eq "x86") {
+        $env:generator="Visual Studio 15 2017"
+    }
+    else {
+        $env:generator="Visual Studio 15 2017 Win64"
+    }
+
     mkdir build
     
     cd build
     
-    cmake c:/dla/ -G "Visual Studio 15 2017 Win64"
-    
-    cmake --build . --config "Debug"
+    cmake c:/dla/ -G $env:generator
+
+build_script:
+- cmake --build . --config %CONFIGURATION%
 
 test_script:
-- cmd: >-
-    ctest
+- ctest -C %CONFIGURATION%
