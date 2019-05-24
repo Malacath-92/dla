@@ -54,6 +54,6 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DENABLE_CODE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   - cmake --build . -- -j2 
   - ctest
