@@ -12,7 +12,17 @@ matrix:
           packages:
             - g++-8
       env:
-        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8 && BUILD_TYPE=Release"
+        
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8 && BUILD_TYPE=Debug"
     
     - os: linux
       addons:
@@ -22,9 +32,21 @@ matrix:
             - llvm-toolchain-xenial-8
           packages:
             - clang-8
-            - g++-8 # Install g++ stdlibc++
+            - g++-8 # Install g++ for stdlibc++
       env:
-        - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
+        - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8 && BUILD_TYPE=Release"
+    
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-8
+          packages:
+            - clang-8
+            - g++-8 # Install g++ for stdlibc++
+      env:
+        - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8 && BUILD_TYPE=Debug"
 
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -32,6 +54,6 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DENABLE_CODE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=Debug
+  - cmake .. -DENABLE_CODE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   - cmake --build . -- -j2 
   - ctest
