@@ -27,11 +27,7 @@ namespace dla::detail {
 	template<class charT, class traits = std::char_traits<charT>>
 	constexpr int compare(const charT* lhs, std::size_t lhsLen,
 						  const charT* rhs, std::size_t rhsLen) {
-#	ifdef _MSVC_LANG
-		if(lhs != rhs) {
-#	else
-		{ // gcc and clang do not allow comparison of charT* in a constant expression
-#	endif
+		{
 			const int result = traits::compare(lhs, rhs, std::min(lhsLen, rhsLen));
 			if(result != 0)
 				return result;
