@@ -26,11 +26,13 @@ TEST_CASE("Test for string conversion of composite unit types", "[to_string_comp
 
 TEST_CASE("Test for string conversion of vector types", "[to_string_vector]") {
 	REQUIRE(to_string(ivec1{ 1 }) == "1");
-	REQUIRE(to_string(ivec2{ 1, 2 }) == "(1, 2)");
-	REQUIRE(to_string(ivec3{ 1, 2, 3 }) == "(1, 2, 3)");
-	REQUIRE(to_string(ivec4{ 1, 2, 3, 4 }) == "(1, 2, 3, 4)");
+	REQUIRE(to_string(ivec2{ 1, 2 }) == "{ 1, 2 }");
+	REQUIRE(to_string(ivec3{ 1, 2, 3 }) == "{ 1, 2, 3 }");
+	REQUIRE(to_string(ivec4{ 1, 2, 3, 4 }) == "{ 1, 2, 3, 4 }");
 }
 
 TEST_CASE("Test for string conversion of matrix types", "[to_string_matrix]") {
 	REQUIRE(to_string(tmat1<int>{ 1 }) == "1");
+	REQUIRE(to_string(tmat2<int>{ { 1, 2 }, { 3, 4 } }) == "{ { 1, 2 }, { 3, 4 } }");
+	REQUIRE(to_string(tmat3<int>{ { 1, 2, 5 }, { 3, 4, 6 }, { 7, 8, 9 } }) == "{ { 1, 2, 5 }, { 3, 4, 6 }, { 7, 8, 9 } }");
 }

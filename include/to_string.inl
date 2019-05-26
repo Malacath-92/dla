@@ -4,6 +4,8 @@
 #include "detail/tuple_sort.h"
 #include "to_string.h"
 
+#include <numeric>
+
 namespace dla {
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
 	struct base_unit;
@@ -74,14 +76,32 @@ namespace dla {
 
     template<class T, std::size_t N>
     struct to_string_impl<vec<T, N>> {
-        static auto call(const vec<T, N>&) {
-            return "vec";
+        static auto call(const vec<T, N>& val) {
+            if constexpr (N == 1) {
+                return std::to_string(val.x);
+            }
+            else {
+				std::string list = std::to_string(val.x);
+                for (std::size_t i = 1; i < N; i++) {
+                    list += ", " + std::to_string(val[i]);
+                }
+                return "{ " + list + " }";
+            }
         }
     };
     template<class T, std::size_t N, std::size_t M>
     struct to_string_impl<mat<T, N, M>> {
-        static auto call(const mat<T, N, M>&) {
-            return "mat";
+        static auto call(const mat<T, N, M>& val) {
+			if constexpr(N == 1 && M == 1) {
+				return std::to_string(val.x.x);
+			}
+			else {
+				std::string list = to_string(val.x);
+				for(std::size_t i = 1; i < N; i++) {
+					list += ", " + to_string(val[i]);
+				}
+				return "{ " + list + " }";
+			}
         }
     };
 
