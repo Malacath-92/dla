@@ -34,9 +34,9 @@ namespace dla::detail {
 	template<class... Units>
 	struct sorted_comp_unit {
 	private:
-		template<class lTag, class rTag>
+		template<class lUnit, class rUnit>
 		struct sorting_predicate {
-			static constexpr auto comp = compare(lTag::tag::id, rTag::tag::id);
+			static constexpr auto comp = compare(lUnit::tag::id, rUnit::tag::id);
 			static constexpr bool value = comp < 0;
 			static_assert(comp != 0, "Duplicate tag found in units!");
 		};
