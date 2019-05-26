@@ -2,6 +2,7 @@ dlaAddTest(tuple_sort)
 dlaAddTest(tuple_find)
 
 dlaAddTest(utility_packed)
+dlaAddTest(type_traits)
 
 dlaAddTest(units_literals)
 dlaAddTest(units_inverse)
