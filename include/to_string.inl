@@ -1,5 +1,7 @@
 #pragma once
 
+#include "detail/detail.h"
+#include "detail/tuple_sort.h"
 #include "to_string.h"
 
 namespace dla {
@@ -13,21 +15,60 @@ namespace dla {
     template<class T, std::size_t N, std::size_t M>
     struct mat;
 
-    // TODO: Make a real implementation for to_string
+    // TODO: Make a clearer implementation for to_string
     template<class T>
     struct to_string_impl {
+		template<class T>
+		struct unit_to_string;
+	    template<class Tag, std::intmax_t Num, std::intmax_t Den>
+        struct unit_to_string<base_unit<Tag, Num, Den>> {
+            static std::string call() {
+                return " " + std::string(Tag::symbol)
+                    + "^(" + (Num * Den < 0 ? "-" : "")
+                    + std::to_string(std::abs(Num)) + "/" + std::to_string(std::abs(Den)) + ")";
+            }
+        };
+	    template<class Tag, std::intmax_t Num>
+        struct unit_to_string<base_unit<Tag, Num, 1>> {
+            static std::string call() {
+                return " " + std::string(Tag::symbol) + "^" + (Num < 0 ? "-" : "") + std::to_string(std::abs(Num));
+            }
+        };
+	    template<class Tag, std::intmax_t Den>
+        struct unit_to_string<base_unit<Tag, 1, Den>> {
+            static std::string call() {
+                return " " + std::string(Tag::symbol)
+                    + "^(" + (Den < 0 ? "-" : "")
+                    + "1/" + std::to_string(std::abs(Den)) + ")";
+            }
+        };
+	    template<class Tag>
+        struct unit_to_string<base_unit<Tag, 1, 1>> {
+            static std::string call() {
+                return " " + std::string(Tag::symbol);
+            }
+        };
         static auto call(const T& val) = delete;
     };
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
     struct to_string_impl<base_unit<Tag, Num, Den>> {
-        static auto call(const base_unit<Tag, Num, Den>&) {
-            return "base_unit";
+        static auto call(const base_unit<Tag, Num, Den>& val) {
+            return std::to_string(float(val)) + to_string_impl<int>::unit_to_string<base_unit<Tag, Num, Den>>::call();
         }
     };
 	template<class... Units>
     struct to_string_impl<comp_unit<Units...>> {
-        static auto call(const comp_unit<Units...>&) {
-            return "comp_unit";
+	private:
+		template<class lUnit, class rUnit>
+		struct sorting_predicate {
+			static constexpr bool value = lUnit::ratio::num * rUnit::ratio::den < rUnit::ratio::num * lUnit::ratio::den;
+		};
+
+        using sortedUnits = detail::tuple_selection_sort_t<sorting_predicate, std::tuple<Units...>>;
+    public:
+        static auto call(const comp_unit<Units...>& val) {
+			return std::to_string(float(val))
+				+ std::apply([](auto... v) { return (to_string_impl<int>::unit_to_string<decltype(v)>::call() + ...); }, sortedUnits{});
         }
     };
 

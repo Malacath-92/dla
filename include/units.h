@@ -14,10 +14,14 @@ namespace dla {
 	struct comp_unit;
 
 	namespace tag {
-	#define MAKE_TAG(tag) struct tag { static constexpr const char* id = #tag; }
-		MAKE_TAG(length);
-		MAKE_TAG(time);
-		MAKE_TAG(weight);
+	#define MAKE_TAG(tagId, tagSymbol) \
+		struct tagId { \
+			static constexpr const char* id = #tagId; \
+			static constexpr const char* symbol = #tagSymbol; \
+		}
+		MAKE_TAG(length, m);
+		MAKE_TAG(time, s);
+		MAKE_TAG(weight, kg);
 	#undef MAKE_TAG
 	}
 
