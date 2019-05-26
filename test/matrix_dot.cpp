@@ -1,5 +1,6 @@
 #include <vector.h>
 #include <matrix.h>
+#include <to_string.h>
 
 #include <type_traits>
 
@@ -43,7 +44,7 @@ TEST_CASE("Compute dot productes of matrices with matrices/vectors", "[matrix_do
 	REQUIRE(std::is_same_v<imat4, decltype(dla::dot(imat4x3{}, imat3x4{}))>);
 
 	REQUIRE(matrix3_dot == matrix3_dot_expected);
-	REQUIRE(matrix3_other_dot != matrix3_other_dot_expected);
+	REQUIRE(matrix3_other_dot == matrix3_other_dot_expected);
 	REQUIRE(matrix4_dot == matrix4_dot_expected);
 	REQUIRE(mat3_vec3_dot == mat3_vec3_dot_expected);
 	REQUIRE(vec3_mat3_dot == vec3_mat3_dot_expected);
