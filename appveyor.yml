@@ -19,6 +19,8 @@ before_build:
     else {
         $env:generator="Visual Studio 15 2017 Win64"
     }
+    
+    pip install --user conan
 
     mkdir build
     

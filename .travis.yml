@@ -48,6 +48,9 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8 && BUILD_TYPE=Debug"
 
+install:
+    - pip install --user conan
+
 before_install:
     - eval "${MATRIX_EVAL}"
 
