@@ -20,6 +20,8 @@ before_build:
         $env:generator="Visual Studio 15 2017 Win64"
     }
     
+    $ENV:PATH="$ENV:PATH;C:\Users\appveyor\AppData\Roaming\Python\Scripts"
+    
     pip install --user conan
 
     mkdir build
