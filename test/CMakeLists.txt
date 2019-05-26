@@ -3,6 +3,7 @@ dlaAddTest(tuple_find)
 
 dlaAddTest(utility_packed)
 dlaAddTest(type_traits)
+dlaAddTest(to_string)
 
 dlaAddTest(units_literals)
 dlaAddTest(units_inverse)
