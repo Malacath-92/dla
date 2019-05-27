@@ -20,7 +20,7 @@ namespace dla {
     // TODO: Make a clearer implementation for to_string
     template<class T>
     struct to_string_impl {
-		template<class T>
+		template<class U>
 		struct unit_to_string;
 	    template<class Tag, std::intmax_t Num, std::intmax_t Den>
         struct unit_to_string<base_unit<Tag, Num, Den>> {
