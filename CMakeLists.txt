@@ -24,7 +24,12 @@ endif()
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_check(REQUIRED)
 conan_cmake_run(CONANFILE "conanfile.txt" CMAKE_TARGETS BUILD missing)
-conan_basic_setup(NO_OUTPUT_DIRS)
+
+if (MSVC)
+  conan_basic_setup()
+else()
+  conan_basic_setup(NO_OUTPUT_DIRS)
+endif()
 
 enable_testing()
 function(dlaAddTest NAME)
