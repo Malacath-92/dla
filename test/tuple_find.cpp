@@ -1,18 +1,19 @@
-#include "detail/tuple_find.h"
+#include <detail/tuple_find.h>
 
-int main() {
-	using input_tuple_t = std::tuple<char, int, char, double, char, float>;
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 
-	int error = 0;
+using namespace dla::detail;
+using input_tuple_t = std::tuple<char, int, char, double, char, float>;
 
-	constexpr std::size_t double_idx = dla::detail::tuple_find_v<double, input_tuple_t>;
-	constexpr std::size_t char_idx = dla::detail::tuple_find_v<char, input_tuple_t>;
-	constexpr std::size_t float_idx = dla::detail::tuple_find_v<float, input_tuple_t>;
-	constexpr std::size_t char_star_idx = dla::detail::tuple_find_v<char*, input_tuple_t>;
-	error += double_idx != 3;
-	error += char_idx != 0;
-	error += float_idx != 5;
-	error += char_star_idx != dla::detail::tuple_find_npos;
+constexpr std::size_t double_idx = tuple_find_v<double, input_tuple_t>;
+constexpr std::size_t char_idx = tuple_find_v<char, input_tuple_t>;
+constexpr std::size_t float_idx = tuple_find_v<float, input_tuple_t>;
+constexpr std::size_t char_star_idx = tuple_find_v<char*, input_tuple_t>;
 
-	return error;
+TEST_CASE("Find elements in a tuple", "[tuple_find]") {
+	REQUIRE(double_idx == 3);
+	REQUIRE(char_idx == 0);
+	REQUIRE(float_idx == 5);
+	REQUIRE(char_star_idx == tuple_find_npos);
 }

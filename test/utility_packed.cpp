@@ -3,43 +3,44 @@
 #include "units.h"
 #include "utility.h"
 
-int main() {
-	using namespace dla;
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 
-    static_assert(is_packed_v<length_unit>);
-    static_assert(is_packed_v<velocity_unit>);
-    static_assert(is_packed_v<force_unit>);
+using namespace dla;
 
-    static_assert(is_packed_v<vec1>);
-    static_assert(is_packed_v<vec2>);
-    static_assert(is_packed_v<vec3>);
-    static_assert(is_packed_v<vec4>);
+TEST_CASE("Test if vector and matrix types are packed tightly", "[utility_packed]") {
+    REQUIRE(is_packed_v<length_unit>);
+    REQUIRE(is_packed_v<velocity_unit>);
+    REQUIRE(is_packed_v<force_unit>);
 
-    static_assert(is_packed_v<tvec1<length_unit>>);
-    static_assert(is_packed_v<tvec2<length_unit>>);
-    static_assert(is_packed_v<tvec3<length_unit>>);
-    static_assert(is_packed_v<tvec4<length_unit>>);
+    REQUIRE(is_packed_v<vec1>);
+    REQUIRE(is_packed_v<vec2>);
+    REQUIRE(is_packed_v<vec3>);
+    REQUIRE(is_packed_v<vec4>);
 
-    static_assert(is_packed_v<tvec1<velocity_unit>>);
-    static_assert(is_packed_v<tvec2<velocity_unit>>);
-    static_assert(is_packed_v<tvec3<velocity_unit>>);
-    static_assert(is_packed_v<tvec4<velocity_unit>>);
+    REQUIRE(is_packed_v<tvec1<length_unit>>);
+    REQUIRE(is_packed_v<tvec2<length_unit>>);
+    REQUIRE(is_packed_v<tvec3<length_unit>>);
+    REQUIRE(is_packed_v<tvec4<length_unit>>);
 
-    static_assert(is_packed_v<tmat1<short>>);
-    static_assert(is_packed_v<tmat1<float>>);
-    static_assert(is_packed_v<tmat1<double>>);
+    REQUIRE(is_packed_v<tvec1<velocity_unit>>);
+    REQUIRE(is_packed_v<tvec2<velocity_unit>>);
+    REQUIRE(is_packed_v<tvec3<velocity_unit>>);
+    REQUIRE(is_packed_v<tvec4<velocity_unit>>);
+
+    REQUIRE(is_packed_v<tmat1<short>>);
+    REQUIRE(is_packed_v<tmat1<float>>);
+    REQUIRE(is_packed_v<tmat1<double>>);
     
-    static_assert(is_packed_v<tmat2<short>>);
-    static_assert(is_packed_v<tmat2<float>>);
-    static_assert(is_packed_v<tmat2<double>>);
+    REQUIRE(is_packed_v<tmat2<short>>);
+    REQUIRE(is_packed_v<tmat2<float>>);
+    REQUIRE(is_packed_v<tmat2<double>>);
     
-    static_assert(is_packed_v<tmat3<short>>);
-    static_assert(is_packed_v<tmat3<float>>);
-    static_assert(is_packed_v<tmat3<double>>);
+    REQUIRE(is_packed_v<tmat3<short>>);
+    REQUIRE(is_packed_v<tmat3<float>>);
+    REQUIRE(is_packed_v<tmat3<double>>);
     
-    static_assert(is_packed_v<tmat4<short>>);
-    static_assert(is_packed_v<tmat4<float>>);
-    static_assert(is_packed_v<tmat4<double>>);
-
-    return 0;
+    REQUIRE(is_packed_v<tmat4<short>>);
+    REQUIRE(is_packed_v<tmat4<float>>);
+    REQUIRE(is_packed_v<tmat4<double>>);
 }
