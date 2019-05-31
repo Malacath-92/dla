@@ -68,9 +68,10 @@ TEST_CASE("Test for bitwise_and overloads of arithmetic types", "[type_traits_bi
 	REQUIRE(overloads_bitwise_and_v<int, int>);
 	REQUIRE(overloads_bitwise_and_v<float, int> == false);
 	REQUIRE(overloads_bitwise_and_v<int, short>);
-	REQUIRE(overloads_bitwise_and_v<int, float>);
+	REQUIRE(overloads_bitwise_and_v<int, float> == false);
+	REQUIRE(overloads_bitwise_and_v<int, double> == false);
 
-	REQUIRE(overloads_bitwise_and_v<short, double>);
+	REQUIRE(overloads_bitwise_and_v<short, double> == false);
 	REQUIRE(overloads_bitwise_and_v<double, double> == false);
 	REQUIRE(overloads_bitwise_and_v<float, double> == false);
 	REQUIRE(overloads_bitwise_and_v<double, short> == false);
@@ -82,9 +83,10 @@ TEST_CASE("Test for bitwise_or overloads of arithmetic types", "[type_traits_bit
 	REQUIRE(overloads_bitwise_or_v<int, int>);
 	REQUIRE(overloads_bitwise_or_v<float, int> == false);
 	REQUIRE(overloads_bitwise_or_v<int, short>);
-	REQUIRE(overloads_bitwise_or_v<int, float>);
+	REQUIRE(overloads_bitwise_or_v<int, float> == false);
+	REQUIRE(overloads_bitwise_or_v<int, double> == false);
 
-	REQUIRE(overloads_bitwise_or_v<short, double>);
+	REQUIRE(overloads_bitwise_or_v<short, double> == false);
 	REQUIRE(overloads_bitwise_or_v<double, double> == false);
 	REQUIRE(overloads_bitwise_or_v<float, double> == false);
 	REQUIRE(overloads_bitwise_or_v<double, short> == false);
@@ -96,9 +98,10 @@ TEST_CASE("Test for bitwise_xor overloads of arithmetic types", "[type_traits_bi
 	REQUIRE(overloads_bitwise_xor_v<int, int>);
 	REQUIRE(overloads_bitwise_xor_v<float, int> == false);
 	REQUIRE(overloads_bitwise_xor_v<int, short>);
-	REQUIRE(overloads_bitwise_xor_v<int, float>);
+	REQUIRE(overloads_bitwise_xor_v<int, float> == false);
+	REQUIRE(overloads_bitwise_xor_v<int, double> == false);
 
-	REQUIRE(overloads_bitwise_xor_v<short, double>);
+	REQUIRE(overloads_bitwise_xor_v<short, double> == false);
 	REQUIRE(overloads_bitwise_xor_v<double, double> == false);
 	REQUIRE(overloads_bitwise_xor_v<float, double> == false);
 	REQUIRE(overloads_bitwise_xor_v<double, short> == false);
@@ -110,9 +113,10 @@ TEST_CASE("Test for left_shift overloads of arithmetic types", "[type_traits_lef
 	REQUIRE(overloads_left_shift_v<int, int>);
 	REQUIRE(overloads_left_shift_v<float, int> == false);
 	REQUIRE(overloads_left_shift_v<int, short>);
-	REQUIRE(overloads_left_shift_v<int, float>);
+	REQUIRE(overloads_left_shift_v<int, float> == false);
+	REQUIRE(overloads_left_shift_v<int, double> == false);
 
-	REQUIRE(overloads_left_shift_v<short, double>);
+	REQUIRE(overloads_left_shift_v<short, double> == false);
 	REQUIRE(overloads_left_shift_v<double, double> == false);
 	REQUIRE(overloads_left_shift_v<float, double> == false);
 	REQUIRE(overloads_left_shift_v<double, short> == false);
@@ -124,9 +128,10 @@ TEST_CASE("Test for right_shift overloads of arithmetic types", "[type_traits_ri
 	REQUIRE(overloads_right_shift_v<int, int>);
 	REQUIRE(overloads_right_shift_v<float, int> == false);
 	REQUIRE(overloads_right_shift_v<int, short>);
-	REQUIRE(overloads_right_shift_v<int, float>);
+	REQUIRE(overloads_right_shift_v<int, float> == false);
+	REQUIRE(overloads_right_shift_v<int, double> == false);
 
-	REQUIRE(overloads_right_shift_v<short, double>);
+	REQUIRE(overloads_right_shift_v<short, double> == false);
 	REQUIRE(overloads_right_shift_v<double, double> == false);
 	REQUIRE(overloads_right_shift_v<float, double> == false);
 	REQUIRE(overloads_right_shift_v<double, short> == false);
@@ -134,11 +139,29 @@ TEST_CASE("Test for right_shift overloads of arithmetic types", "[type_traits_ri
 }
 
 TEST_CASE("Test for operator overloads of vector types", "[type_traits_vector]") {
+	REQUIRE(overloads_plus_v<short, ivec1>);
+	REQUIRE(overloads_plus_v<ivec1, ivec1>);
+	REQUIRE(overloads_plus_v<float, ivec1>);
+	REQUIRE(overloads_plus_v<ivec1, short>);
+	REQUIRE(overloads_plus_v<ivec1, float>);
+
 	REQUIRE(overloads_plus_v<short, ivec2>);
 	REQUIRE(overloads_plus_v<ivec2, ivec2>);
 	REQUIRE(overloads_plus_v<float, ivec2>);
 	REQUIRE(overloads_plus_v<ivec2, short>);
 	REQUIRE(overloads_plus_v<ivec2, float>);
+
+	REQUIRE(overloads_plus_v<short, ivec3>);
+	REQUIRE(overloads_plus_v<ivec3, ivec3>);
+	REQUIRE(overloads_plus_v<float, ivec3>);
+	REQUIRE(overloads_plus_v<ivec3, short>);
+	REQUIRE(overloads_plus_v<ivec3, float>);
+
+	REQUIRE(overloads_plus_v<short, ivec4>);
+	REQUIRE(overloads_plus_v<ivec4, ivec4>);
+	REQUIRE(overloads_plus_v<float, ivec4>);
+	REQUIRE(overloads_plus_v<ivec4, short>);
+	REQUIRE(overloads_plus_v<ivec4, float>);
 }
 
 struct S {};
