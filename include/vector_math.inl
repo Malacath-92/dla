@@ -34,7 +34,7 @@ namespace dla {
 #undef MAKE_VECTOR_VECTOR_BINARY_OPERATOR
 
 #define MAKE_VECTOR_SCALAR_BINARY_OPERATOR(op) \
-    template<class T, class U, std::size_t N> \
+    template<class T, class U, std::size_t N, typename> \
     constexpr auto operator op(const vec<T, N>& lhs, const U& rhs) noexcept { \
         vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
         auto lhs_it = lhs.begin(); \
@@ -60,7 +60,7 @@ namespace dla {
 #undef MAKE_VECTOR_SCALAR_BINARY_OPERATOR
 
 #define MAKE_SCALAR_VECTOR_BINARY_OPERATOR(op) \
-    template<class T, class U, std::size_t N> \
+    template<class T, class U, std::size_t N, typename> \
     constexpr auto operator op(const T& lhs, const vec<U, N>& rhs) noexcept { \
         vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
         auto rhs_it = rhs.begin(); \

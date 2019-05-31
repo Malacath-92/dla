@@ -169,10 +169,47 @@ struct Z {};
 TEST_CASE("Test for operator overloads of failing types", "[type_traits_fails]") {
 	REQUIRE(overloads_plus_v<S, S> == false);
 	REQUIRE(overloads_plus_v<S, Z> == false);
-	//REQUIRE(overloads_plus_v<tmat4<int>, ivec2>);
-	//REQUIRE(overloads_plus_v<ivec4, ivec2>);
-	//REQUIRE(overloads_plus_v<ivec2, ivec2>);
-	//REQUIRE(overloads_plus_v<ivec2, vec3>);
-	//REQUIRE(overloads_plus_v<ivec2, ivec2>);
-	//REQUIRE(overloads_plus_v<ivec2, tmat2<float>>);
+
+	REQUIRE(overloads_plus_v<ivec2, ivec1> == false);
+	REQUIRE(overloads_plus_v<ivec3, ivec1> == false);
+	REQUIRE(overloads_plus_v<ivec4, ivec1> == false);
+	REQUIRE(overloads_plus_v<ivec1, ivec2> == false);
+	REQUIRE(overloads_plus_v<ivec3, ivec2> == false);
+	REQUIRE(overloads_plus_v<ivec4, ivec2> == false);
+	REQUIRE(overloads_plus_v<ivec1, ivec3> == false);
+	REQUIRE(overloads_plus_v<ivec2, ivec3> == false);
+	REQUIRE(overloads_plus_v<ivec4, ivec3> == false);
+	REQUIRE(overloads_plus_v<ivec1, ivec4> == false);
+	REQUIRE(overloads_plus_v<ivec2, ivec4> == false);
+	REQUIRE(overloads_plus_v<ivec3, ivec4> == false);
+
+	REQUIRE(overloads_plus_v<tmat1<int>, ivec1> == false);
+	REQUIRE(overloads_plus_v<tmat1<int>, ivec2> == false);
+	REQUIRE(overloads_plus_v<tmat1<int>, ivec3> == false);
+	REQUIRE(overloads_plus_v<tmat1<int>, ivec4> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, ivec1> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, ivec2> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, ivec3> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, ivec4> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, ivec1> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, ivec2> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, ivec3> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, ivec4> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, ivec1> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, ivec2> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, ivec3> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, ivec4> == false);
+
+	REQUIRE(overloads_plus_v<tmat1<int>, tmat2<int>> == false);
+	REQUIRE(overloads_plus_v<tmat1<int>, tmat3<int>> == false);
+	REQUIRE(overloads_plus_v<tmat1<int>, tmat4<int>> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, tmat1<int>> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, tmat3<int>> == false);
+	REQUIRE(overloads_plus_v<tmat2<int>, tmat4<int>> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, tmat1<int>> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, tmat2<int>> == false);
+	REQUIRE(overloads_plus_v<tmat3<int>, tmat4<int>> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, tmat1<int>> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, tmat2<int>> == false);
+	REQUIRE(overloads_plus_v<tmat4<int>, tmat3<int>> == false);
 }

@@ -34,7 +34,7 @@ namespace dla {
 #undef MAKE_MATRIX_MATRIX_BINARY_OPERATOR
 
 #define MAKE_MATRIX_SCALAR_BINARY_OPERATOR(op) \
-    template<class T, class U, std::size_t N, std::size_t M> \
+    template<class T, class U, std::size_t N, std::size_t M, typename> \
     constexpr auto operator op(const mat<T, N, M>& lhs, const U& rhs) noexcept { \
         mat<decltype(std::declval<T>() op std::declval<U>()), N, M> res{}; \
         auto lhs_it = lhs.begin(); \
@@ -60,7 +60,7 @@ namespace dla {
 #undef MAKE_MATRIX_SCALAR_BINARY_OPERATOR
 
 #define MAKE_SCALAR_VECTOR_BINARY_OPERATOR(op) \
-    template<class T, class U, std::size_t N, std::size_t M> \
+    template<class T, class U, std::size_t N, std::size_t M, typename> \
     constexpr auto operator op(const T& lhs, const mat<U, N, M>& rhs) noexcept { \
         mat<decltype(std::declval<T>() op std::declval<U>()), N, M> res{}; \
         auto rhs_it = rhs.begin(); \

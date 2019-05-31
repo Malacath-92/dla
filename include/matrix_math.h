@@ -28,54 +28,48 @@ namespace dla {
     constexpr auto operator<<(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
     constexpr auto operator>>(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator+(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
 
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator+(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator-(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator*(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator/(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator%(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator&(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator|(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator^(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator<<(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
     constexpr auto operator>>(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator+(const mat<T, N, M>& lhs, const U& rhs) noexcept;
 
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator+(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator-(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator*(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator/(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator%(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator&(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator|(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator^(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator<<(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
     constexpr auto operator>>(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator+(const T& lhs, const mat<U, N, M>& rhs) noexcept;
 
     template<class T, std::size_t N, std::size_t M>
     constexpr auto operator+(const mat<T, N, M>& val) noexcept;
