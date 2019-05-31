@@ -1,14 +1,14 @@
-#include "vector.h"
-#include "matrix.h"
-#include "units.h"
-#include "utility.h"
+#include <vector.h>
+#include <matrix.h>
+#include <units.h>
+#include <type_traits.h>
 
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
 using namespace dla;
 
-TEST_CASE("Test if vector and matrix types are packed tightly", "[utility_packed]") {
+TEST_CASE("Test if vector and matrix types are packed tightly", "[type_traits_packed]") {
     REQUIRE(is_packed_v<length_unit>);
     REQUIRE(is_packed_v<velocity_unit>);
     REQUIRE(is_packed_v<force_unit>);

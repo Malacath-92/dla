@@ -1,8 +1,8 @@
 dlaAddTest(tuple_sort)
 dlaAddTest(tuple_find)
 
-dlaAddTest(utility_packed)
-dlaAddTest(type_traits)
+dlaAddTest(type_traits_packed)
+dlaAddTest(type_traits_arithmetic)
 dlaAddTest(to_string)
 
 dlaAddTest(units_literals)

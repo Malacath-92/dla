@@ -1,12 +1,11 @@
 #include <vector.h>
 #include <matrix.h>
-#include <detail/type_traits.h>
+#include <type_traits.h>
 
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
 using namespace dla;
-using namespace dla::detail;
 
 TEST_CASE("Test for plus overloads of arithmetic types", "[type_traits_plus_arithmetic]") {
 	REQUIRE(overloads_plus_v<short, int>);
