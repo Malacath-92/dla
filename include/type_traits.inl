@@ -18,11 +18,11 @@ namespace dla {
 	struct overloads_##opName { \
 		private: \
             template<typename V, typename W> \
-            static auto test(int) -> decltype(std::declval<V&>() op std::declval<W>(), std::true_type()); \
+            static auto test(int) -> decltype(std::declval<V>() op std::declval<W>(), std::true_type()); \
             template<typename, typename> \
             static auto test(...) -> std::false_type; \
 			template<class V> \
-			using const_ref_t = std::add_const_t<std::add_lvalue_reference_t<T>>; \
+			using const_ref_t = std::add_const_t<std::add_lvalue_reference_t<std::decay_t<V>>>; \
         public: \
             static constexpr bool value = decltype(test<const_ref_t<T>, const_ref_t<U>>(0))::value; \
 	};
