@@ -37,6 +37,19 @@ namespace dla {
     MAKE_OVERLOAD_TEST_STRUCT(left_shift, <<)
     MAKE_OVERLOAD_TEST_STRUCT(right_shift, >>)
 #undef MAKE_OVERLOAD_TEST_STRUCT
+    
+    template<class T>
+    struct is_scalar {
+        static constexpr bool value = true;
+    };
+    template<class T, std::size_t N>
+    struct is_scalar<vec<T, N>> {
+        static constexpr bool value = false;
+    };
+    template<class T, std::size_t N, std::size_t M>
+    struct is_scalar<mat<T, N, M>> {
+        static constexpr bool value = false;
+    };
 
 	template<class Tag, std::intmax_t Num, std::intmax_t Den>
     struct is_packed<base_unit<Tag, Num, Den>> {

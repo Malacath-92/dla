@@ -22,6 +22,9 @@ namespace dla {
 	template<class T, class U>
 	struct overloads_right_shift;
 
+	template<class T>
+	struct is_scalar;
+
     template<class T>
     struct is_packed;
     
@@ -46,6 +49,9 @@ namespace dla {
 	inline constexpr auto overloads_left_shift_v = overloads_left_shift<T, U>::value;
 	template<class T, class U>
 	inline constexpr auto overloads_right_shift_v = overloads_right_shift<T, U>::value;
+    
+    template<class T>
+    inline constexpr auto is_scalar_v = is_scalar<T>::value;
     
     template<class T>
     inline constexpr auto is_packed_v = is_packed<T>::value;
