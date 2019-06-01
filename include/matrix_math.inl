@@ -199,4 +199,16 @@ namespace dla {
         }
         return res;
     }
+
+    template<class T, class U, std::size_t N, std::size_t M>
+    constexpr auto outer_product(const vec<T, N>& lhs, const vec<U, M>& rhs) {
+        using res_t = mat<decltype(std::declval<T>() * std::declval<U>()), N, M>;
+        res_t res{};
+        for (std::size_t i = 0; i < res_t::col_size; i++) {
+            for (std::size_t j = 0; j < res_t::row_size; j++) {
+                res[i][j] = lhs[i] * rhs[j];
+            }
+        }
+        return res;
+    }
 }
