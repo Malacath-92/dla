@@ -101,6 +101,9 @@ namespace dla {
 
     template<class T, class U, std::size_t N, std::size_t M>
     constexpr auto outer_product(const vec<T, N>& lhs, const vec<U, M>& rhs);
+
+    template<class T, std::size_t N>
+    constexpr auto diagonal(const vec<T, N>& diag);
 }
 
 #include "matrix_math.inl"

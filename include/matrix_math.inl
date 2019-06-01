@@ -218,4 +218,14 @@ namespace dla {
         }
         return res;
     }
+
+    template<class T, std::size_t N>
+    constexpr auto diagonal(const vec<T, N>& diag) {
+        using res_t = mat<T, N, N>;
+        res_t res{};
+        for (std::size_t i = 0; i < res_t::num_row; i++) {
+            res[i][i] = diag[i];
+        }
+        return res;
+    }
 }
