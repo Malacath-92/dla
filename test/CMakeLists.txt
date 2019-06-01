@@ -20,3 +20,4 @@ dlaAddTest(vector_reference)
 
 dlaAddTest(matrix_dot)
 dlaAddTest(matrix_outer_product)
+dlaAddTest(matrix_transpose)
