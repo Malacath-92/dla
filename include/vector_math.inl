@@ -36,7 +36,8 @@ namespace dla {
 #define MAKE_VECTOR_SCALAR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N, typename> \
     constexpr auto operator op(const vec<T, N>& lhs, const U& rhs) noexcept { \
-        vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
+        using res_t = vec<decltype(std::declval<T>() op std::declval<U>()), N>; \
+        res_t res{}; \
         auto lhs_it = lhs.begin(); \
         auto it = res.begin(); \
         const auto it_end = res.end(); \
@@ -62,7 +63,8 @@ namespace dla {
 #define MAKE_SCALAR_VECTOR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N, typename> \
     constexpr auto operator op(const T& lhs, const vec<U, N>& rhs) noexcept { \
-        vec<decltype(std::declval<T>() op std::declval<U>()), N> res{}; \
+        using res_t = vec<decltype(std::declval<T>() op std::declval<U>()), N>; \
+        res_t res{}; \
         auto rhs_it = rhs.begin(); \
         auto it = res.begin(); \
         const auto it_end = res.end(); \
@@ -88,7 +90,8 @@ namespace dla {
 #define MAKE_VECTOR_UNARY_OPERATOR(op) \
     template<class T, std::size_t N> \
     constexpr auto operator op(const vec<T, N>& val) noexcept { \
-        vec<decltype(op std::declval<T>()), N> res{}; \
+        using res_t = vec<decltype(op std::declval<T>()), N>; \
+        res_t res{}; \
         auto val_it = val.begin(); \
         auto it = res.begin(); \
         const auto it_end = res.end(); \
@@ -130,7 +133,8 @@ namespace dla {
 
     template<class T, class U, std::size_t N>
     constexpr auto compare(const vec<T, N>& lhs, const vec<U, N>& rhs) noexcept {
-        vec<decltype(std::declval<T>() == std::declval<U>()), N> res{};
+        using res_t = vec<decltype(std::declval<T>() == std::declval<U>()), N>;
+        res_t res{};
         auto lhs_it = lhs.begin();
         auto rhs_it = rhs.begin();
         auto it = res.begin();
@@ -146,7 +150,8 @@ namespace dla {
 
     template<class T, std::size_t N>
     constexpr auto abs(const vec<T, N>& val) noexcept {
-        vec<T, N> res{};
+        using res_t = vec<T, N>;
+        res_t res{};
         auto val_it = val.begin();
         auto it = res.begin();
         const auto it_end = res.end();
@@ -170,7 +175,8 @@ namespace dla {
 
     template<class T, class U, std::size_t N>
     constexpr auto dot(const vec<T, N>& lhs, const vec<U, N>& rhs) {
-        decltype(std::declval<T>() * std::declval<U>()) res{};
+        using res_t = decltype(std::declval<T>() * std::declval<U>());
+        res_t res{};
         auto lhs_it = lhs.begin();
         auto rhs_it = rhs.begin();
         const auto lhs_it_end = lhs.end();

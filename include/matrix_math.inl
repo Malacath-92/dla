@@ -8,7 +8,8 @@ namespace dla {
 #define MAKE_MATRIX_MATRIX_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N, std::size_t M> \
     constexpr auto operator op(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept { \
-        mat<decltype(std::declval<T>() op std::declval<U>()), N, M> res{}; \
+        using res_t = mat<decltype(std::declval<T>() op std::declval<U>()), N, M>; \
+        res_t res{}; \
         auto lhs_it = lhs.begin(); \
         auto rhs_it = rhs.begin(); \
         auto it = res.begin(); \
@@ -36,7 +37,8 @@ namespace dla {
 #define MAKE_MATRIX_SCALAR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N, std::size_t M, typename> \
     constexpr auto operator op(const mat<T, N, M>& lhs, const U& rhs) noexcept { \
-        mat<decltype(std::declval<T>() op std::declval<U>()), N, M> res{}; \
+        using res_t = mat<decltype(std::declval<T>() op std::declval<U>()), N, M>; \
+        res_t res{}; \
         auto lhs_it = lhs.begin(); \
         auto it = res.begin(); \
         const auto it_end = res.end(); \
@@ -62,7 +64,8 @@ namespace dla {
 #define MAKE_SCALAR_VECTOR_BINARY_OPERATOR(op) \
     template<class T, class U, std::size_t N, std::size_t M, typename> \
     constexpr auto operator op(const T& lhs, const mat<U, N, M>& rhs) noexcept { \
-        mat<decltype(std::declval<T>() op std::declval<U>()), N, M> res{}; \
+        using res_t = mat<decltype(std::declval<T>() op std::declval<U>()), N, M>; \
+        res_t res{}; \
         auto rhs_it = rhs.begin(); \
         auto it = res.begin(); \
         const auto it_end = res.end(); \
@@ -88,7 +91,8 @@ namespace dla {
 #define MAKE_MATRIX_UNARY_OPERATOR(op) \
     template<class T, std::size_t N, std::size_t M> \
     constexpr auto operator op(const mat<T, N, M>& val) noexcept { \
-        mat<decltype(op std::declval<T>()), N, M> res{}; \
+        using res_t = mat<decltype(op std::declval<T>()), N, M>; \
+        res_t res{}; \
         auto val_it = val.begin(); \
         auto it = res.begin(); \
         const auto it_end = res.end(); \
@@ -130,7 +134,8 @@ namespace dla {
 
     template<class T, class U, std::size_t N, std::size_t M>
     constexpr auto compare(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept {
-        mat<decltype(std::declval<T>() == std::declval<U>()), N, M> res{};
+        using res_t = mat<decltype(std::declval<T>() == std::declval<U>()), N, M>;
+        res_t res{};
         auto lhs_it = lhs.begin();
         auto rhs_it = rhs.begin();
         auto it = res.begin();
@@ -146,7 +151,8 @@ namespace dla {
 
     template<class T, std::size_t N, std::size_t M>
     constexpr auto abs(const mat<T, N, M>& val) noexcept {
-        mat<T, N, M> res{};
+        using res_t = mat<T, N, M>;
+        res_t res{};
         auto val_it = val.begin();
         auto it = res.begin();
         const auto it_end = res.end();
