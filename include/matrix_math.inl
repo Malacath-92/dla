@@ -160,9 +160,10 @@ namespace dla {
 
     template<class T, std::size_t N, std::size_t M>
     constexpr auto transpose(const mat<T, N, M>& val) noexcept {
-        mat<T, M, N> res{};
-        for (std::size_t i = 0; i < res.num_col; i++) {
-            for (std::size_t j = 0; j < res.num_row; j++) {
+		using res_t = mat<T, M, N>;
+		res_t res{};
+        for (std::size_t i = 0; i < res_t::num_row; i++) {
+			for(std::size_t j = 0; j < res_t::num_col; j++) {
                 res[i][j] = val[j][i];
             }
         }
