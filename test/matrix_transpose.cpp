@@ -35,7 +35,7 @@ constexpr auto matrix4x4 = transpose(imat4({ 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 
 TEST_CASE("Compute transpose of matrices", "[matrix_transpose]") {
     REQUIRE(matrix2x2 == matrix2x2_expected);
     REQUIRE(matrix2x3 == matrix2x3_expected);
-    REQUIRE(matrix2x3 == matrix2x3_expected);
+    REQUIRE(matrix2x4 == matrix2x4_expected);
     REQUIRE(matrix3x3 == matrix3x3_expected);
     REQUIRE(matrix3x4 == matrix3x4_expected);
     REQUIRE(matrix4x4 == matrix4x4_expected);
