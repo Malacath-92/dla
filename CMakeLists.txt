@@ -33,6 +33,7 @@ endif()
 
 enable_testing()
 function(dlaAddTest NAME)
+  message("\tAdding test " ${NAME})
   add_executable(${NAME} ${NAME}.cpp)
 	add_test(${NAME} ${NAME})
 endfunction()
