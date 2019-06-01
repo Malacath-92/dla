@@ -1,4 +1,4 @@
-message("Discovering all tests...")
+message(STATUS "Discovering all tests...")
 file(GLOB files "*.cpp")
 foreach(file ${files})
   get_filename_component(filename ${file} NAME_WE)
