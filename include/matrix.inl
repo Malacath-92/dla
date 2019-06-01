@@ -1,12 +1,24 @@
 #pragma once
 
+#include <type_traits>
+
 #include "matrix.h"
 #include "detail/matrix_get_col.h"
 
 namespace dla {
+    template<std::size_t N, std::size_t M>
+    using matrix_default_construct_t = std::conditional_t<N == M, matrix_diagonal_t, matrix_fill_t>;
+
     template<class T, std::size_t N, std::size_t M>
     constexpr mat<T, N, M>::mat(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
-        vec_elements(col_type{val}) {}
+        mat(val, matrix_default_construct_t<N, M>{}) {}
+	template<class T, std::size_t N, std::size_t M>
+	template<bool C, typename>
+    constexpr mat<T, N, M>::mat(const T& val, matrix_diagonal_t) noexcept(std::is_nothrow_copy_constructible_v<T>) :
+        mat(diagonal(vec<T, N>(val))) {}
+	template<class T, std::size_t N, std::size_t M>
+	constexpr mat<T, N, M>::mat(const T& val, matrix_fill_t) noexcept(std::is_nothrow_copy_constructible_v<T>) :
+        vec_elements(row_type{val}) {}
     template<class T, std::size_t N, std::size_t M>
     template<class U>
     constexpr mat<T, N, M>::mat(const mat<U, N, M>& val) :

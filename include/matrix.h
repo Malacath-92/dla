@@ -15,6 +15,12 @@ namespace dla {
     inline constexpr bool mat_index_operator_is_noexcept = true;
 #endif
 
+    struct matrix_diagonal_t {};
+    struct matrix_fill_t {};
+
+    inline constexpr auto matrix_diagonal = matrix_diagonal_t{};
+    inline constexpr auto matrix_fill = matrix_fill_t{};
+
     template<class T, std::size_t N, std::size_t M>
     struct mat : detail::vec_elements<vec<T, M>, N> {
         using value_type = vec<T, M>;
@@ -44,6 +50,9 @@ namespace dla {
         using vec_elements = detail::vec_elements<vec<T, M>, N>;
         using vec_elements::vec_elements;
         constexpr explicit mat(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
+        template<bool C = (N == M), typename = std::enable_if<C>>
+        constexpr explicit mat(const T& val, matrix_diagonal_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
+        constexpr explicit mat(const T& val, matrix_fill_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
         template<class U>
         constexpr explicit mat(const mat<U, N, M>& val);
 
