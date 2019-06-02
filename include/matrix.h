@@ -53,8 +53,6 @@ namespace dla {
         template<bool C = (N == M), typename = std::enable_if<C>>
         constexpr explicit mat(const T& val, matrix_diagonal_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
         constexpr explicit mat(const T& val, matrix_fill_t) noexcept(std::is_nothrow_copy_constructible_v<T>);
-        template<class U>
-        constexpr explicit mat(const mat<U, N, M>& val);
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept);
         constexpr reference operator[](std::size_t idx) noexcept(mat_index_operator_is_noexcept);

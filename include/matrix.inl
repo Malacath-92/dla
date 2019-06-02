@@ -19,10 +19,6 @@ namespace dla {
 	template<class T, std::size_t N, std::size_t M>
 	constexpr mat<T, N, M>::mat(const T& val, matrix_fill_t) noexcept(std::is_nothrow_copy_constructible_v<T>) :
         vec_elements(row_type{val}) {}
-    template<class T, std::size_t N, std::size_t M>
-    template<class U>
-    constexpr mat<T, N, M>::mat(const mat<U, N, M>& val) :
-        vec_elements(static_cast<const detail::vec_elements<vec<U, N>, M>&>(val)) {}
 
     template<class T, std::size_t N, std::size_t M>
     constexpr typename mat<T, N, M>::const_reference mat<T, N, M>::operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept) {

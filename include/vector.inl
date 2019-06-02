@@ -4,11 +4,6 @@
 
 namespace dla {
     template<class T, std::size_t N>
-    template<class U>
-    constexpr vec<T, N>::vec(const vec<U, N>& val) :
-        vec_elements(static_cast<const detail::vec_elements<U, N>&>(val)) {}
-
-    template<class T, std::size_t N>
     constexpr typename vec<T, N>::const_reference vec<T, N>::operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
         if (idx == 0) return this->x;
         else if constexpr (N > 1) {

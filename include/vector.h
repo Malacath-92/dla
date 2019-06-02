@@ -35,8 +35,6 @@ namespace dla {
         using vec_elements = detail::vec_elements<T, N>;
         using vec_elements::vec_elements;
         using vec_elements::operator=;
-        template<class U>
-        constexpr explicit vec(const vec<U, N>& val);
 
         constexpr const_reference operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept);
         constexpr reference operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept);
