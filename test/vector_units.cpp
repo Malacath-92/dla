@@ -11,12 +11,12 @@
 using namespace dla;
 using namespace literals;
 using namespace int_literals;
-constexpr auto scalar_gravity = -9.81_m_s2;
+DLA_TEST_CONSTEXPR auto scalar_gravity = -9.81_m_s2;
 
-constexpr auto vector_gravity = vec(0_m_s2, 0_m_s2, scalar_gravity);
-constexpr auto double_gravity = vector_gravity + vector_gravity;
-constexpr auto square_gravity = vector_gravity * vector_gravity;
-constexpr auto no_gravity = vector_gravity / vector_gravity.z;
+DLA_TEST_CONSTEXPR auto vector_gravity = vec(0_m_s2, 0_m_s2, scalar_gravity);
+DLA_TEST_CONSTEXPR auto double_gravity = vector_gravity + vector_gravity;
+DLA_TEST_CONSTEXPR auto square_gravity = vector_gravity * vector_gravity;
+DLA_TEST_CONSTEXPR auto no_gravity = vector_gravity / vector_gravity.z;
 
 TEST_CASE("Test vector of units", "[vector_units]") {
 	REQUIRE(is_similar<vec<acceleration_unit, 3>>(vector_gravity));

@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include <vector.h>
 #include <matrix.h>
 #include <to_string.h>
@@ -63,10 +65,10 @@ auto test = [](auto... args) {
 
 	return test_result;
 };
-constexpr auto test_result_vec1 = test(1);
-constexpr auto test_result_vec2 = test(1, 8);
-constexpr auto test_result_vec3 = test(-1, 5, 5);
-constexpr auto test_result_vec4 = test(1, 2, 12, 188);
+DLA_TEST_CONSTEXPR auto test_result_vec1 = test(1);
+DLA_TEST_CONSTEXPR auto test_result_vec2 = test(1, 8);
+DLA_TEST_CONSTEXPR auto test_result_vec3 = test(-1, 5, 5);
+DLA_TEST_CONSTEXPR auto test_result_vec4 = test(1, 2, 12, 188);
 
 TEST_CASE("Test vector of references", "[vector_reference]") {
 	REQUIRE(test_result_vec1 == 0);

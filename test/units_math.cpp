@@ -11,12 +11,12 @@
 using namespace dla;
 using namespace int_literals;
 
-constexpr auto length = 1_m;
-constexpr auto time_value = 1_s;
-constexpr auto weight = 1_kg;
-constexpr auto force = length * weight / time_value / time_value;
+DLA_TEST_CONSTEXPR auto length = 1_m;
+DLA_TEST_CONSTEXPR auto time_value = 1_s;
+DLA_TEST_CONSTEXPR auto weight = 1_kg;
+DLA_TEST_CONSTEXPR auto force = length * weight / time_value / time_value;
 
-constexpr auto three = 3.0f;
+DLA_TEST_CONSTEXPR auto three = 3.0f;
 auto cbrt_three = math::cbrt(three);
 auto three_again = cbrt_three * cbrt_three * cbrt_three;
 

@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include <units.h>
 #include <literals.h>
 #include <to_string.h>
@@ -7,22 +9,22 @@
 
 using namespace dla;
 using namespace int_literals;
-constexpr auto length = 1_m;
-constexpr auto time_value = 1_s;
-constexpr auto weight = 1_kg;
-constexpr auto frequency = 1.0f / time_value;
+DLA_TEST_CONSTEXPR auto length = 1_m;
+DLA_TEST_CONSTEXPR auto time_value = 1_s;
+DLA_TEST_CONSTEXPR auto weight = 1_kg;
+DLA_TEST_CONSTEXPR auto frequency = 1.0f / time_value;
 
-constexpr auto volume = length * length * length;
-constexpr auto velocity = length / time_value;
-constexpr auto same_velocity = frequency * length;
-constexpr auto acceleration = length / time_value / time_value;
-constexpr auto same_acceleration = frequency * frequency * length;
-constexpr auto force = acceleration * weight;
-constexpr auto same_force = (frequency * length) * (weight / time_value);
-constexpr auto dim_less = length / length;
-constexpr auto other_dim_less = velocity / same_velocity;
-constexpr auto more_dim_less = time_value * acceleration / length / frequency;
-constexpr auto last_dim_less = acceleration / acceleration;
+DLA_TEST_CONSTEXPR auto volume = length * length * length;
+DLA_TEST_CONSTEXPR auto velocity = length / time_value;
+DLA_TEST_CONSTEXPR auto same_velocity = frequency * length;
+DLA_TEST_CONSTEXPR auto acceleration = length / time_value / time_value;
+DLA_TEST_CONSTEXPR auto same_acceleration = frequency * frequency * length;
+DLA_TEST_CONSTEXPR auto force = acceleration * weight;
+DLA_TEST_CONSTEXPR auto same_force = (frequency * length) * (weight / time_value);
+DLA_TEST_CONSTEXPR auto dim_less = length / length;
+DLA_TEST_CONSTEXPR auto other_dim_less = velocity / same_velocity;
+DLA_TEST_CONSTEXPR auto more_dim_less = time_value * acceleration / length / frequency;
+DLA_TEST_CONSTEXPR auto last_dim_less = acceleration / acceleration;
 
 TEST_CASE("Test that types resulting from multiplicative operations are correct", "[units_composite]") {
 	REQUIRE(volume == volume_unit{ 1.0f });

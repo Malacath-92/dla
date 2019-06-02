@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include <vector.h>
 #include <matrix.h>
 #include <to_string.h>
@@ -18,19 +20,19 @@ using imat2 = tmat2<int>;
 using imat3 = tmat3<int>;
 using imat4 = tmat4<int>;
 
-constexpr auto matrix2x2_expected = imat2({ 1, 3 }, { 2, 4 });
-constexpr auto matrix2x3_expected = imat3x2({ 1, 3 }, { 2, 4 }, { 5, 6 });
-constexpr auto matrix2x4_expected = imat4x2({ 1, 3 }, { 2, 4 }, { 5, 6 }, { 7, 8 });
-constexpr auto matrix3x3_expected = imat3({ 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 });
-constexpr auto matrix3x4_expected = imat4x3({ 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 }, { 10, 11, 12 });
-constexpr auto matrix4x4_expected = imat4({ 1, 5, 9, 13 }, { 2, 6, 10, 14 }, { 3, 7, 11, 15 }, { 4, 8, 12, 16 });
+DLA_TEST_CONSTEXPR auto matrix2x2_expected = imat2({ 1, 3 }, { 2, 4 });
+DLA_TEST_CONSTEXPR auto matrix2x3_expected = imat3x2({ 1, 3 }, { 2, 4 }, { 5, 6 });
+DLA_TEST_CONSTEXPR auto matrix2x4_expected = imat4x2({ 1, 3 }, { 2, 4 }, { 5, 6 }, { 7, 8 });
+DLA_TEST_CONSTEXPR auto matrix3x3_expected = imat3({ 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 });
+DLA_TEST_CONSTEXPR auto matrix3x4_expected = imat4x3({ 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 }, { 10, 11, 12 });
+DLA_TEST_CONSTEXPR auto matrix4x4_expected = imat4({ 1, 5, 9, 13 }, { 2, 6, 10, 14 }, { 3, 7, 11, 15 }, { 4, 8, 12, 16 });
 
-constexpr auto matrix2x2 = transpose(imat2({ 1, 2 }, { 3, 4 }));
-constexpr auto matrix2x3 = transpose(imat2x3({ 1, 2, 5 }, { 3, 4, 6 }));
-constexpr auto matrix2x4 = transpose(imat2x4({ 1, 2, 5, 7 }, { 3, 4, 6, 8 }));
-constexpr auto matrix3x3 = transpose(imat3({ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }));
-constexpr auto matrix3x4 = transpose(imat3x4({ 1, 2, 3, 10 }, { 4, 5, 6, 11 }, { 7, 8, 9, 12 }));
-constexpr auto matrix4x4 = transpose(imat4({ 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 }));
+DLA_TEST_CONSTEXPR auto matrix2x2 = transpose(imat2({ 1, 2 }, { 3, 4 }));
+DLA_TEST_CONSTEXPR auto matrix2x3 = transpose(imat2x3({ 1, 2, 5 }, { 3, 4, 6 }));
+DLA_TEST_CONSTEXPR auto matrix2x4 = transpose(imat2x4({ 1, 2, 5, 7 }, { 3, 4, 6, 8 }));
+DLA_TEST_CONSTEXPR auto matrix3x3 = transpose(imat3({ 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }));
+DLA_TEST_CONSTEXPR auto matrix3x4 = transpose(imat3x4({ 1, 2, 3, 10 }, { 4, 5, 6, 11 }, { 7, 8, 9, 12 }));
+DLA_TEST_CONSTEXPR auto matrix4x4 = transpose(imat4({ 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 }));
 
 TEST_CASE("Compute transpose of matrices", "[matrix_transpose]") {
     REQUIRE(matrix2x2 == matrix2x2_expected);

@@ -12,10 +12,10 @@ using namespace dla;
 using namespace literals;
 using namespace int_literals;
 using manhattan = dla::distances::manhattan<dla::length_unit>;
-constexpr auto right = vec(0_m, 1_m, 0_m);
-constexpr auto left = vec(0_m, -1_m, 0_m);
-constexpr auto up = vec(0_m, 0_m, 1_m);
-constexpr auto diag = vec(1_m, 1_m, 1_m);
+DLA_TEST_CONSTEXPR auto right = vec(0_m, 1_m, 0_m);
+DLA_TEST_CONSTEXPR auto left = vec(0_m, -1_m, 0_m);
+DLA_TEST_CONSTEXPR auto up = vec(0_m, 0_m, 1_m);
+DLA_TEST_CONSTEXPR auto diag = vec(1_m, 1_m, 1_m);
 
 auto one_meter = right.length();
 auto one_other_meter = left.length();

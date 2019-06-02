@@ -1,3 +1,5 @@
+#include "common.h"
+
 #include <units.h>
 #include <literals.h>
 #include <to_string.h>
@@ -10,41 +12,41 @@ using namespace dla;
 
 using namespace literals;
 
-constexpr auto length = 1.0_m;
-constexpr auto time_value = 1.0_s;
-constexpr auto weight = 1.0_kg;
+DLA_TEST_CONSTEXPR auto length = 1.0_m;
+DLA_TEST_CONSTEXPR auto time_value = 1.0_s;
+DLA_TEST_CONSTEXPR auto weight = 1.0_kg;
 
-constexpr auto area = 1.0_m2;
-constexpr auto volume = 1.0_m3;
-constexpr auto frequency = 1.0_Hz;
+DLA_TEST_CONSTEXPR auto area = 1.0_m2;
+DLA_TEST_CONSTEXPR auto volume = 1.0_m3;
+DLA_TEST_CONSTEXPR auto frequency = 1.0_Hz;
 
-constexpr auto velocity = 1.0_m_s;
-constexpr auto acceleration = 1.0_m_s2;
-constexpr auto force = 1.0_N;
-constexpr auto impulse = 1.0_Ns;
-constexpr auto density = 1.0_rho;
-constexpr auto energy = 1.0_J;
-constexpr auto power = 1.0_W;
-constexpr auto pressure = 1.0_Pa;
+DLA_TEST_CONSTEXPR auto velocity = 1.0_m_s;
+DLA_TEST_CONSTEXPR auto acceleration = 1.0_m_s2;
+DLA_TEST_CONSTEXPR auto force = 1.0_N;
+DLA_TEST_CONSTEXPR auto impulse = 1.0_Ns;
+DLA_TEST_CONSTEXPR auto density = 1.0_rho;
+DLA_TEST_CONSTEXPR auto energy = 1.0_J;
+DLA_TEST_CONSTEXPR auto power = 1.0_W;
+DLA_TEST_CONSTEXPR auto pressure = 1.0_Pa;
 
 using namespace int_literals;
 
-constexpr auto length_int = 1_m;
-constexpr auto time_int = 1_s;
-constexpr auto weight_int = 1_kg;
+DLA_TEST_CONSTEXPR auto length_int = 1_m;
+DLA_TEST_CONSTEXPR auto time_int = 1_s;
+DLA_TEST_CONSTEXPR auto weight_int = 1_kg;
 
-constexpr auto area_int = 1_m2;
-constexpr auto volume_int = 1_m3;
-constexpr auto frequency_int = 1_Hz;
+DLA_TEST_CONSTEXPR auto area_int = 1_m2;
+DLA_TEST_CONSTEXPR auto volume_int = 1_m3;
+DLA_TEST_CONSTEXPR auto frequency_int = 1_Hz;
 
-constexpr auto velocity_int = 1_m_s;
-constexpr auto acceleration_int = 1_m_s2;
-constexpr auto force_int = 1_N;
-constexpr auto impulse_int = 1_Ns;
-constexpr auto density_int = 1_rho;
-constexpr auto energy_int = 1_J;
-constexpr auto power_int = 1_W;
-constexpr auto pressure_int = 1_Pa;
+DLA_TEST_CONSTEXPR auto velocity_int = 1_m_s;
+DLA_TEST_CONSTEXPR auto acceleration_int = 1_m_s2;
+DLA_TEST_CONSTEXPR auto force_int = 1_N;
+DLA_TEST_CONSTEXPR auto impulse_int = 1_Ns;
+DLA_TEST_CONSTEXPR auto density_int = 1_rho;
+DLA_TEST_CONSTEXPR auto energy_int = 1_J;
+DLA_TEST_CONSTEXPR auto power_int = 1_W;
+DLA_TEST_CONSTEXPR auto pressure_int = 1_Pa;
 
 TEST_CASE("Test that unit literals construct the right types", "[units_literals]") {
 	REQUIRE(length == length_unit{ 1.0f });

@@ -7,17 +7,17 @@
 #include <catch2/catch.hpp>
 
 using namespace dla;
-constexpr auto right = ivec3(0, 1, 0);
-constexpr auto left = ivec3(0, -1, 0);
-constexpr auto up_f = vec3(0.0f, 0.0f, 1.0f);
-constexpr auto diag_f = vec3(1.0f, 1.0f, 1.0f);
-constexpr auto other_diag_f = vec3(0.0f, 1.0f, 1.0f);
+DLA_TEST_CONSTEXPR auto right = ivec3(0, 1, 0);
+DLA_TEST_CONSTEXPR auto left = ivec3(0, -1, 0);
+DLA_TEST_CONSTEXPR auto up_f = vec3(0.0f, 0.0f, 1.0f);
+DLA_TEST_CONSTEXPR auto diag_f = vec3(1.0f, 1.0f, 1.0f);
+DLA_TEST_CONSTEXPR auto other_diag_f = vec3(0.0f, 1.0f, 1.0f);
 
-constexpr auto minus_one = right.dot(left);
-constexpr auto zero = up_f.dot(left);
-constexpr auto one = up_f.dot(diag_f);
-constexpr auto other_minus_one = left.dot(diag_f);
-constexpr auto two = other_diag_f.dot(diag_f);
+DLA_TEST_CONSTEXPR auto minus_one = right.dot(left);
+DLA_TEST_CONSTEXPR auto zero = up_f.dot(left);
+DLA_TEST_CONSTEXPR auto one = up_f.dot(diag_f);
+DLA_TEST_CONSTEXPR auto other_minus_one = left.dot(diag_f);
+DLA_TEST_CONSTEXPR auto two = other_diag_f.dot(diag_f);
 
 TEST_CASE("Test vector dot products", "[vector_dot]") {
     REQUIRE(minus_one == -1);

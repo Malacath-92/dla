@@ -34,8 +34,14 @@ endif()
 enable_testing()
 function(dlaAddTest NAME)
   message(STATUS "\tAdding test " ${NAME})
+
   add_executable(${NAME} ${NAME}.cpp)
-	add_test(${NAME} ${NAME})
+  add_test(${NAME} ${NAME})
+  
+  set(CONSTEXPR_NAME ${NAME}_constexpr)
+  add_executable(${NAME}_constexpr ${NAME}.cpp)
+  target_compile_definitions(${NAME}_constexpr PRIVATE DLA_TEST_CONSTEXPR)
+	add_test(${NAME}_constexpr ${NAME}_constexpr)
 endfunction()
 
 add_subdirectory(test)
