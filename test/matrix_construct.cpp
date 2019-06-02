@@ -47,6 +47,14 @@ constexpr auto matrix2x2_conv = umat2(matrix2x2_diag);
 constexpr auto matrix3x3_conv = umat3(matrix3x3_diag);
 constexpr auto matrix4x4_conv = umat4(matrix4x4_diag);
 
+constexpr auto matrix2x2_zero_expected = imat2({ 0, 0 }, { 0, 0 });
+constexpr auto matrix3x3_zero_expected = imat3({ 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 });
+constexpr auto matrix4x4_zero_expected = imat4({ 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
+
+constexpr auto matrix2x2_zero = imat2{};
+constexpr auto matrix3x3_zero = imat3{};
+constexpr auto matrix4x4_zero = imat4{};
+
 TEST_CASE("Generate matrices from single arguments", "[matrix_construct_single]") {
     REQUIRE(matrix2x2_diag == matrix2x2_diag_expected);
     REQUIRE(matrix2x2_fill == matrix2x2_fill_expected);
@@ -63,4 +71,10 @@ TEST_CASE("Copy construct matrices from other underlying type", "[matrix_constru
     REQUIRE(matrix2x2_conv == matrix2x2_conv_expected);
     REQUIRE(matrix3x3_conv == matrix3x3_conv_expected);
     REQUIRE(matrix4x4_conv == matrix4x4_conv_expected);
+}
+
+TEST_CASE("Zero-initialize matrices", "[matrix_construct_zero]") {
+    REQUIRE(matrix2x2_zero == matrix2x2_zero_expected);
+    REQUIRE(matrix3x3_zero == matrix3x3_zero_expected);
+    REQUIRE(matrix4x4_zero == matrix4x4_zero_expected);
 }
