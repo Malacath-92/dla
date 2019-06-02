@@ -43,15 +43,9 @@ constexpr auto matrix2x2_conv_expected = umat2({ 1u, 0u }, { 0u, 1u });
 constexpr auto matrix3x3_conv_expected = umat3({ 1u, 0u, 0u }, { 0u, 1u, 0u }, { 0u, 0u, 1u });
 constexpr auto matrix4x4_conv_expected = umat4({ 1u, 0u, 0u, 0u }, { 0u, 1u, 0u, 0u }, { 0u, 0u, 1u, 0u }, { 0u, 0u, 0u, 1u });
 
-#ifdef _MSC_VER
-/*constexpr*/ auto matrix2x2_conv = umat2(matrix2x2_diag);
-/*constexpr*/ auto matrix3x3_conv = umat3(matrix3x3_diag);
-/*constexpr*/ auto matrix4x4_conv = umat4(matrix4x4_diag);
-#else
 constexpr auto matrix2x2_conv = umat2(matrix2x2_diag);
 constexpr auto matrix3x3_conv = umat3(matrix3x3_diag);
 constexpr auto matrix4x4_conv = umat4(matrix4x4_diag);
-#endif
 
 TEST_CASE("Generate matrices from single arguments", "[matrix_construct_single]") {
     REQUIRE(matrix2x2_diag == matrix2x2_diag_expected);

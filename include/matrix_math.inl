@@ -223,6 +223,13 @@ namespace dla {
     constexpr auto diagonal(const vec<T, N>& diag) {
         using res_t = mat<T, N, N>;
         res_t res{};
+#ifdef _MSC_VER
+        for (std::size_t i = 0; i < res_t::num_row; i++) {
+            for (std::size_t j = 0; j < res_t::num_col; j++) {
+                res[i][j] = static_cast<T>(0);
+            }
+        }
+#endif
         for (std::size_t i = 0; i < res_t::num_row; i++) {
             res[i][i] = diag[i];
         }
