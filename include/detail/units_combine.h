@@ -9,34 +9,23 @@
 #include "tuple_find.h"
 
 namespace dla {
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	template<class Name, std::intmax_t Num, std::intmax_t Den>
+	struct unit_tag;
+	template<class Tag>
 	struct base_unit;
-	template<class... Units>
+	template<class... Tags>
 	struct comp_unit;
 }
 
 namespace dla::detail {
-	template<class T>
-	struct is_base_unit : std::false_type {};
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	struct is_base_unit<base_unit<Tag, Num, Den>> : std::true_type {};
-	template<class T>
-	struct is_comp_unit : std::false_type {};
-	template<class... Units>
-	struct is_comp_unit<comp_unit<Units...>> : std::true_type {};
-	template<class T>
-	inline constexpr bool is_base_unit_v = is_base_unit<T>::value;
-	template<class T>
-	inline constexpr bool is_comp_unit_v = is_comp_unit<T>::value;
-	template<class T>
-	inline constexpr bool is_unit_type_v = is_base_unit_v<T> || is_comp_unit_v<T>;
-
-	template<class... Units>
+	template<class... Tags>
 	struct sorted_comp_unit {
 	private:
-		template<class lUnit, class rUnit>
+		template<class lTag, class rTag>
 		struct sorting_predicate {
-			static constexpr auto comp = compare(lUnit::tag::id, rUnit::tag::id);
+			using lName = typename lTag::name_t;
+			using rName = typename rTag::name_t;
+			static constexpr auto comp = compare(lName::id, rName::id);
 			static constexpr bool value = comp < 0;
 			static_assert(comp != 0, "Duplicate tag found in units!");
 		};
@@ -45,64 +34,63 @@ namespace dla::detail {
 		struct sort_into_comp_unit;
 		template<std::size_t... Is>
 		struct sort_into_comp_unit<std::index_sequence<Is...>> {
-			using sorted_tuple = tuple_selection_sort_t<sorting_predicate, std::tuple<Units...>>;
+			using sorted_tuple = tuple_selection_sort_t<sorting_predicate, std::tuple<Tags...>>;
 			using type = comp_unit<std::tuple_element_t<Is, sorted_tuple>...>;
 		};
 
 	public:
-		using type = typename sort_into_comp_unit<std::make_index_sequence<sizeof...(Units)>>::type;
+		using type = typename sort_into_comp_unit<std::make_index_sequence<sizeof...(Tags)>>::type;
 	};
 	template<>
 	struct sorted_comp_unit<> {
 		using type = float;
 	};
-	template<class... Units>
-	using sorted_comp_unit_t = typename sorted_comp_unit<Units...>::type;
+	template<class... Tags>
+	using sorted_comp_unit_t = typename sorted_comp_unit<Tags...>::type;
 
 	template<class T>
 	struct inverse;
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	struct inverse<base_unit<Tag, Num, Den>> {
-		using type = base_unit<Tag, -Num, Den>;
+	template<class Name, std::intmax_t Num, std::intmax_t Den>
+	struct inverse<unit_tag<Name, Num, Den>> {
+		using type = unit_tag<Name, -Num, Den>;
 	};
-	template<class... Units>
-	struct inverse<comp_unit<Units...>> {
-		using type = comp_unit<typename inverse<Units>::type...>;
+	template<class Tag>
+	struct inverse<base_unit<Tag>> {
+		using type = base_unit<typename inverse<Tag>::type>;
+	};
+	template<class... Tags>
+	struct inverse<comp_unit<Tags...>> {
+		using type = comp_unit<typename inverse<Tags>::type...>;
 	};
 	template<class T>
 	using inverse_t = typename inverse<T>::type;
 
 	template<class T, class U>
 	struct multiply;
-	template<class Tag, std::intmax_t lNum, std::intmax_t lDen, std::intmax_t rNum, std::intmax_t rDen>
-	struct multiply<base_unit<Tag, lNum, lDen>, base_unit<Tag, rNum, rDen>> {
+	template<class Name, std::intmax_t lNum, std::intmax_t lDen, std::intmax_t rNum, std::intmax_t rDen>
+	struct multiply<base_unit<unit_tag<Name, lNum, lDen>>, base_unit<unit_tag<Name, rNum, rDen>>> {
 	private:
 		using result_ratio = std::ratio_add<std::ratio<lNum, lDen>, std::ratio<rNum, rDen>>;
 
 	public:
 		using type = std::conditional_t<result_ratio::num != 0,
-			base_unit<Tag, result_ratio::num, result_ratio::den>,
+			base_unit<unit_tag<Name, result_ratio::num, result_ratio::den>>,
 			float
 		>;
 	};
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class rTag, std::intmax_t rNum, std::intmax_t rDen>
-	struct multiply<base_unit<lTag, lNum, lDen>, base_unit<rTag, rNum, rDen>> {
-	private:
-		using lUnit = base_unit<lTag, lNum, lDen>;
-		using rUnit = base_unit<rTag, rNum, rDen>;
-
-	public:
-		using type = sorted_comp_unit_t<lUnit, rUnit>;
+	template<class lName, std::intmax_t lNum, std::intmax_t lDen, class rName, std::intmax_t rNum, std::intmax_t rDen>
+	struct multiply<base_unit<unit_tag<lName, lNum, lDen>>, base_unit<unit_tag<rName, rNum, rDen>>> {
+		using type = sorted_comp_unit_t<unit_tag<lName, lNum, lDen>, unit_tag<rName, rNum, rDen>>;
 	};
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	struct multiply<base_unit<lTag, lNum, lDen>, comp_unit<Units...>> {
+	template<class Tag, class... Tags>
+	struct multiply<base_unit<Tag>, comp_unit<Tags...>> {
 	private:
-		using lUnit = base_unit<lTag, lNum, lDen>;
-		using rUnit = comp_unit<Units...>;
+		using lUnit = base_unit<Tag>;
+		using rUnit = comp_unit<Tags...>;
 
-		static constexpr std::size_t tagIndex = tuple_find_v<typename lUnit::tag, std::tuple<typename Units::tag...>>;
+		static constexpr std::size_t tagIndex = tuple_find_v<typename Tag::name_t, std::tuple<typename Tags::name_t...>>;
 
-		template<class T, class Tuple, std::size_t index>
+		template<class T, class Ts, std::size_t index>
 		struct indexed_multiply;
 		template<class T, class... Ts>
 		struct indexed_multiply<T, std::tuple<Ts...>, tuple_find_npos> {
@@ -111,8 +99,17 @@ namespace dla::detail {
 		template<class T, class... Ts, std::size_t index>
 		struct indexed_multiply<T, std::tuple<Ts...>, index> {
 		private:
-			using before_multiplied = std::tuple_element_t<index, std::tuple<Ts...>>;
-			using multiplied = typename multiply<before_multiplied, T>::type;
+			using before_multiplied = base_unit<std::tuple_element_t<index, std::tuple<Ts...>>>;
+			using multiplied = typename multiply<before_multiplied, base_unit<T>>::type;
+
+			template<class U>
+			struct tag {
+				using type = std::tuple<>;
+			};
+			template<class U>
+			struct tag<base_unit<U>> {
+				using type = std::tuple<U>;
+			};
 
 			template<class IndexSequence>
 			struct replace_index_and_skip_float;
@@ -120,14 +117,12 @@ namespace dla::detail {
 			struct replace_index_and_skip_float<std::index_sequence<Is...>> {
 				template<class...Us>
 				using tuple_cat_t = decltype(std::tuple_cat(std::declval<Us>()...));
+
 				using type = tuple_cat_t<
 					std::conditional_t<
-					Is == index,
-					std::conditional_t<std::is_same_v<float, multiplied>,
-					std::tuple<>,
-					std::tuple<multiplied>
-					>,
-					std::tuple<Units>
+						Is == index,
+						typename tag<multiplied>::type,
+						std::tuple<Ts>
 					>...
 				>;
 			};
@@ -139,56 +134,60 @@ namespace dla::detail {
 				using type = sorted_comp_unit_t<Us...>;
 			};
 
-			using result_tuple = typename replace_index_and_skip_float<std::make_index_sequence<sizeof...(Units)>>::type;
+			using result_tuple = typename replace_index_and_skip_float<std::make_index_sequence<sizeof...(Tags)>>::type;
 
 		public:
 			using type = typename unpack_into_comp_unit<result_tuple>::type;
 		};
 
 	public:
-		using type = typename indexed_multiply<lUnit, std::tuple<Units...>, tagIndex>::type;
+		using type = typename indexed_multiply<Tag, std::tuple<Tags...>, tagIndex>::type;
 	};
-	template<class rTag, std::intmax_t rNum, std::intmax_t rDen, class... Units>
-	struct multiply<comp_unit<Units...>, base_unit<rTag, rNum, rDen>> {
+	template<class Tag, class... Tags>
+	struct multiply<comp_unit<Tags...>, base_unit<Tag>> {
 	private:
-		using lUnit = comp_unit<Units...>;
-		using rUnit = base_unit<rTag, rNum, rDen>;
+		using lUnit = comp_unit<Tags...>;
+		using rUnit = base_unit<Tag>;
 
 	public:
 		using type = typename multiply<rUnit, lUnit>::type;
 	};
-	template<class... lUnits, class... rUnits>
-	struct multiply<comp_unit<lUnits...>, comp_unit<rUnits...>> {
+	template<class... lTags, class... rTags>
+	struct multiply<comp_unit<lTags...>, comp_unit<rTags...>> {
 	private:
-		using lUnit = comp_unit<lUnits...>;
-		using rUnit = comp_unit<rUnits...>;
+		using lUnit = comp_unit<lTags...>;
 
-		template<class lhs, class rUnitToMult, class... rUnitsLeft>
+		template<class lUnitToMult, class rUnitToMult, class... rUnits>
 		struct iterative_multiply {
-			using type = typename iterative_multiply<typename multiply<lhs, rUnitToMult>::type, rUnitsLeft...>::type;
+			using type = typename iterative_multiply<typename multiply<lUnitToMult, rUnitToMult>::type, rUnits...>::type;
 		};
-		template<class lhs, class rUnitToMult>
-		struct iterative_multiply<lhs, rUnitToMult> {
-			using type = typename multiply<lhs, rUnitToMult>::type;
+		template<class lUnitToMult, class rUnitToMult>
+		struct iterative_multiply<lUnitToMult, rUnitToMult> {
+			using type = typename multiply<lUnitToMult, rUnitToMult>::type;
 		};
 
 	public:
-		using type = typename iterative_multiply<lUnit, rUnits...>::type;
+		using type = typename iterative_multiply<lUnit, base_unit<rTags>...>::type;
 	};
+
 	template<class T, std::intmax_t pNum, std::intmax_t pDen>
 	struct power {
 		using type = T;
 	};
-	template<class Tag, std::intmax_t Num, std::intmax_t Den, std::intmax_t pNum, std::intmax_t pDen>
-	struct power<base_unit<Tag, Num, Den>, pNum, pDen> {
+	template<class Name, std::intmax_t Num, std::intmax_t Den, std::intmax_t pNum, std::intmax_t pDen>
+	struct power<unit_tag<Name, Num, Den>, pNum, pDen> {
 	private:
 		using result_ratio = std::ratio_multiply<std::ratio<Num, Den>, std::ratio<pNum, pDen>>;
 	public:
-		using type = base_unit<Tag, result_ratio::num, result_ratio::den>;
+		using type = unit_tag<Name, result_ratio::num, result_ratio::den>;
 	};
-	template<class... Units, std::intmax_t pNum, std::intmax_t pDen>
-	struct power<comp_unit<Units...>, pNum, pDen> {
-		using type = comp_unit<typename power<Units, pNum, pDen>::type...>;
+	template<class Tag, std::intmax_t pNum, std::intmax_t pDen>
+	struct power<base_unit<Tag>, pNum, pDen> {
+		using type = base_unit<typename power<Tag, pNum, pDen>::type>;
+	};
+	template<class... Tags, std::intmax_t pNum, std::intmax_t pDen>
+	struct power<comp_unit<Tags...>, pNum, pDen> {
+		using type = comp_unit<typename power<Tags, pNum, pDen>::type...>;
 	};
 
 	template<class T, class U>

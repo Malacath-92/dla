@@ -8,11 +8,6 @@
 namespace dla {
     template<class T, std::size_t N>
     struct vec;
-
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	struct base_unit;
-	template<class... Units>
-	struct comp_unit;
 }
 
 namespace dla::distances {

@@ -27,8 +27,14 @@ namespace dla {
 
     template<class T>
     struct is_packed;
-    
 
+	template<class T>
+	struct is_unit_tag;
+	template<class T>
+	struct is_base_unit;
+	template<class T>
+	struct is_comp_unit;
+    
 	template<class T, class U>
 	inline constexpr auto overloads_plus_v = overloads_plus<T, U>::value;
 	template<class T, class U>
@@ -55,6 +61,15 @@ namespace dla {
     
     template<class T>
     inline constexpr auto is_packed_v = is_packed<T>::value;
+
+	template<class T>
+	inline constexpr bool is_unit_tag_v = is_unit_tag<T>::value;
+	template<class T>
+	inline constexpr bool is_base_unit_v = is_base_unit<T>::value;
+	template<class T>
+	inline constexpr bool is_comp_unit_v = is_comp_unit<T>::value;
+	template<class T>
+	inline constexpr bool is_unit_type_v = is_base_unit_v<T> || is_comp_unit_v<T>;
 }
 
 #include "type_traits.inl"

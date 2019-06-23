@@ -3,9 +3,11 @@
 #include "type_traits.h"
 
 namespace dla {
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	template<class Name, std::intmax_t Num, std::intmax_t Den>
+	struct unit_tag;
+	template<class Tag>
 	struct base_unit;
-	template<class... Units>
+	template<class... Tags>
 	struct comp_unit;
 
     template<class T, std::size_t N>
@@ -51,14 +53,27 @@ namespace dla {
         static constexpr bool value = false;
     };
 
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    struct is_packed<base_unit<Tag, Num, Den>> {
-        static constexpr bool value = sizeof(base_unit<Tag, Num, Den>) == sizeof(float);
+	template<class Tag>
+    struct is_packed<base_unit<Tag>> {
+        static constexpr bool value = sizeof(base_unit<Tag>) == sizeof(float);
     };
-	template<class... Units>
-    struct is_packed<comp_unit<Units...>> {
-        static constexpr bool value = sizeof(comp_unit<Units...>) == sizeof(float);
+	template<class... Tags>
+    struct is_packed<comp_unit<Tags...>> {
+        static constexpr bool value = sizeof(comp_unit<Tags...>) == sizeof(float);
     };
+
+	template<class T>
+	struct is_unit_tag : std::false_type {};
+    template<class Name, std::intmax_t Num, std::intmax_t Den>
+    struct is_unit_tag<unit_tag<Name, Num, Den>> : std::true_type {};
+	template<class T>
+	struct is_base_unit : std::false_type {};
+	template<class Tag>
+	struct is_base_unit<base_unit<Tag>> : std::true_type {};
+	template<class T>
+	struct is_comp_unit : std::false_type {};
+	template<class... Tags>
+	struct is_comp_unit<comp_unit<Tags...>> : std::true_type {};
     
     template<class T, std::size_t N>
     struct is_packed<vec<T, N>> {

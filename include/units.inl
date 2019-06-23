@@ -9,219 +9,252 @@
 #include "detail/units_combine.h"
 
 namespace dla {
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr base_unit<Tag, Num, Den>::operator float() const noexcept { return value; }
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr base_unit<Tag, Num, Den>::operator float&() noexcept { return value; }
+    template<class Tag>
+    constexpr base_unit<Tag>::operator underlying_t() const noexcept { return value; }
+    template<class Tag>
+    constexpr base_unit<Tag>::operator underlying_t&() noexcept { return value; }
 
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr decltype(auto) base_unit<Tag, Num, Den>::operator+=(const base_unit& rhs) {
+    template<class Tag>
+    constexpr decltype(auto) base_unit<Tag>::operator+=(const base_unit& rhs) {
         value += rhs.value;
         return *this;
     }
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr decltype(auto) base_unit<Tag, Num, Den>::operator-=(const base_unit& rhs) {
+    template<class Tag>
+    constexpr decltype(auto) base_unit<Tag>::operator-=(const base_unit& rhs) {
         value -= rhs.value;
         return *this;
     }
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr decltype(auto) base_unit<Tag, Num, Den>::operator*=(float rhs) {
+    template<class Tag>
+    constexpr decltype(auto) base_unit<Tag>::operator*=(underlying_t rhs) {
         value *= rhs;
         return *this;
     }
-    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    constexpr decltype(auto) base_unit<Tag, Num, Den>::operator/=(float rhs) {
+    template<class Tag>
+    constexpr decltype(auto) base_unit<Tag>::operator/=(underlying_t rhs) {
         value /= rhs;
         return *this;
     }
 
-	template<class Tag, std::intmax_t Den>
-    constexpr base_unit<Tag, 0, Den>::operator float() const noexcept { return value; }
-	template<class Tag, std::intmax_t Den>
-    constexpr base_unit<Tag, 0, Den>::operator float&() noexcept { return value; }
+	template<class... Tags>
+    constexpr comp_unit<Tags...>::operator underlying_t() const noexcept { return value; }
+	template<class... Tags>
+    constexpr comp_unit<Tags...>::operator underlying_t&() noexcept { return value; }
 
-	template<class... Units>
-    constexpr comp_unit<Units...>::operator float() const noexcept { return value; }
-	template<class... Units>
-    constexpr comp_unit<Units...>::operator float&() noexcept { return value; }
-
-	template<class... Units>
-    constexpr decltype(auto) comp_unit<Units...>::operator+=(const comp_unit& rhs) {
+	template<class... Tags>
+    constexpr decltype(auto) comp_unit<Tags...>::operator+=(const comp_unit& rhs) {
         value += rhs.value;
         return *this;
     }
-	template<class... Units>
-    constexpr decltype(auto) comp_unit<Units...>::operator-=(const comp_unit& rhs) {
+	template<class... Tags>
+    constexpr decltype(auto) comp_unit<Tags...>::operator-=(const comp_unit& rhs) {
         value -= rhs.value;
         return *this;
     }
-	template<class... Units>
-    constexpr decltype(auto) comp_unit<Units...>::operator*=(float rhs) {
+	template<class... Tags>
+    constexpr decltype(auto) comp_unit<Tags...>::operator*=(underlying_t rhs) {
         value *= rhs;
         return *this;
     }
-	template<class... Units>
-    constexpr decltype(auto) comp_unit<Units...>::operator/=(float rhs) {
+	template<class... Tags>
+    constexpr decltype(auto) comp_unit<Tags...>::operator/=(underlying_t rhs) {
         value /= rhs;
         return *this;
     }
 
-    constexpr comp_unit<>::operator float() const noexcept { return value; }
-    constexpr comp_unit<>::operator float&() noexcept { return value; }
+    constexpr comp_unit<>::operator underlying_t() const noexcept { return value; }
+    constexpr comp_unit<>::operator underlying_t&() noexcept { return value; }
 
 	// Operations producing base units
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator-(const base_unit<Tag, Num, Den>& val) {
-		return base_unit<Tag, Num, Den>{ -float(val) };
+	template<class Tag>
+	constexpr auto operator-(const base_unit<Tag>& val) {
+		using unit = base_unit<Tag>;
+		using underlying_t = typename unit::underlying_t;
+		return base_unit<Tag>{ -underlying_t(val) };
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator+(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return base_unit<Tag, Num, Den>{ float(rhs) + float(lhs) };
+	template<class Tag>
+	constexpr auto operator+(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using unit = base_unit<Tag>;
+		using underlying_t = typename unit::underlying_t;
+		return base_unit<Tag>{ underlying_t(rhs) + underlying_t(lhs) };
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator-(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
+	template<class Tag>
+	constexpr auto operator-(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
 		return lhs + (-rhs);
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator*(const base_unit<Tag, Num, Den>& lhs, float rhs) {
-		return base_unit<Tag, Num, Den>{ float(lhs) * rhs };
+	template<class Tag>
+	constexpr auto operator*(const base_unit<Tag>& lhs, float rhs) {
+		using unit = base_unit<Tag>;
+		using underlying_t = typename unit::underlying_t;
+		return base_unit<Tag>{ underlying_t(lhs) * rhs };
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator*(float lhs, const base_unit<Tag, Num, Den>& rhs) {
+	template<class Tag>
+	constexpr auto operator*(float lhs, const base_unit<Tag>& rhs) {
 		return rhs * lhs;
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator/(const base_unit<Tag, Num, Den>& lhs, float rhs) {
-		return base_unit<Tag, Num, Den>{ float(lhs) / rhs };
+	template<class Tag>
+	constexpr auto operator/(const base_unit<Tag>& lhs, float rhs) {
+		using unit = base_unit<Tag>;
+		using underlying_t = typename unit::underlying_t;
+		return base_unit<Tag>{ underlying_t(lhs) / rhs };
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator/(float lhs, const base_unit<Tag, Num, Den>& rhs) {
-		using unit = base_unit<Tag, Num, Den>;
-		return detail::inverse_t<unit>{ 1.0f / float(rhs) } *lhs;
+	template<class Tag>
+	constexpr auto operator/(float lhs, const base_unit<Tag>& rhs) {
+		using unit = base_unit<Tag>;
+		using underlying_t = typename unit::underlying_t;
+		return detail::inverse_t<unit>{ 1.0f / underlying_t(rhs) } * lhs;
 	}
 
 	// Operations producing composite units
-	template<class... Units>
-	constexpr auto operator-(const comp_unit<Units...>& val) {
-		return comp_unit<Units...>{ -float(val) };
+	template<class... Tags>
+	constexpr auto operator-(const comp_unit<Tags...>& val) {
+		using unit = comp_unit<Tags...>;
+		using underlying_t = typename unit::underlying_t;
+		return comp_unit<Tags...>{ -underlying_t(val) };
 	}
-	template<class... Units>
-	constexpr auto operator+(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return comp_unit<Units...>{ float(rhs) + float(lhs) };
+	template<class... Tags>
+	constexpr auto operator+(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using unit = comp_unit<Tags...>;
+		using underlying_t = typename unit::underlying_t;
+		return comp_unit<Tags...>{ underlying_t(rhs) + underlying_t(lhs) };
 	}
-	template<class... Units>
-	constexpr auto operator-(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
+	template<class... Tags>
+	constexpr auto operator-(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
 		return lhs + (-rhs);
 	}
-	template<class... Units>
-	constexpr auto operator*(const comp_unit<Units...>& lhs, float rhs) {
-		return comp_unit<Units...>{ float(lhs) * rhs };
+	template<class... Tags>
+	constexpr auto operator*(const comp_unit<Tags...>& lhs, float rhs) {
+		using unit = comp_unit<Tags...>;
+		using underlying_t = typename unit::underlying_t;
+		return comp_unit<Tags...>{ underlying_t(lhs) * rhs };
 	}
-	template<class... Units>
-	constexpr auto operator*(float lhs, const comp_unit<Units...>& rhs) {
+	template<class... Tags>
+	constexpr auto operator*(float lhs, const comp_unit<Tags...>& rhs) {
 		return rhs * lhs;
 	}
-	template<class... Units>
-	constexpr auto operator/(const comp_unit<Units...>& lhs, float rhs) {
-		return comp_unit<Units...>{ float(lhs) / rhs };
+	template<class... Tags>
+	constexpr auto operator/(const comp_unit<Tags...>& lhs, float rhs) {
+		using unit = comp_unit<Tags...>;
+		using underlying_t = typename unit::underlying_t;
+		return comp_unit<Tags...>{ underlying_t(lhs) / rhs };
 	}
-	template<class... Units>
-	constexpr auto operator/(float lhs, const comp_unit<Units...>& rhs) {
-		using unit = comp_unit<Units...>;
-		return detail::inverse_t<unit>{ 1.0f / float(rhs) } *lhs;
+	template<class... Tags>
+	constexpr auto operator/(float lhs, const comp_unit<Tags...>& rhs) {
+		using unit = comp_unit<Tags...>;
+		using underlying_t = typename unit::underlying_t;
+		return detail::inverse_t<unit>{ 1.0f / underlying_t(rhs) } *lhs;
 	}
 
 	// Operations producing composite units from base units
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class rTag, std::intmax_t rNum, std::intmax_t rDen>
-	constexpr auto operator*(const base_unit<lTag, lNum, lDen>& lhs, const base_unit<rTag, rNum, rDen>& rhs) {
-		using lUnit = base_unit<lTag, lNum, lDen>;
-		using rUnit = base_unit<rTag, rNum, rDen>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
+	template<class lTag, class rTag>
+	constexpr auto operator*(const base_unit<lTag>& lhs, const base_unit<rTag>& rhs) {
+		using lUnit = base_unit<lTag>;
+		using rUnit = base_unit<rTag>;
+		using lUnderlying_t = typename lUnit::underlying_t;
+		using rUnderlying_t = typename rUnit::underlying_t;
+		return detail::multiply_t<lUnit, rUnit>{ lUnderlying_t(lhs) * rUnderlying_t(rhs) };
 	}
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class rTag, std::intmax_t rNum, std::intmax_t rDen>
-	constexpr auto operator/(const base_unit<lTag, lNum, lDen>& lhs, const base_unit<rTag, rNum, rDen>& rhs) {
+	template<class lTag, class rTag>
+	constexpr auto operator/(const base_unit<lTag>& lhs, const base_unit<rTag>& rhs) {
 		return lhs * (1.0f / rhs);
 	}
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator*(const base_unit<lTag, lNum, lDen>& lhs, const comp_unit<Units...>& rhs) {
-		using lUnit = base_unit<lTag, lNum, lDen>;
-		using rUnit = comp_unit<Units...>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
+	template<class Tag, class... Tags>
+	constexpr auto operator*(const base_unit<Tag>& lhs, const comp_unit<Tags...>& rhs) {
+		using lUnit = base_unit<Tag>;
+		using rUnit = comp_unit<Tags...>;
+		using lUnderlying_t = typename lUnit::underlying_t;
+		using rUnderlying_t = typename rUnit::underlying_t;
+		return detail::multiply_t<lUnit, rUnit>{ lUnderlying_t(lhs) * rUnderlying_t(rhs) };
 	}
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator/(const base_unit<lTag, lNum, lDen>& lhs, const comp_unit<Units...>& rhs) {
+	template<class Tag, class... Tags>
+	constexpr auto operator/(const base_unit<Tag>& lhs, const comp_unit<Tags...>& rhs) {
 		return lhs * (1.0f / rhs);
 	}
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator*(const comp_unit<Units...>& lhs, const base_unit<lTag, lNum, lDen>& rhs) {
-		using lUnit = comp_unit<Units...>;
-		using rUnit = base_unit<lTag, lNum, lDen>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
+	template<class Tag, class... Tags>
+	constexpr auto operator*(const comp_unit<Tags...>& lhs, const base_unit<Tag>& rhs) {
+		using lUnit = comp_unit<Tags...>;
+		using rUnit = base_unit<Tag>;
+		using lUnderlying_t = typename lUnit::underlying_t;
+		using rUnderlying_t = typename rUnit::underlying_t;
+		return detail::multiply_t<lUnit, rUnit>{ lUnderlying_t(lhs) * rUnderlying_t(rhs) };
 	}
-	template<class lTag, std::intmax_t lNum, std::intmax_t lDen, class... Units>
-	constexpr auto operator/(const comp_unit<Units...>& lhs, const base_unit<lTag, lNum, lDen>& rhs) {
+	template<class Tag, class... Tags>
+	constexpr auto operator/(const comp_unit<Tags...>& lhs, const base_unit<Tag>& rhs) {
 		return lhs * (1.0f / rhs);
 	}
 
 	// Operations producing composite units from composite units
-	template<class... lUnits, class... rUnits>
-	constexpr auto operator*(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs) {
-		using lUnit = comp_unit<lUnits...>;
-		using rUnit = comp_unit<rUnits...>;
-		return detail::multiply_t<lUnit, rUnit>{ float(lhs) * float(rhs) };
+	template<class... lTags, class... rTags>
+	constexpr auto operator*(const comp_unit<lTags...>& lhs, const comp_unit<rTags...>& rhs) {
+		using lUnit = comp_unit<lTags...>;
+		using rUnit = comp_unit<rTags...>;
+		using lUnderlying_t = typename lUnit::underlying_t;
+		using rUnderlying_t = typename rUnit::underlying_t;
+		return detail::multiply_t<lUnit, rUnit>{ lUnderlying_t(lhs) * rUnderlying_t(rhs) };
 	}
-	template<class... lUnits, class... rUnits>
-	constexpr auto operator/(const comp_unit<lUnits...>& lhs, const comp_unit<rUnits...>& rhs) {
+	template<class... lTags, class... rTags>
+	constexpr auto operator/(const comp_unit<lTags...>& lhs, const comp_unit<rTags...>& rhs) {
 		return lhs * (1.0f / rhs);
 	}
 
 	// Comparison and relational operations
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator==(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return float(lhs) == float(rhs);
+	template<class Tag>
+	constexpr auto operator==(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using underlying_t = typename base_unit<Tag>::underlying_t;
+		return underlying_t(lhs) == underlying_t(rhs);
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator!=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return float(lhs) != float(rhs);
+	template<class Tag>
+	constexpr auto operator!=(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using underlying_t = typename base_unit<Tag>::underlying_t;
+		return underlying_t(lhs) != underlying_t(rhs);
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator>(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return float(lhs) > float(rhs);
+	template<class Tag>
+	constexpr auto operator>(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using underlying_t = typename base_unit<Tag>::underlying_t;
+		return underlying_t(lhs) > underlying_t(rhs);
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator<(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return float(lhs) < float(rhs);
+	template<class Tag>
+	constexpr auto operator<(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using underlying_t = typename base_unit<Tag>::underlying_t;
+		return underlying_t(lhs) < underlying_t(rhs);
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator>=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return float(lhs) >= float(rhs);
+	template<class Tag>
+	constexpr auto operator>=(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using underlying_t = typename base_unit<Tag>::underlying_t;
+		return underlying_t(lhs) >= underlying_t(rhs);
 	}
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-	constexpr auto operator<=(const base_unit<Tag, Num, Den>& lhs, const base_unit<Tag, Num, Den>& rhs) {
-		return float(lhs) <= float(rhs);
+	template<class Tag>
+	constexpr auto operator<=(const base_unit<Tag>& lhs, const base_unit<Tag>& rhs) {
+		using underlying_t = typename base_unit<Tag>::underlying_t;
+		return underlying_t(lhs) <= underlying_t(rhs);
 	}
-	template<class... Units>
-	constexpr auto operator==(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return float(lhs) == float(rhs);
+	template<class... Tags>
+	constexpr auto operator==(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using underlying_t = typename comp_unit<Tags...>::underlying_t;
+		return underlying_t(lhs) == underlying_t(rhs);
 	}
-	template<class... Units>
-	constexpr auto operator!=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return float(lhs) != float(rhs);
+	template<class... Tags>
+	constexpr auto operator!=(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using underlying_t = typename comp_unit<Tags...>::underlying_t;
+		return underlying_t(lhs) != underlying_t(rhs);
 	}
-	template<class... Units>
-	constexpr auto operator>(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return float(lhs) > float(rhs);
+	template<class... Tags>
+	constexpr auto operator>(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using underlying_t = typename comp_unit<Tags...>::underlying_t;
+		return underlying_t(lhs) > underlying_t(rhs);
 	}
-	template<class... Units>
-	constexpr auto operator<(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return float(lhs) < float(rhs);
+	template<class... Tags>
+	constexpr auto operator<(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using underlying_t = typename comp_unit<Tags...>::underlying_t;
+		return underlying_t(lhs) < underlying_t(rhs);
 	}
-	template<class... Units>
-	constexpr auto operator>=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return float(lhs) >= float(rhs);
+	template<class... Tags>
+	constexpr auto operator>=(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using underlying_t = typename comp_unit<Tags...>::underlying_t;
+		return underlying_t(lhs) >= underlying_t(rhs);
 	}
-	template<class... Units>
-	constexpr auto operator<=(const comp_unit<Units...>& lhs, const comp_unit<Units...>& rhs) {
-		return float(lhs) <= float(rhs);
+	template<class... Tags>
+	constexpr auto operator<=(const comp_unit<Tags...>& lhs, const comp_unit<Tags...>& rhs) {
+		using underlying_t = typename comp_unit<Tags...>::underlying_t;
+		return underlying_t(lhs) <= underlying_t(rhs);
 	}
 }

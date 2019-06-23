@@ -10,8 +10,8 @@
 using namespace dla;
 using namespace int_literals;
 using inverse_time_t = frequency_unit;
-using inverse_velocity_t = detail::sorted_comp_unit_t<time_unit, base_unit<tag::length, -1, 1>>;
-using inverse_force_t = detail::sorted_comp_unit_t<base_unit<tag::time, 2, 1>, base_unit<tag::length, -1, 1>, base_unit<tag::weight, -1, 1>>;
+using inverse_velocity_t = detail::sorted_comp_unit_t<time_unit::tag_t, unit_tag<unit_name::length, -1, 1>>;
+using inverse_force_t = detail::sorted_comp_unit_t<unit_tag<unit_name::time, 2, 1>, unit_tag<unit_name::length, -1, 1>, unit_tag<unit_name::weight, -1, 1>>;
 DLA_TEST_CONSTEXPR auto time_value = 1_s;
 DLA_TEST_CONSTEXPR auto velocity = 1_m_s;
 DLA_TEST_CONSTEXPR auto force = 1_N;

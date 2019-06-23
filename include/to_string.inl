@@ -7,9 +7,11 @@
 #include <numeric>
 
 namespace dla {
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
+	template<class Name, std::intmax_t Num, std::intmax_t Den>
+	struct unit_tag;
+	template<class Tag>
 	struct base_unit;
-	template<class... Units>
+	template<class... Tags>
 	struct comp_unit;
 
     template<class T, std::size_t N>
@@ -19,58 +21,58 @@ namespace dla {
 
     // TODO: Make a clearer implementation for to_string
     template<class T>
-    struct to_string_impl {
-		template<class U>
-		struct unit_to_string;
-	    template<class Tag, std::intmax_t Num, std::intmax_t Den>
-        struct unit_to_string<base_unit<Tag, Num, Den>> {
-            static std::string call() {
-                return " " + std::string(Tag::symbol)
-                    + "^(" + (Num * Den < 0 ? "-" : "")
-                    + std::to_string(std::abs(Num)) + "/" + std::to_string(std::abs(Den)) + ")";
-            }
-        };
-	    template<class Tag, std::intmax_t Num>
-        struct unit_to_string<base_unit<Tag, Num, 1>> {
-            static std::string call() {
-                return " " + std::string(Tag::symbol) + "^" + (Num < 0 ? "-" : "") + std::to_string(std::abs(Num));
-            }
-        };
-	    template<class Tag, std::intmax_t Den>
-        struct unit_to_string<base_unit<Tag, 1, Den>> {
-            static std::string call() {
-                return " " + std::string(Tag::symbol)
-                    + "^(" + (Den < 0 ? "-" : "")
-                    + "1/" + std::to_string(std::abs(Den)) + ")";
-            }
-        };
-	    template<class Tag>
-        struct unit_to_string<base_unit<Tag, 1, 1>> {
-            static std::string call() {
-                return " " + std::string(Tag::symbol);
-            }
-        };
-        static auto call(const T& val) = delete;
-    };
-	template<class Tag, std::intmax_t Num, std::intmax_t Den>
-    struct to_string_impl<base_unit<Tag, Num, Den>> {
-        static auto call(const base_unit<Tag, Num, Den>& val) {
-            return std::to_string(float(val)) + to_string_impl<int>::unit_to_string<base_unit<Tag, Num, Den>>::call();
+    struct tag_to_string;
+    template<class Name, std::intmax_t Num, std::intmax_t Den>
+    struct tag_to_string<unit_tag<Name, Num, Den>> {
+        static std::string call() {
+            return " " + std::string(Name::symbol)
+                + "^(" + (Num * Den < 0 ? "-" : "")
+                + std::to_string(std::abs(Num)) + "/" + std::to_string(std::abs(Den)) + ")";
         }
     };
-	template<class... Units>
-    struct to_string_impl<comp_unit<Units...>> {
+    template<class Name, std::intmax_t Num>
+    struct tag_to_string<unit_tag<Name, Num, 1>> {
+        static std::string call() {
+            return " " + std::string(Name::symbol) + "^" + (Num < 0 ? "-" : "") + std::to_string(std::abs(Num));
+        }
+    };
+    template<class Name, std::intmax_t Den>
+    struct tag_to_string<unit_tag<Name, 1, Den>> {
+        static std::string call() {
+            return " " + std::string(Name::symbol)
+                + "^(" + (Den < 0 ? "-" : "")
+                + "1/" + std::to_string(std::abs(Den)) + ")";
+        }
+    };
+    template<class Name>
+    struct tag_to_string<unit_tag<Name, 1, 1>> {
+        static std::string call() {
+            return " " + std::string(Name::symbol);
+        }
+    };
+    template<class T>
+    struct to_string_impl {
+        static auto call(const T& val) = delete;
+    };
+	template<class Tag>
+    struct to_string_impl<base_unit<Tag>> {
+        static auto call(const base_unit<Tag>& val) {
+            return std::to_string(float(val)) + tag_to_string<Tag>::call();
+        }
+    };
+	template<class... Tags>
+    struct to_string_impl<comp_unit<Tags...>> {
 	private:
 		template<class lUnit, class rUnit>
 		struct sorting_predicate {
-			static constexpr bool value = lUnit::ratio::num * rUnit::ratio::den < rUnit::ratio::num * lUnit::ratio::den;
+			static constexpr bool value = lUnit::ratio_t::num * rUnit::ratio_t::den < rUnit::ratio_t::num * lUnit::ratio_t::den;
 		};
 
-        using sortedUnits = detail::tuple_selection_sort_t<sorting_predicate, std::tuple<Units...>>;
+        using sortedTags = detail::tuple_selection_sort_t<sorting_predicate, std::tuple<Tags...>>;
     public:
-        static auto call(const comp_unit<Units...>& val) {
+        static auto call(const comp_unit<Tags...>& val) {
 			return std::to_string(float(val))
-				+ std::apply([](auto... v) { return (to_string_impl<int>::unit_to_string<decltype(v)>::call() + ...); }, sortedUnits{});
+				+ std::apply([](auto... v) { return (tag_to_string<decltype(v)>::call() + ...); }, sortedTags{});
         }
     };
 
@@ -109,15 +111,15 @@ namespace dla {
     struct stream_insert_impl {
         static decltype(auto) call(const T& val) = delete;
     };
-	template<class CharT, class Traits, class Tag, std::intmax_t Num, std::intmax_t Den>
-    struct stream_insert_impl<CharT, Traits, base_unit<Tag, Num, Den>> {
-        static decltype(auto) call(std::basic_ostream<CharT, Traits>& stream, const base_unit<Tag, Num, Den>& val) {
+	template<class CharT, class Traits, class Tag>
+    struct stream_insert_impl<CharT, Traits, base_unit<Tag>> {
+        static decltype(auto) call(std::basic_ostream<CharT, Traits>& stream, const base_unit<Tag>& val) {
             return stream << to_string(val);
         }
     };
-	template<class CharT, class Traits, class... Units>
-    struct stream_insert_impl<CharT, Traits, comp_unit<Units...>> {
-        static decltype(auto) call(std::basic_ostream<CharT, Traits>& stream, const comp_unit<Units...>& val) {
+	template<class CharT, class Traits, class... Tags>
+    struct stream_insert_impl<CharT, Traits, comp_unit<Tags...>> {
+        static decltype(auto) call(std::basic_ostream<CharT, Traits>& stream, const comp_unit<Tags...>& val) {
             return stream << to_string(val);
         }
     };
