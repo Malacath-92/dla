@@ -14,7 +14,7 @@ else()
   add_compile_options("$<$<CONFIG:RELEASE>:-O3>")
 endif()
 
-include_directories("include")
+include_directories("include/dla")
 
 # Load Conan
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
