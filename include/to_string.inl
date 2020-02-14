@@ -20,34 +20,46 @@ namespace dla {
     struct mat;
 
     // TODO: Make a clearer implementation for to_string
+
+    template<std::intmax_t Num, std::intmax_t Den>
+    struct ratio_to_string {
+        static std::string call() {
+            return (Num * Den < 0 ? "-" : "")
+                + std::to_string(std::abs(Num))
+                + "/"
+                + std::to_string(std::abs(Den));
+        }
+    };
+    template<std::intmax_t Num>
+    struct ratio_to_string<Num, 1> {
+        static std::string call() {
+            return std::to_string(Num);
+        }
+    };
+
     template<class T>
     struct tag_to_string;
     template<class Name, std::intmax_t Num, std::intmax_t Den>
     struct tag_to_string<unit_tag<Name, Num, Den>> {
         static std::string call() {
-            return " " + std::string(Name::symbol)
-                + "^(" + (Num * Den < 0 ? "-" : "")
-                + std::to_string(std::abs(Num)) + "/" + std::to_string(std::abs(Den)) + ")";
+            return std::string(Name::symbol)
+                + "^("
+                + ratio_to_string<Num, Den>::call()
+                + ")";
         }
     };
     template<class Name, std::intmax_t Num>
     struct tag_to_string<unit_tag<Name, Num, 1>> {
         static std::string call() {
-            return " " + std::string(Name::symbol) + "^" + (Num < 0 ? "-" : "") + std::to_string(std::abs(Num));
-        }
-    };
-    template<class Name, std::intmax_t Den>
-    struct tag_to_string<unit_tag<Name, 1, Den>> {
-        static std::string call() {
-            return " " + std::string(Name::symbol)
-                + "^(" + (Den < 0 ? "-" : "")
-                + "1/" + std::to_string(std::abs(Den)) + ")";
+            return std::string(Name::symbol)
+            + "^"
+            + ratio_to_string<Num, 1>::call();
         }
     };
     template<class Name>
     struct tag_to_string<unit_tag<Name, 1, 1>> {
         static std::string call() {
-            return " " + std::string(Name::symbol);
+            return std::string(Name::symbol);
         }
     };
     template<class T>
