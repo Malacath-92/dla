@@ -64,12 +64,14 @@ namespace dla {
     };
     template<class T>
     struct to_string_impl {
-        static auto call(const T& val) = delete;
+        static auto call(const T& val) {
+            return std::to_string(val);
+        }
     };
 	template<class Tag>
     struct to_string_impl<base_unit<Tag>> {
         static auto call(const base_unit<Tag>& val) {
-            return std::to_string(float(val)) + tag_to_string<Tag>::call();
+            return std::to_string(float(val)) + ' ' + tag_to_string<Tag>::call();
         }
     };
 	template<class... Tags>
@@ -84,7 +86,7 @@ namespace dla {
     public:
         static auto call(const comp_unit<Tags...>& val) {
 			return std::to_string(float(val))
-				+ std::apply([](auto... v) { return (tag_to_string<decltype(v)>::call() + ...); }, sortedTags{});
+				+ std::apply([](auto... v) { return ((' ' + tag_to_string<decltype(v)>::call()) + ...); }, sortedTags{});
         }
     };
 
@@ -92,12 +94,12 @@ namespace dla {
     struct to_string_impl<vec<T, N>> {
         static auto call(const vec<T, N>& val) {
             if constexpr (N == 1) {
-                return std::to_string(val.x);
+                return to_string(val.x);
             }
             else {
 				std::string list = std::to_string(val.x);
                 for (std::size_t i = 1; i < N; i++) {
-                    list += ", " + std::to_string(val[i]);
+                    list += ", " + to_string(val[i]);
                 }
                 return "{ " + list + " }";
             }
@@ -107,7 +109,7 @@ namespace dla {
     struct to_string_impl<mat<T, N, M>> {
         static auto call(const mat<T, N, M>& val) {
 			if constexpr(N == 1 && M == 1) {
-				return std::to_string(val.x.x);
+				return to_string(val.x.x);
 			}
 			else {
 				std::string list = to_string(val.x);
