@@ -12,6 +12,9 @@ image:
 clone_folder: c:/dla/
 
 before_build:
+- cmd: pip install conan --upgrade
+- cmd: conan user
+- cmd: conan --version
 - ps: >-
     if ($ENV:PLATFORM -eq "x86") {
         $ENV:GENERATOR="Visual Studio 15 2017"
@@ -19,10 +22,8 @@ before_build:
     else {
         $ENV:GENERATOR="Visual Studio 15 2017 Win64"
     }
-    
+
     $ENV:PATH="$ENV:PATH;C:\Users\appveyor\AppData\Roaming\Python\Scripts"
-    
-    pip install --user conan
 
     mkdir build
     
