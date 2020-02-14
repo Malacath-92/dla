@@ -50,6 +50,8 @@ matrix:
 
 install:
     - pip install --user conan
+    - conan user
+    - conan --version
 
 before_install:
     - eval "${MATRIX_EVAL}"
