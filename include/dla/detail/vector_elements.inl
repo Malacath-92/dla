@@ -111,7 +111,7 @@ namespace dla::detail {
     
     template<class T>
     constexpr vec_elements<T, 4>::vec_elements(T&& px, const vec_elements<T, 2>& vyz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
-        x(std::move(x)), y(vyz.y), z(vyz.z), w(std::move(w)) {}
+        x(std::move(px)), y(vyz.y), z(vyz.z), w(std::move(pw)) {}
     
     template<class T>
     constexpr vec_elements<T, 4>::vec_elements(T&& px, T&& py, const vec_elements<T, 2>& vzw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
