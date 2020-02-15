@@ -66,6 +66,16 @@ namespace dla::detail {
 	constexpr vec_elements<T, 3>::vec_elements(T&& px, T&& py, T&& pz) noexcept(std::is_nothrow_move_constructible_v<T>) :
         x(std::move(px)), y(std::move(py)), z(std::move(pz)) {}
 
+
+    template<class T>
+    constexpr vec_elements<T, 3>::vec_elements(const vec_elements<T, 2>& vxy, T&& pz) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(vxy.x), y(vxy.y), z(std::move(pz)) {}
+    
+    template<class T>
+    constexpr vec_elements<T, 3>::vec_elements(T&& px, const vec_elements<T, 2>& vyz) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(std::move(px)), y(vyz.y), z(vyz.z) {}
+
+
 	template<class T>
 	template<class U, typename>
 	constexpr vec_elements<T, 3>::vec_elements(const vec_elements<U, 3>& val) :
@@ -93,6 +103,32 @@ namespace dla::detail {
 	template<class U, typename>
 	constexpr vec_elements<T, 4>::vec_elements(T&& px, T&& py, T&& pz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>) :
         x(std::move(px)), y(std::move(py)), z(std::move(pz)), w(std::move(pw)) {}
+
+
+    template<class T>
+    constexpr vec_elements<T, 4>::vec_elements(const vec_elements<T, 2>& vxy, T&& pz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(vxy.x), y(vxy.y), z(std::move(pz)), w(std::move(pw)) {}
+    
+    template<class T>
+    constexpr vec_elements<T, 4>::vec_elements(T&& px, const vec_elements<T, 2>& vyz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(std::move(x)), y(vyz.y), z(vyz.z), w(std::move(w)) {}
+    
+    template<class T>
+    constexpr vec_elements<T, 4>::vec_elements(T&& px, T&& py, const vec_elements<T, 2>& vzw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(std::move(px)), y(std::move(py)), z(vzw.z), w(vzw.w) {}
+    
+    template<class T>
+    constexpr vec_elements<T, 4>::vec_elements(const vec_elements<T, 2>& vxy, const vec_elements<T, 2>& vzw) noexcept(std::is_nothrow_copy_constructible_v<T>) :
+        x(vxy.x), y(vxy.y), z(vzw.z), w(vzw.w)  {}
+    
+    template<class T>
+    constexpr vec_elements<T, 4>::vec_elements(const vec_elements<T, 3>& vxyz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(vxyz.x), y(vxyz.y), z(vxyz.z), w(std::move(pw)) {}
+    
+    template<class T>
+    constexpr vec_elements<T, 4>::vec_elements(T&& px, const vec_elements<T, 3>& vyzw) noexcept(std::is_nothrow_move_constructible_v<T>&& std::is_nothrow_copy_constructible_v<T>) :
+        x(std::move(px)), y(vyzw.y), z(vyzw.z), w(vyzw.w) {}
+
 
     template<class T>
     template<class U, typename>

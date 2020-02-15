@@ -81,6 +81,9 @@ namespace dla::detail {
 
 		template<class U = T, typename = std::enable_if_t<!std::is_same_v<const U&, T&&>>>
 		constexpr vec_elements(T&& px, T&& py, T&& pz) noexcept(std::is_nothrow_move_constructible_v<T>);
+		
+		constexpr vec_elements(const vec_elements<T, 2>& vxy, T&& pz) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
+		constexpr vec_elements(T&& px, const vec_elements<T, 2>& vyz) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
 
 		template<class U, typename = std::enable_if_t<is_element_convertible_v<U, T>>>
 		constexpr explicit vec_elements(const vec_elements<U, 3>& val);
@@ -104,6 +107,13 @@ namespace dla::detail {
 		constexpr explicit vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>);
 
 		constexpr vec_elements(const T& px, const T& py, const T& pz, const T& pw) noexcept(std::is_nothrow_copy_constructible_v<T>);
+
+		constexpr vec_elements(const vec_elements<T, 2>& vxy, T&& pz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
+		constexpr vec_elements(T&& px, const vec_elements<T, 2>& vyz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
+		constexpr vec_elements(T&& px, T&& py, const vec_elements<T, 2>& vzw) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
+		constexpr vec_elements(const vec_elements<T, 2>& vxy, const vec_elements<T, 2>& vzw) noexcept(std::is_nothrow_copy_constructible_v<T>);
+		constexpr vec_elements(const vec_elements<T, 3>& vxyz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
+		constexpr vec_elements(T&& px, const vec_elements<T, 3>& vyzw) noexcept(std::is_nothrow_move_constructible_v<T> && std::is_nothrow_copy_constructible_v<T>);
 
 		template<class U = T, typename = std::enable_if_t<!std::is_same_v<const U&, T&&>>>
 		constexpr vec_elements(T&& px, T&& py, T&& pz, T&& pw) noexcept(std::is_nothrow_move_constructible_v<T>);
