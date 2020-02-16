@@ -14,6 +14,13 @@ namespace dla::math {
 
     template<class T>
     constexpr auto abs(const T& val);
+
+    template<class T>
+    DLA_OPTIMISTIC_CONSTEXPR auto floor(const T& val);
+    template<class T>
+    DLA_OPTIMISTIC_CONSTEXPR auto ceil(const T& val);
+    template<class T>
+    DLA_OPTIMISTIC_CONSTEXPR auto round(const T& val);
 }
 
 #include "scalar_math.inl"
