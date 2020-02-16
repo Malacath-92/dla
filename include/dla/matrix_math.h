@@ -29,46 +29,46 @@ namespace dla {
     template<class T, class U, std::size_t N, std::size_t M>
     constexpr auto operator>>(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
 
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_plus_v<T, U>>>
     constexpr auto operator+(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_minus_v<T, U>>>
     constexpr auto operator-(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_multiply_v<T, U>>>
     constexpr auto operator*(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_divide_v<T, U>>>
     constexpr auto operator/(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_modulo_v<T, U>>>
     constexpr auto operator%(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_bitwise_and_v<T, U>>>
     constexpr auto operator&(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_bitwise_or_v<T, U>>>
     constexpr auto operator|(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_bitwise_xor_v<T, U>>>
     constexpr auto operator^(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_left_shift_v<T, U>>>
     constexpr auto operator<<(const mat<T, N, M>& lhs, const U& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_right_shift_v<T, U>>>
     constexpr auto operator>>(const mat<T, N, M>& lhs, const U& rhs) noexcept;
 
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_plus_v<T, U>>>
     constexpr auto operator+(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_minus_v<T, U>>>
     constexpr auto operator-(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_multiply_v<T, U>>>
     constexpr auto operator*(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_divide_v<T, U>>>
     constexpr auto operator/(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_modulo_v<T, U>>>
     constexpr auto operator%(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_bitwise_and_v<T, U>>>
     constexpr auto operator&(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_bitwise_or_v<T, U>>>
     constexpr auto operator|(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_bitwise_xor_v<T, U>>>
     constexpr auto operator^(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_left_shift_v<T, U>>>
     constexpr auto operator<<(const T& lhs, const mat<U, N, M>& rhs) noexcept;
-    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T>>>
+    template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<T> && overloads_right_shift_v<T, U>>>
     constexpr auto operator>>(const T& lhs, const mat<U, N, M>& rhs) noexcept;
 
     template<class T, std::size_t N, std::size_t M>
