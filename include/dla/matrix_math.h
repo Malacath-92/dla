@@ -88,6 +88,13 @@ namespace dla {
 
     template<class T, std::size_t N, std::size_t M>
     constexpr auto abs(const mat<T, N, M>& val) noexcept;
+    
+    template<class T, std::size_t N, std::size_t M>
+    constexpr auto floor(const mat<T, N, M>& val) noexcept;
+    template<class T, std::size_t N, std::size_t M>
+    constexpr auto ceil(const mat<T, N, M>& val) noexcept;
+    template<class T, std::size_t N, std::size_t M>
+    constexpr auto round(const mat<T, N, M>& val) noexcept;
 
     template<class T, std::size_t N, std::size_t M>
     constexpr auto transpose(const mat<T, N, M>& val) noexcept;

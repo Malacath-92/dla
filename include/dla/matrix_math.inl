@@ -1,6 +1,7 @@
 #pragma once
 
 #include "matrix_math.h"
+#include "vector_math.h"
 
 #include <cmath>
 
@@ -149,20 +150,27 @@ namespace dla {
         return res;
     }
 
-    template<class T, std::size_t N, std::size_t M>
-    constexpr auto abs(const mat<T, N, M>& val) noexcept {
-        using res_t = mat<T, N, M>;
-        res_t res{};
-        auto val_it = val.begin();
-        auto it = res.begin();
-        const auto it_end = res.end();
-        for (; it != it_end;) {
-            *it = math::abs(*val_it);
-            ++val_it;
-            ++it;
-        }
-        return res;
+#define MAKE_ELEMENTWISE_MATH_FUNCTION(fun) \
+    template<class T, std::size_t N, std::size_t M> \
+    constexpr auto fun(const mat<T, N, M>& val) noexcept { \
+        using res_t = mat<T, N, M>; \
+        res_t res{}; \
+        auto val_it = val.begin(); \
+        auto it = res.begin(); \
+        const auto it_end = res.end(); \
+        for (; it != it_end;) { \
+            *it = dla::fun(*val_it); \
+            ++val_it; \
+            ++it; \
+        } \
+        return res; \
     }
+    MAKE_ELEMENTWISE_MATH_FUNCTION(abs)
+
+    MAKE_ELEMENTWISE_MATH_FUNCTION(floor)
+    MAKE_ELEMENTWISE_MATH_FUNCTION(ceil)
+    MAKE_ELEMENTWISE_MATH_FUNCTION(round)
+#undef MAKE_ELEMENTWISE_MATH_FUNCTION
 
     template<class T, std::size_t N, std::size_t M>
     constexpr auto transpose(const mat<T, N, M>& val) noexcept {

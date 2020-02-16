@@ -148,20 +148,27 @@ namespace dla {
         return res;
     }
 
-    template<class T, std::size_t N>
-    constexpr auto abs(const vec<T, N>& val) noexcept {
-        using res_t = vec<T, N>;
-        res_t res{};
-        auto val_it = val.begin();
-        auto it = res.begin();
-        const auto it_end = res.end();
-        for (; it != it_end;) {
-            *it = math::abs(*val_it);
-            ++val_it;
-            ++it;
-        }
-        return res;
+#define MAKE_ELEMENTWISE_MATH_FUNCTION(fun) \
+    template<class T, std::size_t N> \
+    constexpr auto fun(const vec<T, N>& val) noexcept { \
+        using res_t = vec<T, N>; \
+        res_t res{}; \
+        auto val_it = val.begin(); \
+        auto it = res.begin(); \
+        const auto it_end = res.end(); \
+        for (; it != it_end;) { \
+            *it = math::fun(*val_it); \
+            ++val_it; \
+            ++it; \
+        } \
+        return res; \
     }
+    MAKE_ELEMENTWISE_MATH_FUNCTION(abs)
+
+    MAKE_ELEMENTWISE_MATH_FUNCTION(floor)
+    MAKE_ELEMENTWISE_MATH_FUNCTION(ceil)
+    MAKE_ELEMENTWISE_MATH_FUNCTION(round)
+#undef MAKE_ELEMENTWISE_MATH_FUNCTION
 
     template<class T, class U, std::size_t N, class Distance>
     DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric) noexcept {
