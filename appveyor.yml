@@ -7,7 +7,12 @@ configuration:
   - Release
 
 image:
-  - Visual Studio 2017
+  - Visual Studio 2019
+
+environment:
+  matrix:
+    - TOOLSET: MSVC
+    - TOOLSET: Clang
 
 clone_folder: c:/dla/
 
@@ -17,10 +22,17 @@ before_build:
 - cmd: conan --version
 - ps: >-
     if ($ENV:PLATFORM -eq "x86") {
-        $ENV:GENERATOR="Visual Studio 15 2017"
+        $ENV:ARCH="Win32"
     }
     else {
-        $ENV:GENERATOR="Visual Studio 15 2017 Win64"
+        $ENV:ARCH="x64"
+    }
+
+    if ($ENV:TOOLSET -eq "MSVC") {
+        $ENV:TOOLSET="v142"
+    }
+    else {
+        $ENV:TOOLSET="ClangCL"
     }
 
     $ENV:PATH="$ENV:PATH;C:\Users\appveyor\AppData\Roaming\Python\Scripts"
@@ -29,7 +41,7 @@ before_build:
     
     cd build
     
-    cmake c:/dla/ -G $ENV:GENERATOR
+    cmake c:/dla/ -G"Visual Studio 16 2019" -A $ENV:ARCH -T $ENV:TOOLSET
 
 build_script:
 - cmake --build . --config %CONFIGURATION%
