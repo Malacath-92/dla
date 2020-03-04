@@ -31,4 +31,5 @@ else()
   conan_basic_setup(NO_OUTPUT_DIRS)
 endif()
 
+enable_testing()
 add_subdirectory(test)

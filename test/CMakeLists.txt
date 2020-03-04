@@ -1,6 +1,5 @@
 add_library(catch_main STATIC main.cpp)
 
-enable_testing()
 function(dlaAddTest NAME)
   message(STATUS "\tAdding test " ${NAME})
 
