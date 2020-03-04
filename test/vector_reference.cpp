@@ -4,7 +4,6 @@
 #include <matrix.h>
 #include <to_string.h>
 
-#define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
 #include <type_traits>

@@ -2,7 +2,6 @@
 
 #include <detail/tuple_find.h>
 
-#define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
 using namespace dla::detail;

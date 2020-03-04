@@ -31,21 +31,4 @@ else()
   conan_basic_setup(NO_OUTPUT_DIRS)
 endif()
 
-enable_testing()
-function(dlaAddTest NAME)
-  message(STATUS "\tAdding test " ${NAME})
-
-  add_executable(${NAME} ${NAME}.cpp)
-  add_test(${NAME} ${NAME})
-  set_target_properties(${NAME} PROPERTIES
-                        FOLDER dla_tests)
-  
-  set(CONSTEXPR_NAME ${NAME}_constexpr)
-  add_executable(${NAME}_constexpr ${NAME}.cpp)
-  target_compile_definitions(${NAME}_constexpr PRIVATE DLA_TEST_CONSTEXPR)
-	add_test(${NAME}_constexpr ${NAME}_constexpr)
-  set_target_properties(${NAME}_constexpr PROPERTIES
-                        FOLDER dla_tests)
-endfunction()
-
 add_subdirectory(test)
