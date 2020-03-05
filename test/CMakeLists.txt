@@ -1,4 +1,5 @@
 add_library(catch_main STATIC main.cpp)
+target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
 
 function(dlaAddTest NAME)
   message(STATUS "\tAdding test " ${NAME})
