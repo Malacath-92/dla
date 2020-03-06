@@ -16,19 +16,8 @@ endif()
 
 include_directories("include/dla")
 
-# Load Conan
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-  message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-  file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.13/conan.cmake" "${CMAKE_BINARY_DIR}/conan.cmake")
-endif()
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_check(REQUIRED)
-conan_cmake_run(CONANFILE "conanfile.txt" CMAKE_TARGETS BUILD missing)
+include(cmake/Conan.cmake)
+run_conan()
 
-if (MSVC)
-  conan_basic_setup()
-else()
-  conan_basic_setup(NO_OUTPUT_DIRS)
-endif()
-
+enable_testing()
 add_subdirectory(test)
