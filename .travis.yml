@@ -46,7 +46,7 @@ jobs:
           packages:
             - clang-9
       env:
-        - MATRIX_EVAL="CC=clang-9 && CXX=clang++9 && BUILD_TYPE=Debug"
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9 && BUILD_TYPE=Debug"
 
 install:
     - pip install --user conan
