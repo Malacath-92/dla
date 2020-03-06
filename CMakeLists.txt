@@ -16,6 +16,10 @@ endif()
 
 include_directories("include/dla")
 
+if(NOT MSVC)
+  SET(CONAN_EXTRA_OPTIONS NO_OUTPUT_DIRS)
+endif()
+
 include(cmake/conan.cmake)
 run_conan()
 
