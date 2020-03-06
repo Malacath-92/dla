@@ -10,9 +10,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-10
+            - g++-9
       env:
-        - MATRIX_EVAL="CC=gcc-10 && CXX=g++-10 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Release"
         
     - os: linux
       addons:
@@ -20,33 +20,33 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-10
+            - g++-9
       env:
-        - MATRIX_EVAL="CC=gcc-10 && CXX=g++-10 && BUILD_TYPE=Debug"
+        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Debug"
     
     - os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-bionic-10
+            - llvm-toolchain-bionic-9
           packages:
-            - clang-10
-            - g++-10 # Install g++ for stdlibc++
+            - clang-9
+            - g++-9 # Install g++ for stdlibc++
       env:
-        - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9 && BUILD_TYPE=Release"
     
     - os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-bionic-10
+            - llvm-toolchain-bionic-9
           packages:
-            - clang-10
-            - g++-10 # Install g++ for stdlibc++
+            - clang-9
+            - g++-9 # Install g++ for stdlibc++
       env:
-        - MATRIX_EVAL="CC=clang-10 && CXX=clang++10 && BUILD_TYPE=Debug"
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++9 && BUILD_TYPE=Debug"
 
 install:
     - pip install --user conan
