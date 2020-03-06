@@ -6,7 +6,7 @@ function(dlaAddTest NAME)
 
   add_executable(${NAME} ${NAME}.cpp)
   target_link_libraries(${NAME} PRIVATE catch_main)
-  add_test(${NAME} ${NAME})
+  add_test(${NAME} ${NAME} COMMAND $<TARGET_FILE:${NAME}>)
   set_target_properties(${NAME} PROPERTIES
                         FOLDER dla_tests)
   
@@ -14,7 +14,7 @@ function(dlaAddTest NAME)
   add_executable(${CONSTEXPR_NAME} ${NAME}.cpp)
   target_link_libraries(${CONSTEXPR_NAME} PRIVATE catch_main)
   target_compile_definitions(${CONSTEXPR_NAME} PRIVATE DLA_TEST_CONSTEXPR)
-	add_test(${CONSTEXPR_NAME} ${CONSTEXPR_NAME})
+	add_test(${CONSTEXPR_NAME} ${CONSTEXPR_NAME} COMMAND $<TARGET_FILE:${CONSTEXPR_NAME}>)
   set_target_properties(${CONSTEXPR_NAME} PROPERTIES
                         FOLDER dla_tests)
 endfunction()
