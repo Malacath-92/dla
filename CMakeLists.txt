@@ -16,7 +16,7 @@ endif()
 
 include_directories("include/dla")
 
-include(cmake/Conan.cmake)
+include(cmake/conan.cmake)
 run_conan()
 
 enable_testing()
