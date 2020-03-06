@@ -12,7 +12,7 @@ matrix:
           packages:
             - g++-10
       env:
-        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-10 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CC=gcc-10 && CXX=g++-10 && BUILD_TYPE=Release"
         
     - os: linux
       addons:
@@ -22,14 +22,14 @@ matrix:
           packages:
             - g++-10
       env:
-        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-10 && BUILD_TYPE=Debug"
+        - MATRIX_EVAL="CC=gcc-10 && CXX=g++-10 && BUILD_TYPE=Debug"
     
     - os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-8
+            - llvm-toolchain-bionic-10
           packages:
             - clang-10
             - g++-10 # Install g++ for stdlibc++
@@ -41,7 +41,7 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-8
+            - llvm-toolchain-bionic-10
           packages:
             - clang-10
             - g++-10 # Install g++ for stdlibc++
