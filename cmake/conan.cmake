@@ -1,9 +1,14 @@
 macro(run_conan)
 # Download automatically, you can also just copy the conan.cmake file
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-    message(
-        STATUS
-            "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+    if(GNU)
+        # A bug in newer versions prevents building with gcc
+        set(CONAN_SOURCE_URL "https://github.com/conan-io/cmake-conan/raw/v0.13/conan.cmake")
+    else()
+        set(CONAN_SOURCE_URL "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake")
+    endif()
+
+    message(STATUS "Downloading conan.cmake from ${CONAN_SOURCE_URL}")
     file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake"
             "${CMAKE_BINARY_DIR}/conan.cmake")
 endif()
