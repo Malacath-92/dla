@@ -57,6 +57,8 @@ jobs:
 install:
     - pip install --user conan
     - conan user
+    - conan profile new default --detect --force
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
     - conan --version
 
 before_install:
