@@ -1,6 +1,7 @@
 os: linux
 dist: bionic
 language: cpp
+python: "3.7"
 
 jobs:
   include:
@@ -8,11 +9,9 @@ jobs:
       addons:
         apt:
           sources:
-            - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
             - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages:
-            - clang-9 # Install clang for libc++
+            - gcc-9
             - g++-9
       env:
         - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Release"
@@ -21,11 +20,9 @@ jobs:
       addons:
         apt:
           sources:
-            - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
-              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
             - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages:
-            - clang-9 # Install clang for libc++
+            - gcc-9
             - g++-9
       env:
         - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Debug"
