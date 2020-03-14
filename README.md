@@ -1,6 +1,19 @@
 # Dimensional analysis and linear algebra (dla)
-[![Build status](https://ci.appveyor.com/api/projects/status/jh4oxlm6i85ltqbm?svg=true)](https://ci.appveyor.com/project/Malacath-92/dla)
-[![Build Status](https://travis-ci.org/Malacath-92/dla.svg?branch=master)](https://travis-ci.org/Malacath-92/dla)
+
+<p align="center">
+  <a href="https://isocpp.org/">
+      <img src="https://img.shields.io/badge/language-C%2B%2B17-blue.svg">
+  </a>
+  <a href="https://ci.appveyor.com/project/Malacath-92/dla/branch/master">
+      <img src="https://ci.appveyor.com/api/projects/status/jh4oxlm6i85ltqbm/branch/master?svg=true">
+  </a>
+  <a href="https://travis-ci.org/Malacath-92/dla">
+      <img src="https://travis-ci.org/Malacath-92/dla.svg?branch=master">
+  </a>
+  <a href="https://opensource.org/licenses/MIT" >
+      <img src="https://img.shields.io/apm/l/vim-mode.svg">
+  </a>
+</p>
 
 **The library is a work in progress.**
 
