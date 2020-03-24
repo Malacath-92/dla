@@ -41,7 +41,7 @@ before_build:
     
     cd build
     
-    cmake c:/dla/ -G"Visual Studio 16 2019" -A $ENV:ARCH -T $ENV:TOOLSET
+    cmake c:/dla/ -G"Visual Studio 16 2019" -A $ENV:ARCH -T $ENV:TOOLSET -DDLA_BUILD_TESTS=ON
 
 build_script:
 - cmake --build . --config %CONFIGURATION%

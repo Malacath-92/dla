@@ -1,8 +1,8 @@
 #include "common.h"
 
-#include <matrix.h>
-#include <matrix_math.h>
-#include <to_string.h>
+#include <dla/matrix.h>
+#include <dla/matrix_math.h>
+#include <dla/to_string.h>
 
 #include <catch2/catch.hpp>
 

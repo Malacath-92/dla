@@ -1,8 +1,8 @@
 #include "common.h"
 
-#include <vector.h>
-#include <matrix.h>
-#include <type_traits.h>
+#include <dla/vector.h>
+#include <dla/matrix.h>
+#include <dla/type_traits.h>
 
 #include <catch2/catch.hpp>
 

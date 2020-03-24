@@ -1,10 +1,10 @@
 #include "common.h"
 
-#include <vector.h>
-#include <matrix.h>
-#include <units.h>
-#include <scalar_math.h>
-#include <to_string.h>
+#include <dla/vector.h>
+#include <dla/matrix.h>
+#include <dla/units.h>
+#include <dla/scalar_math.h>
+#include <dla/to_string.h>
 
 #include <catch2/catch.hpp>
 

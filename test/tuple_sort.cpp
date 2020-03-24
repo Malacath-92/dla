@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include <detail/tuple_sort.h>
+#include <dla/detail/tuple_sort.h>
 
 #include <catch2/catch.hpp>
 
