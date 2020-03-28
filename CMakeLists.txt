@@ -17,10 +17,6 @@ if(DLA_BUILD_TESTS)
 	add_library(dla_test INTERFACE)
 	target_link_libraries(dla_test INTERFACE dla dla_warnings)
 
-	if(NOT MSVC)
-	SET(CONAN_EXTRA_OPTIONS NO_OUTPUT_DIRS)
-	endif()
-
 	include(cmake/conan.cmake)
 	run_conan()
 
