@@ -17,8 +17,11 @@ if(DLA_BUILD_TESTS)
 	add_library(dla_test INTERFACE)
 	target_link_libraries(dla_test INTERFACE dla dla_warnings)
 
-    if(NOT MSVC)
-        SET(CONAN_EXTRA_OPTIONS NO_OUTPUT_DIRS)
+	get_property(IS_MULTI_GENERATOR GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+	if(NOT IS_MULTI_GENERATOR)
+		# The default option is only useful to write package functions for binary libraries
+		# Unsetting the default here does not make any difference for multi-generators, yet causes CI to fail
+		SET(CONAN_EXTRA_OPTIONS NO_OUTPUT_DIRS)
 	endif()
 	
 	include(cmake/conan.cmake)
