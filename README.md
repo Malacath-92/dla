@@ -10,6 +10,9 @@
   <a href="https://travis-ci.org/Malacath-92/dla">
       <img src="https://travis-ci.org/Malacath-92/dla.svg?branch=master">
   </a>
+  <a href="https://github.com/Malacath-92/dla/actions">
+      <img src="https://github.com/Malacath-92/dla/workflows/Github%20Actions%20CI/badge.svg">
+  </a>
   <a href="https://opensource.org/licenses/MIT" >
       <img src="https://img.shields.io/apm/l/vim-mode.svg">
   </a>
