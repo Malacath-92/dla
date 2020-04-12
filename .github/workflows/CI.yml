@@ -8,7 +8,25 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, ubuntu-latest]
+        build_type: [Debug, Release]
+        include: 
+        - os: macos-latest
+          name: "MacOS clang"
+          c_compiler: clang
+          cxx_compiler: clang++
+        - os: ubuntu-latest
+          name: "Ubuntu clang"
+          c_compiler: clang-9
+          cxx_compiler: clang++-9
+        - os: ubuntu-latest 
+          name: "Ubuntu gcc"
+          c_compiler: gcc-9
+          cxx_compiler: g++-9
 
     steps:
     - uses: actions/checkout@v2
@@ -25,7 +43,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DDLA_BUILD_TESTS=ON
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DDLA_BUILD_TESTS=ON
 
     - name: Build
       run: |
