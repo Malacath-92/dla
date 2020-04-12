@@ -12,19 +12,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, ubuntu-latest]
+        name: ["MacOS clang", "Ubuntu clang", "Ubuntu gcc"]
         build_type: [Debug, Release]
         include: 
-        - os: macos-latest
-          name: "MacOS clang"
+        - name: "MacOS clang"
+          os: macos-latest
           c_compiler: clang
           cxx_compiler: clang++
-        - os: ubuntu-latest
-          name: "Ubuntu clang"
+        - name: "Ubuntu clang"
+          os: ubuntu-latest
           c_compiler: clang-9
           cxx_compiler: clang++-9
-        - os: ubuntu-latest 
-          name: "Ubuntu gcc"
+        - name: "Ubuntu gcc"
+          os: ubuntu-latest 
           c_compiler: gcc-9
           cxx_compiler: g++-9
 
