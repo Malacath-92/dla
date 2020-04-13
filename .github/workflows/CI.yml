@@ -24,7 +24,7 @@ jobs:
           cxx_compiler: clang++
         - os: macos-latest
           name: MacOS
-        - os: ubunutu-latest
+        - os: ubuntu-latest
           name: Ubuntu
 
     steps:
