@@ -8,25 +8,20 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.name }}
+    name: (${{ matrix.os }}) (${{ matrix.compiler }}) (${{ matrix.build_type }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        name: ["MacOS clang", "Ubuntu clang", "Ubuntu gcc"]
+        os: [macos-latest, ubuntu-latest]
+        compiler: [gcc, clang]
         build_type: [Debug, Release]
         include: 
-        - name: "MacOS clang"
-          os: macos-latest
-          c_compiler: clang
-          cxx_compiler: clang++
-        - name: "Ubuntu clang"
-          os: ubuntu-latest
-          c_compiler: clang-9
-          cxx_compiler: clang++-9
-        - name: "Ubuntu gcc"
-          os: ubuntu-latest 
+        - compiler: gcc
           c_compiler: gcc-9
           cxx_compiler: g++-9
+        - compiler: clang
+          c_compiler: clang
+          cxx_compiler: clang++
 
     steps:
     - uses: actions/checkout@v2
