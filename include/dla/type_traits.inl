@@ -2,6 +2,10 @@
 
 #include "type_traits.h"
 
+#include <type_traits>
+#include <utility>
+#include <cstdint>
+
 namespace dla {
 	template<class Name, std::intmax_t Num, std::intmax_t Den>
 	struct unit_tag;
