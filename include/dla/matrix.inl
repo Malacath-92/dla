@@ -32,15 +32,12 @@ namespace dla {
                 }
             }
         }
-        if constexpr (!mat_index_operator_is_noexcept) {
-            throw std::out_of_range("Matrix index out of range!");
-        }
-
-#   ifdef _MSVC_LANG
-        __assume(false);
-#   else
-        __builtin_unreachable();
-#   endif
+        
+#if DLA_MAT_INDEX_OPERATOR_IS_NOEXCEPT
+        declare_unreachable();
+#else
+        throw std::out_of_range("Matrix index out of rance!");
+#endif
     }
     template<class T, std::size_t N, std::size_t M>
     constexpr typename mat<T, N, M>::reference mat<T, N, M>::operator[](std::size_t idx) noexcept(mat_index_operator_is_noexcept) {
@@ -58,15 +55,12 @@ namespace dla {
                 }
             }
         }
-        if constexpr (!mat_index_operator_is_noexcept) {
-            throw std::out_of_range("Matrix index out of range!");
-        }
 
-#   ifdef _MSVC_LANG
-        __assume(false);
-#   else
-        __builtin_unreachable();
-#   endif
+#if DLA_MAT_INDEX_OPERATOR_IS_NOEXCEPT
+        declare_unreachable();
+#else
+        throw std::out_of_range("Matrix index out of rance!");
+#endif
     }
     template<class T, std::size_t N, std::size_t M>
     constexpr typename mat<T, N, M>::col_reference mat<T, N, M>::get_col(std::size_t idx) noexcept(mat_index_operator_is_noexcept) {
@@ -80,15 +74,12 @@ namespace dla {
                 }
             }
         }
-        if constexpr (!mat_index_operator_is_noexcept) {
-            throw std::out_of_range("Matrix index out of range!");
-        }
-
-#   ifdef _MSVC_LANG
-        __assume(false);
-#   else
-        __builtin_unreachable();
-#   endif
+        
+#if DLA_MAT_INDEX_OPERATOR_IS_NOEXCEPT
+        declare_unreachable();
+#else
+        throw std::out_of_range("Matrix index out of rance!");
+#endif
     }
 
 #define MAKE_MATRIX_SCALAR_BINARY_ASSIGNEMT_OPERATOR(op) \

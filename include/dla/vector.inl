@@ -2,6 +2,8 @@
 
 #include "vector.h"
 
+#include "detail/defines.h"
+
 namespace dla {
     template<class T, std::size_t N>
     constexpr typename vec<T, N>::const_reference vec<T, N>::operator[](std::size_t idx) const noexcept(vec_index_operator_is_noexcept) {
@@ -15,15 +17,12 @@ namespace dla {
                 }
             }
         }
-        if constexpr (!vec_index_operator_is_noexcept) {
-            throw std::out_of_range("Vector index out of rance!");
-        }
-
-#   ifdef _MSVC_LANG
-        __assume(false);
-#   else
-        __builtin_unreachable();
-#   endif
+        
+#if DLA_VEC_INDEX_OPERATOR_IS_NOEXCEPT
+        declare_unreachable();
+#else
+        throw std::out_of_range("Vector index out of rance!");
+#endif
     }
     template<class T, std::size_t N>
     constexpr typename vec<T, N>::reference vec<T, N>::operator[](std::size_t idx) noexcept(vec_index_operator_is_noexcept) {

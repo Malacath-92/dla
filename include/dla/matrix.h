@@ -9,11 +9,13 @@
 #include "detail/vector_iterator.h"
 
 namespace dla {
-#ifdef DLA_INDEXING_OPERATOR_THROWS_OUT_OF_BOUNDS
-    inline constexpr bool mat_index_operator_is_noexcept = false;
+#if defined(__cpp_exceptions) && !defined(DLA_DISABLE_EXCEPTIONS)
+#   define DLA_MAT_INDEX_OPERATOR_IS_NOEXCEPT 1
 #else
-    inline constexpr bool mat_index_operator_is_noexcept = true;
+#   define DLA_MAT_INDEX_OPERATOR_IS_NOEXCEPT 0
 #endif
+
+    inline constexpr bool mat_index_operator_is_noexcept = static_cast<bool>(DLA_MAT_INDEX_OPERATOR_IS_NOEXCEPT);
 
     struct matrix_diagonal_t {};
     struct matrix_fill_t {};
