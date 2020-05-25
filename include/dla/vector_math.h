@@ -4,6 +4,7 @@
 
 #include "type_traits.h"
 #include "vector_distance.h"
+#include "detail/optimistic_constexpr.h"
 
 namespace dla {
     template<class T, std::size_t N>

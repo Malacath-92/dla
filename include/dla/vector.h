@@ -8,6 +8,7 @@
 
 #include "detail/vector_elements.h"
 #include "detail/vector_iterator.h"
+#include "detail/optimistic_constexpr.h"
 
 namespace dla {
 #if defined(__cpp_exceptions) && !defined(DLA_DISABLE_EXCEPTIONS)

@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "detail/detail.h"
+#include "detail/algorithm.h"
 #include "scalar_math.h"
 
 namespace dla {

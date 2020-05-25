@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <ratio>
 
-#include "detail.h"
+#include "string.h"
 #include "tuple_sort.h"
 #include "tuple_find.h"
 

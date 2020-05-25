@@ -6,7 +6,7 @@
 
 #include "units.h"
 
-#include "detail/detail.h"
+#include "detail/math.h"
 
 namespace dla::math {
     namespace custom {

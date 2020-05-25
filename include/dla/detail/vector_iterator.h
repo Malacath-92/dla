@@ -2,8 +2,6 @@
 
 #include <cstdint>
 
-#include "detail.h"
-
 // TODO: Conditional noexcept specifiers
 
 namespace dla::detail {

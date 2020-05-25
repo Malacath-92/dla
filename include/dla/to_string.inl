@@ -1,6 +1,5 @@
 #pragma once
 
-#include "detail/detail.h"
 #include "detail/tuple_sort.h"
 #include "to_string.h"
 
