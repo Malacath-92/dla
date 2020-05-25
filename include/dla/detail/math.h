@@ -1,9 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <type_traits>
-#include <algorithm>
-
 namespace dla::detail {
 	// Quick and dirty implementation, only run in constexpr context
 	// TODO: C++20 use consteval

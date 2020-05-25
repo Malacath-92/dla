@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cstdint>
+#include <functional>
 #include <type_traits>
-#include <algorithm>
 
 namespace dla::detail {
 	template<class InputIt, class T, class F>

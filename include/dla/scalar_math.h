@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detail/optimistic_constexpr.h"
+#include "detail/defines.h"
 
 #include <cstdint>
 
