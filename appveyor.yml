@@ -12,7 +12,7 @@ image:
 environment:
   matrix:
     - TOOLSET: MSVC
-#    - TOOLSET: Clang
+    - TOOLSET: Clang
 
 clone_folder: c:/dla/
 
