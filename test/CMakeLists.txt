@@ -6,13 +6,15 @@ set_target_properties(catch_main PROPERTIES
 function(dlaAddTest NAME)
 	message(STATUS "\tAdding test " ${NAME})
 
-	add_executable(${NAME} ${NAME}.cpp)
-	target_link_libraries(${NAME} PRIVATE catch_main dla_test)
-	add_test(${NAME} ${NAME})
-	set_target_properties(${NAME} PROPERTIES
+	set(TEST_NAME ${NAME}_test)
+	
+	add_executable(${TEST_NAME} ${NAME}.cpp)
+	target_link_libraries(${TEST_NAME} PRIVATE catch_main dla_test)
+	add_test(${TEST_NAME} ${TEST_NAME})
+	set_target_properties(${TEST_NAME} PROPERTIES
 						  FOLDER dla_tests)
 
-	set(CONSTEXPR_NAME ${NAME}_constexpr)
+	set(CONSTEXPR_NAME ${TEST_NAME}_constexpr)
 	add_executable(${CONSTEXPR_NAME} ${NAME}.cpp)
 	target_link_libraries(${CONSTEXPR_NAME} PRIVATE catch_main dla_test)
 	target_compile_definitions(${CONSTEXPR_NAME} PRIVATE DLA_TEST_CONSTEXPR)
