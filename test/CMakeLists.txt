@@ -1,5 +1,7 @@
 add_library(catch_main STATIC main.cpp)
 target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
+set_target_properties(catch_main PROPERTIES
+					  FOLDER dla_tests)
 
 function(dlaAddTest NAME)
 	message(STATUS "\tAdding test " ${NAME})
