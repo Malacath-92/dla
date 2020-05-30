@@ -14,7 +14,7 @@ function(dlaAddTest NAME)
 	set_target_properties(${TEST_NAME} PROPERTIES
 						  FOLDER dla_tests)
 
-	set(CONSTEXPR_NAME ${TEST_NAME}_constexpr)
+	set(CONSTEXPR_NAME ${NAME}_constexpr_test)
 	add_executable(${CONSTEXPR_NAME} ${NAME}.cpp)
 	target_link_libraries(${CONSTEXPR_NAME} PRIVATE catch_main dla_test)
 	target_compile_definitions(${CONSTEXPR_NAME} PRIVATE DLA_TEST_CONSTEXPR)
