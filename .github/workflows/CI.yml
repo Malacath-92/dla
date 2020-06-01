@@ -19,9 +19,11 @@ jobs:
         - compiler: gcc
           c_compiler: gcc-9
           cxx_compiler: g++-9
+          gen_metrics: OFF
         - compiler: clang
           c_compiler: clang
           cxx_compiler: clang++
+          gen_metrics: ON
         - os: macos-latest
           name: MacOS
         - os: ubuntu-latest
@@ -42,7 +44,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DDLA_BUILD_TESTS=ON
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DDLA_GENERATE_METRICS=${{matrix.gen_metrics}} -DDLA_BUILD_TESTS=ON
 
     - name: Build
       run: |
