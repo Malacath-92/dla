@@ -64,6 +64,6 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDLA_BUILD_TESTS=ON -DDLA_GENERATE_TIMINGS=$METRICS
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDLA_BUILD_TESTS=ON -DDLA_GENERATE_METRICS=$METRICS
   - cmake --build . -- -j2 
   - ctest --output-on-failure
