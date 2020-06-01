@@ -14,7 +14,7 @@ jobs:
             - gcc-9
             - g++-9
       env:
-        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Release" && METRICS=OFF
         
     - os: linux
       addons:
@@ -25,7 +25,7 @@ jobs:
             - gcc-9
             - g++-9
       env:
-        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Debug"
+        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9 && BUILD_TYPE=Debug" && METRICS=OFF
     
     - os: linux
       addons:
@@ -37,7 +37,7 @@ jobs:
           packages:
             - clang-9
       env:
-        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9 && BUILD_TYPE=Release" && METRICS=ON
     
     - os: linux
       addons:
@@ -49,7 +49,7 @@ jobs:
           packages:
             - clang-9
       env:
-        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9 && BUILD_TYPE=Debug"
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9 && BUILD_TYPE=Debug" && METRICS=ON
 
 install:
     - pip install --user conan
@@ -64,6 +64,6 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDLA_BUILD_TESTS=ON
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDLA_BUILD_TESTS=ON -DDLA_GENERATE_TIMINGS=$METRICS
   - cmake --build . -- -j2 
   - ctest --output-on-failure
