@@ -11,7 +11,7 @@ target_include_directories(dla INTERFACE "include")
 option(DLA_BUILD_TESTS "Build test suite for dla" OFF)
 
 if(CLANG AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "9.0.0")
-	option(DLA_GENERATE_TIMINGS "Build test suite for dla" OFF)
+	option(DLA_GENERATE_METRICS "Generate metrics for dla headers and tests if enabled" OFF)
 endif()
 
 if(DLA_BUILD_TESTS)
@@ -26,7 +26,7 @@ if(DLA_BUILD_TESTS)
 
 	add_library(dla_test INTERFACE)
 	target_link_libraries(dla_test INTERFACE dla dla_warnings)
-	if(DLA_GENERATE_TIMINGS)
+	if(DLA_GENERATE_METRICS)
 		target_compile_options(dla_test INTERFACE -ftime-trace)
 	endif()
 
@@ -44,14 +44,14 @@ if(DLA_BUILD_TESTS)
 	add_subdirectory(test)
 endif()
 
-if(DLA_GENERATE_TIMINGS)
+if(DLA_GENERATE_METRICS)
 
-	add_library(dla_timing_base INTERFACE)
-	target_link_libraries(dla_timing_base INTERFACE dla dla_warnings)
-	target_compile_options(dla_timing_base INTERFACE -ftime-trace)
+	add_library(dla_metrics_base INTERFACE)
+	target_link_libraries(dla_metrics_base INTERFACE dla dla_warnings)
+	target_compile_options(dla_metrics_base INTERFACE -ftime-trace)
 
-	function(dlaAddHeaderTiming PATH)
-		message(STATUS "\tAdding header timing " ${PATH})
+	function(dlaAddHeaderMetrics PATH)
+		message(STATUS "\tAdding metrics target for header " ${PATH})
 		
 		get_filename_component(NAME ${PATH} NAME_WE)
 		set(GENERATED_SOURCE "${CMAKE_BINARY_DIR}/${NAME}.cpp")
@@ -60,17 +60,17 @@ if(DLA_GENERATE_TIMINGS)
 #include <${PATH}>
 int main() {}")
 
-		set(TIMING_TARGET ${NAME}_timing)
-		add_executable(${TIMING_TARGET} ${GENERATED_SOURCE})
-		target_link_libraries(${TIMING_TARGET} PRIVATE dla dla_timing_base)
-		set_target_properties(${TIMING_TARGET} PROPERTIES
-							  FOLDER dla_timing)
+		set(METRICS_TARGET ${NAME}_metrics)
+		add_executable(${METRICS_TARGET} ${GENERATED_SOURCE})
+		target_link_libraries(${METRICS_TARGET} PRIVATE dla dla_metrics_base)
+		set_target_properties(${METRICS_TARGET} PROPERTIES
+							  FOLDER dla_metrics)
 	endfunction()
 
-	message(STATUS "Generating dla timing data")
+	message(STATUS "Generating dla metrics")
 	message(STATUS "Discovering all headers...")
 	file(GLOB_RECURSE files RELATIVE ${CMAKE_SOURCE_DIR}"/include" "include/*.h")
 	foreach(file ${files})
-		dlaAddHeaderTiming(${file})
+		dlaAddHeaderMetrics(${file})
 	endforeach()
 endif()
