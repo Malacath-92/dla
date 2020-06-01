@@ -1,6 +1,8 @@
 #pragma once
 
 #include <type_traits>
+#include <memory>
+#include <utility>
 
 namespace dla::detail {
 	// Dumbed down version of std::reference_wrapper which has better reference-semantics
