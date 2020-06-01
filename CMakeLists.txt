@@ -46,9 +46,9 @@ endif()
 
 if(DLA_GENERATE_TIMINGS)
 
-	add_library(dla_timing INTERFACE)
-	target_link_libraries(dla_timing INTERFACE dla dla_warnings)
-	target_compile_options(dla_timing INTERFACE -ftime-trace)
+	add_library(dla_timing_base INTERFACE)
+	target_link_libraries(dla_timing_base INTERFACE dla dla_warnings)
+	target_compile_options(dla_timing_base INTERFACE -ftime-trace)
 
 	function(dlaAddHeaderTiming PATH)
 		message(STATUS "\tAdding header timing " ${PATH})
@@ -62,7 +62,7 @@ int main() {}")
 
 		set(TIMING_TARGET ${NAME}_timing)
 		add_executable(${TIMING_TARGET} ${GENERATED_SOURCE})
-		target_link_libraries(${TIMING_TARGET} PRIVATE catch_main dla_timing)
+		target_link_libraries(${TIMING_TARGET} PRIVATE dla dla_timing_base)
 		set_target_properties(${TIMING_TARGET} PROPERTIES
 							  FOLDER dla_timing)
 	endfunction()
