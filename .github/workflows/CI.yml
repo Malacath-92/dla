@@ -56,7 +56,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics
-        path: metrics.json
+        path: build/metrics.json
 
     - name: Test
       run: |
