@@ -46,17 +46,17 @@ jobs:
         cd build
         cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER=${{matrix.c_compiler}} -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} -DDLA_GENERATE_METRICS=${{matrix.gen_metrics}} -DDLA_BUILD_TESTS=ON
 
-    - name: Metrics Artifact
-      if: matrix.compiler == 'clang'
-      uses: actions/upload-artifact@v2
-      with:
-        name: my-artifact
-        path: metrics.json
-
     - name: Build
       run: |
         cd build
         cmake --build .
+        
+    - name: Metrics Artifact
+      if: matrix.compiler == 'clang'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics
+        path: metrics.json
 
     - name: Test
       run: |
