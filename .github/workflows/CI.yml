@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]
-        compiler: [gcc, clang]
+        compiler: [GCC, Clang]
         build_type: [Debug, Release]
         include: 
         - compiler: gcc
@@ -51,12 +51,26 @@ jobs:
         cd build
         cmake --build .
         
-    - name: Metrics Artifact
+    - name: Metrics Tier 1 Artifact
       if: matrix.compiler == 'clang'
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics
-        path: build/metrics.json
+        name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 1
+        path: build/metrics/metrics_tier_1.json
+
+    - name: Metrics Tier 2 Artifact
+      if: matrix.compiler == 'clang'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 2
+        path: build/metrics/metrics_tier_2.json
+
+    - name: Metrics Tier 3 Artifact
+      if: matrix.compiler == 'clang'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 3
+        path: build/metrics/tier_3/
 
     - name: Test
       run: |
