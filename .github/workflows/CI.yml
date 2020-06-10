@@ -72,6 +72,12 @@ jobs:
         name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 3
         path: build/metrics/tier_3/
 
+    - name: Remove old artifacts
+      uses: c-hive/gha-remove-artifacts@v1
+      with:
+        age: '25 year'
+        skip-recent: 120
+
     - name: Test
       run: |
         cd build
