@@ -6,6 +6,6 @@ namespace dla::detail {
 			lhs++;
 			rhs++;
 		}
-		return static_cast<const unsigned char>(*lhs) - static_cast<const unsigned char>(*rhs);
+		return static_cast<int>(*lhs) - static_cast<int>(*rhs);
 	}
 }
