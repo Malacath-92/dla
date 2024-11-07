@@ -32,6 +32,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
+    - uses: lukka/get-cmake@v3.31.0
+    - uses: seanmiddleditch/gha-setup-ninja@v5
 
     - name: Prepare
       run: |
