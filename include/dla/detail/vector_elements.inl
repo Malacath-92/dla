@@ -24,6 +24,15 @@ namespace dla::detail {
 		return *this;
 	}
 
+	template<class T>
+	constexpr auto vec_elements<T, 1>::pod() const {
+        struct vec_pod
+        {
+            value_type x;
+        };
+        return vec_pod{ x };
+	}
+
 
     
     template<class T>
@@ -52,7 +61,18 @@ namespace dla::detail {
 		return *this;
 	}
 
+	template<class T>
+	constexpr auto vec_elements<T, 2>::pod() const {
+        struct vec_pod
+        {
+            value_type x;
+            value_type y;
+        };
+        return vec_pod{ x, y };
+	}
+
     
+
     template<class T>
     constexpr vec_elements<T, 3>::vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
         x(val), y(val), z(val) {}
@@ -89,7 +109,19 @@ namespace dla::detail {
 		z = val.z;
 		return *this;
 	}
+
+	template<class T>
+	constexpr auto vec_elements<T, 3>::pod() const {
+        struct vec_pod
+        {
+            value_type x;
+            value_type y;
+            value_type z;
+        };
+        return vec_pod{ x, y, z };
+	}
     
+
     
     template<class T>
     constexpr vec_elements<T, 4>::vec_elements(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
@@ -143,5 +175,17 @@ namespace dla::detail {
 		z = val.z;
 		w = val.w;
 		return *this;
+	}
+    
+	template<class T>
+	constexpr auto vec_elements<T, 4>::pod() const {
+        struct vec_pod
+        {
+            value_type x;
+            value_type y;
+            value_type z;
+            value_type w;
+        };
+        return vec_pod{ x, y, z, w };
 	}
 }
