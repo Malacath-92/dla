@@ -6,7 +6,7 @@
 
 #include <type_traits>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 using namespace dla;
 using imat3x4 = tmat3x4<int>;

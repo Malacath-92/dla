@@ -2,7 +2,7 @@
 
 #include <dla/detail/tuple_sort.h>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 template <class T, class U>
 struct sort_by_sizeof_in_descending_order {

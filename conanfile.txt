@@ -1,6 +1,5 @@
 [requires]
-catch2/2.4.0@bincrafters/stable
+catch2/3.7.1
 
 [generators]
-cmake
-cmake_multi
+CMakeDeps

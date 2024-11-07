@@ -1,4 +1,17 @@
 cmake_minimum_required(VERSION 3.9)
+
+option(DLA_BUILD_TESTS "Build test suite for dla" OFF)
+
+if(DLA_BUILD_TESTS)
+	# needs to happen before project definition
+	include(cmake/conan.cmake)
+	run_conan(
+		HOST_PROFILE default auto-cmake
+		BUILD_PROFILE default
+		INSTALL_ARGS --build=missing
+	)
+endif()
+
 project(dla LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -8,8 +21,6 @@ string(COMPARE EQUAL "Clang" "${CMAKE_CXX_COMPILER_ID}" CLANG)
 
 add_library(dla INTERFACE)
 target_include_directories(dla INTERFACE "include")
-
-option(DLA_BUILD_TESTS "Build test suite for dla" OFF)
 
 if(CLANG AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "9.0.0")
 	option(DLA_GENERATE_METRICS "Generate metrics for dla headers and tests if enabled" OFF)
@@ -32,16 +43,6 @@ if(DLA_BUILD_TESTS)
 	if(DLA_GENERATE_METRICS)
 		target_compile_options(dla_test INTERFACE -ftime-trace)
 	endif()
-
-	get_property(IS_MULTI_GENERATOR GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
-	if(NOT IS_MULTI_GENERATOR)
-		# The default option is only useful to write package functions for binary libraries
-		# Unsetting the default here does not make any difference for multi-generators, yet causes CI to fail
-		SET(CONAN_EXTRA_OPTIONS NO_OUTPUT_DIRS)
-	endif()
-	
-	include(cmake/conan.cmake)
-	run_conan()
 
 	enable_testing()
 	add_subdirectory(test)

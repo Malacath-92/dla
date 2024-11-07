@@ -2,7 +2,7 @@
 
 #include <dla/detail/tuple_find.h>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 using namespace dla::detail;
 using input_tuple_t = std::tuple<char, int, char, double, char, float>;

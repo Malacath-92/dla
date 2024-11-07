@@ -6,7 +6,7 @@
 #include <dla/scalar_math.h>
 #include <dla/to_string.h>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 using namespace dla;
 

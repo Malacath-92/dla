@@ -1,5 +1,7 @@
+find_package(Catch2 REQUIRED)
+
 add_library(catch_main STATIC main.cpp)
-target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
+target_link_libraries(catch_main PUBLIC Catch2::Catch2WithMain)
 set_target_properties(catch_main PROPERTIES
 					  FOLDER dla_tests)
 

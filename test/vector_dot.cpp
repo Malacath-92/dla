@@ -3,7 +3,7 @@
 #include <dla/vector.h>
 #include <dla/to_string.h>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 using namespace dla;
 DLA_TEST_CONSTEXPR auto right = ivec3(0, 1, 0);

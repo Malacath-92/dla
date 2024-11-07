@@ -4,7 +4,7 @@
 #include <dla/matrix_math.h>
 #include <dla/to_string.h>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 namespace dla {
 	using mat2 = tmat2<float>;
