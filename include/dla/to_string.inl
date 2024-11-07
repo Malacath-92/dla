@@ -96,7 +96,7 @@ namespace dla {
                 return to_string(val.x);
             }
             else {
-				std::string list = std::to_string(val.x);
+				std::string list = to_string(val.x);
                 for (std::size_t i = 1; i < N; i++) {
                     list += ", " + to_string(val[i]);
                 }
