@@ -17,8 +17,8 @@ jobs:
         build_type: [Debug, Release]
         include: 
         - compiler: gcc
-          c_compiler: gcc-13
-          cxx_compiler: g++-13
+          c_compiler: gcc-11
+          cxx_compiler: g++-11
           gen_metrics: OFF
         - compiler: clang
           c_compiler: clang
