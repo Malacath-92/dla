@@ -28,7 +28,7 @@ namespace dla {
 	#undef MAKE_UNIT_NAME
 	}
 
-	template<class Name, std::intmax_t Num, std::intmax_t Den>
+	template<class Name, std::intmax_t Num = 1, std::intmax_t Den = 1>
 	struct unit_tag {
 		using ratio_t = std::ratio<Num, Den>;
 		using name_t = Name;
