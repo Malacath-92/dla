@@ -14,6 +14,10 @@ namespace dla::math {
 
     template<class T>
     constexpr auto abs(const T& val);
+    template<class T>
+    constexpr auto min(const T& lhs, const T& rhs);
+    template<class T>
+    constexpr auto max(const T& lhs, const T& rhs);
 
     template<class T>
     DLA_OPTIMISTIC_CONSTEXPR auto floor(const T& val);

@@ -85,6 +85,18 @@ namespace dla::math {
             }
         };
         template<class T>
+        struct min_impl {
+            static constexpr auto call(const T& lhs, const T& rhs) {
+                return rhs < lhs ? rhs : lhs;
+            }
+        };
+        template<class T>
+        struct max_impl {
+            static constexpr auto call(const T& lhs, const T& rhs) {
+                return rhs > lhs ? rhs : lhs;
+            }
+        };
+        template<class T>
         struct floor_impl {
             static DLA_OPTIMISTIC_CONSTEXPR auto call(const T& val) {
                 // if (std::is_constant_evaluated()) {
@@ -165,6 +177,15 @@ namespace dla::math {
     template<class T>
     constexpr auto abs(const T& val) {
         return custom::abs_impl<T>::call(val);
+    }
+
+    template<class T>
+    constexpr auto min(const T& lhs, const T& rhs) {
+        return custom::min_impl<T>::call(lhs, rhs);
+    }
+    template<class T>
+    constexpr auto max(const T& lhs, const T& rhs) {
+        return custom::max_impl<T>::call(lhs, rhs);
     }
 
     template<class T>
