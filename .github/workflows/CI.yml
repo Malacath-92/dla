@@ -52,21 +52,21 @@ jobs:
         cmake --build .
         
     - name: Metrics Tier 1 Artifact
-      if: matrix.gen_metrics
+      if: matrix.gen_metrics == true
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 1
         path: build/metrics/metrics_tier_1.json
 
     - name: Metrics Tier 2 Artifact
-      if: matrix.gen_metrics
+      if: matrix.gen_metrics == true
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 2
         path: build/metrics/metrics_tier_2.json
 
     - name: Metrics Tier 3 Artifact
-      if: matrix.gen_metrics
+      if: matrix.gen_metrics == true
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }} Metrics Tier 3
