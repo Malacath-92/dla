@@ -78,6 +78,8 @@ namespace dla {
 		constexpr decltype(auto) operator*=(underlying_t rhs);
 		constexpr decltype(auto) operator/=(underlying_t rhs);
 	};
+	template<class Tag>
+	struct comp_unit<Tag> : base_unit<Tag> {};
 	template<>
 	struct comp_unit<> {
 		using underlying_t = float;
