@@ -38,6 +38,7 @@ namespace dla::detail {
 		template<class U, typename = std::enable_if_t<std::is_assignable_v<std::add_lvalue_reference_t<T>, U>>>
 		constexpr vec_elements& operator=(const vec_elements<U, 1>& val);
 
+        constexpr auto pod();
 		constexpr auto pod() const;
 
 		union { value_type x, r, s; };
@@ -63,7 +64,8 @@ namespace dla::detail {
 		constexpr explicit vec_elements(const vec_elements<U, 2>& val);
 		template<class U, typename = std::enable_if_t<std::is_assignable_v<std::add_lvalue_reference_t<T>, U>>>
 		constexpr vec_elements& operator=(const vec_elements<U, 2>& val);
-
+		
+		constexpr auto pod();
 		constexpr auto pod() const;
 
 		union { value_type x, r, s; };
@@ -94,6 +96,7 @@ namespace dla::detail {
 		template<class U, typename = std::enable_if_t<std::is_assignable_v<std::add_lvalue_reference_t<T>, U>>>
 		constexpr vec_elements& operator=(const vec_elements<U, 3>& val);
 
+		constexpr auto pod();
 		constexpr auto pod() const;
 
 		union { value_type x, r, s; };
@@ -129,7 +132,8 @@ namespace dla::detail {
         template<class U, typename = std::enable_if_t<std::is_assignable_v<std::add_lvalue_reference_t<T>, U>>>
         constexpr vec_elements& operator=(const vec_elements<U, 4>& val);
 
-		constexpr auto pod() const;
+		constexpr auto pod();
+        constexpr auto pod() const;
         
         union { value_type x, r, s; };
         union { value_type y, g, t; };
