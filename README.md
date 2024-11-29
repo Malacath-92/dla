@@ -14,7 +14,7 @@
       <img src="https://github.com/Malacath-92/dla/workflows/Github%20Actions%20CI/badge.svg">
   </a>
   <a href="https://opensource.org/licenses/MIT" >
-      <img src="https://img.shields.io/apm/l/vim-mode.svg">
+      <img src="https://img.shields.io/badge/License-MIT-blue">
   </a>
 </p>
 
