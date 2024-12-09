@@ -66,6 +66,12 @@ namespace dla {
 
 	// Operations producing base units
 	template<class Tag>
+	constexpr auto operator+(const base_unit<Tag>& val) {
+		using unit = base_unit<Tag>;
+		using underlying_t = typename unit::underlying_t;
+		return base_unit<Tag>{ +underlying_t(val) };
+	}
+	template<class Tag>
 	constexpr auto operator-(const base_unit<Tag>& val) {
 		using unit = base_unit<Tag>;
 		using underlying_t = typename unit::underlying_t;
@@ -105,6 +111,12 @@ namespace dla {
 	}
 
 	// Operations producing composite units
+	template<class... Tags>
+	constexpr auto operator+(const comp_unit<Tags...>& val) {
+		using unit = comp_unit<Tags...>;
+		using underlying_t = typename unit::underlying_t;
+		return comp_unit<Tags...>{ +underlying_t(val) };
+	}
 	template<class... Tags>
 	constexpr auto operator-(const comp_unit<Tags...>& val) {
 		using unit = comp_unit<Tags...>;
