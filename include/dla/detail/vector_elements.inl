@@ -25,7 +25,7 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 1>::pod() {
+	constexpr auto vec_elements<T, 1>::pod() & {
         struct vec_pod
         {
             value_type& x;
@@ -34,12 +34,21 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 1>::pod() const {
+	constexpr auto vec_elements<T, 1>::pod() const & {
         struct vec_pod
         {
             const value_type& x;
         };
         return vec_pod{ x };
+	}
+
+	template<class T>
+	constexpr auto vec_elements<T, 1>::pod() && {
+        struct vec_pod
+        {
+            value_type x;
+        };
+        return vec_pod{ std::move(x) };
 	}
 
 
@@ -71,7 +80,7 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 2>::pod() {
+	constexpr auto vec_elements<T, 2>::pod() & {
         struct vec_pod
         {
             value_type& x;
@@ -81,13 +90,23 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 2>::pod() const {
+	constexpr auto vec_elements<T, 2>::pod() const & {
         struct vec_pod
         {
             const value_type& x;
             const value_type& y;
         };
         return vec_pod{ x, y };
+	}
+
+	template<class T>
+	constexpr auto vec_elements<T, 2>::pod() && {
+        struct vec_pod
+        {
+            value_type x;
+            value_type y;
+        };
+        return vec_pod{ std::move(x), std::move(y) };
 	}
 
     
@@ -130,7 +149,7 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 3>::pod() {
+	constexpr auto vec_elements<T, 3>::pod() & {
         struct vec_pod
         {
             value_type& x;
@@ -141,7 +160,7 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 3>::pod() const {
+	constexpr auto vec_elements<T, 3>::pod() const & {
         struct vec_pod
         {
             const value_type& x;
@@ -149,6 +168,17 @@ namespace dla::detail {
             const value_type& z;
         };
         return vec_pod{ x, y, z };
+	}
+
+	template<class T>
+	constexpr auto vec_elements<T, 3>::pod() && {
+        struct vec_pod
+        {
+            value_type x;
+            value_type y;
+            value_type z;
+        };
+        return vec_pod{ std::move(x), std::move(y), std::move(z) };
 	}
     
 
@@ -208,7 +238,7 @@ namespace dla::detail {
 	}
     
 	template<class T>
-	constexpr auto vec_elements<T, 4>::pod() {
+	constexpr auto vec_elements<T, 4>::pod() & {
         struct vec_pod
         {
             value_type& x;
@@ -220,7 +250,7 @@ namespace dla::detail {
 	}
 
 	template<class T>
-	constexpr auto vec_elements<T, 4>::pod() const {
+	constexpr auto vec_elements<T, 4>::pod() const & {
         struct vec_pod
         {
             const value_type& x;
@@ -229,5 +259,17 @@ namespace dla::detail {
             const value_type& w;
         };
         return vec_pod{ x, y, z, w };
+	}
+
+	template<class T>
+	constexpr auto vec_elements<T, 4>::pod() && {
+        struct vec_pod
+        {
+            value_type x;
+            value_type y;
+            value_type z;
+            value_type w;
+        };
+        return vec_pod{ std::move(x), std::move(y), std::move(z), std::move(w) };
 	}
 }
