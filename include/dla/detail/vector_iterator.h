@@ -8,16 +8,22 @@ namespace dla::detail {
     template<class T, std::size_t N>
     class vec_iterator {
     public:
-        constexpr vec_iterator(T& vec, std::size_t startIdx) noexcept : mVec(vec), mIdx(startIdx) {}
+        using difference_type = std::size_t;
+        using value_type = T;
+        using pointer = T*;
+        using reference = T&;
+        using iterator_category = std::forward_iterator_tag;
+
+        constexpr vec_iterator(T& vec, std::size_t startIdx) noexcept : mVec(&vec), mIdx(startIdx) {}
 
         constexpr vec_iterator(const vec_iterator&) noexcept = default;
         constexpr vec_iterator& operator=(const vec_iterator&) noexcept = default;
 
         constexpr decltype(auto) operator*() const noexcept {
-            return mVec[mIdx];
+            return (*mVec)[mIdx];
         }
         constexpr decltype(auto) operator*() noexcept {
-            return mVec[mIdx];
+            return (*mVec)[mIdx];
         }
 
         constexpr decltype(auto) operator++() noexcept {
@@ -58,14 +64,14 @@ namespace dla::detail {
         }
 
         constexpr auto operator==(const vec_iterator& rhs) noexcept {
-            return &mVec == &rhs.mVec && mIdx == rhs.mIdx;
+            return mVec == rhs.mVec && mIdx == rhs.mIdx;
         }
         constexpr auto operator!=(const vec_iterator& rhs) noexcept {
-            return &mVec != &rhs.mVec || mIdx != rhs.mIdx;
+            return mVec != rhs.mVec || mIdx != rhs.mIdx;
         }
 
     private:
-        T& mVec;
+        T* mVec;
         std::size_t mIdx;
     };
 }
