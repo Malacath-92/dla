@@ -194,4 +194,20 @@ namespace dla {
         }
         return res;
     }
+
+    template<class T, std::size_t N>
+    DLA_OPTIMISTIC_CONSTEXPR auto rotl(const vec<T, N>& val) noexcept {
+        vec<T, N> res{};
+        std::copy(val.begin() + 1, val.end(), res.begin());
+        *res.rbegin() = *val.begin();
+        return res;
+    }
+
+    template<class T, std::size_t N>
+    DLA_OPTIMISTIC_CONSTEXPR auto rotr(const vec<T, N>& val) noexcept {
+        vec<T, N> res{};
+        std::copy(val.rbegin() + 1, val.rend(), res.rbegin());
+        *res.begin() = *val.rbegin();
+        return res;
+    }
 }
