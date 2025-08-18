@@ -113,20 +113,20 @@ namespace dla {
     constexpr typename vec<T, N>::const_iterator vec<T, N>::end() const noexcept { return { *this, N }; }
 
     template<class T, std::size_t N>
-    constexpr typename vec<T, N>::reverse_iterator vec<T, N>::rbegin() noexcept { return std::make_reverse_iterator(iterator{ *this, N - 1 }); }
+    constexpr typename vec<T, N>::reverse_iterator vec<T, N>::rbegin() noexcept { return std::make_reverse_iterator(iterator{ *this, N }); }
     template<class T, std::size_t N>
-    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::rbegin() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, N - 1 }); }
+    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::rbegin() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, N }); }
     template<class T, std::size_t N>
-    constexpr typename vec<T, N>::reverse_iterator vec<T, N>::rend() noexcept { return std::make_reverse_iterator(iterator{ *this, -1 }); }
+    constexpr typename vec<T, N>::reverse_iterator vec<T, N>::rend() noexcept { return std::make_reverse_iterator(iterator{ *this, 0 }); }
     template<class T, std::size_t N>
-    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::rend() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, -1 }); }
+    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::rend() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, 0 }); }
 
     template<class T, std::size_t N>
     constexpr typename vec<T, N>::const_iterator vec<T, N>::cbegin() const noexcept { return { *this, 0 }; }
     template<class T, std::size_t N>
     constexpr typename vec<T, N>::const_iterator vec<T, N>::cend() const noexcept { return { *this, N }; }
     template<class T, std::size_t N>
-    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::crbegin() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, N - 1 }); }
+    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::crbegin() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, N }); }
     template<class T, std::size_t N>
-    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::crend() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, -1 }); }
+    constexpr typename vec<T, N>::const_reverse_iterator vec<T, N>::crend() const noexcept { return std::make_reverse_iterator(const_iterator{ *this, 0 }); }
 }
