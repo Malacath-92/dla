@@ -170,6 +170,46 @@ namespace dla {
     MAKE_ELEMENTWISE_MATH_FUNCTION(round)
 #undef MAKE_ELEMENTWISE_MATH_FUNCTION
 
+#define MAKE_ELEMENTWISE_BINARY_MATH_FUNCTION(fun) \
+    template<class T, class U, std::size_t N> \
+    constexpr auto fun(const vec<T, N>& lhs, const vec<U, N>& rhs) noexcept { \
+        using res_t = vec<decltype(math::fun(std::declval<T>(), std::declval<U>())), N>; \
+        res_t res{}; \
+        auto lhs_it = lhs.begin(); \
+        auto rhs_it = rhs.begin(); \
+        auto it = res.begin(); \
+        const auto it_end = res.end(); \
+        for (; it != it_end;) { \
+            *it = math::fun(*lhs_it, *rhs_it); \
+            ++lhs_it; \
+            ++rhs_it; \
+            ++it; \
+        } \
+        return res; \
+    }\
+    template<class T, class U, std::size_t N> \
+    constexpr auto fun(const vec<T, N>& lhs, const U& rhs) noexcept { \
+        using res_t = vec<decltype(math::fun(std::declval<T>(), std::declval<U>())), N>; \
+        res_t res{}; \
+        auto lhs_it = lhs.begin(); \
+        auto it = res.begin(); \
+        const auto it_end = res.end(); \
+        for (; it != it_end;) { \
+            *it = math::fun(*lhs_it, rhs); \
+            ++lhs_it; \
+            ++it; \
+        } \
+        return res; \
+    }\
+    template<class T, class U, std::size_t N> \
+    constexpr auto fun(const T& lhs, const vec<U, N>& rhs) noexcept { \
+        return fun(rhs, lhs); \
+    }
+
+    MAKE_ELEMENTWISE_BINARY_MATH_FUNCTION(min)
+    MAKE_ELEMENTWISE_BINARY_MATH_FUNCTION(max)
+#undef MAKE_ELEMENTWISE_BINARY_MATH_FUNCTION
+
     template<class T, class U, std::size_t N, class Distance>
     DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric) noexcept {
         return metric(lhs, rhs);

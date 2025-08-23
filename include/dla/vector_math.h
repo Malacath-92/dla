@@ -98,6 +98,19 @@ namespace dla {
     template<class T, std::size_t N>
     constexpr auto round(const vec<T, N>& val) noexcept;
 
+    template<class T, class U, std::size_t N>
+    constexpr auto min(const vec<T, N>& lhs, const vec<U, N>& rhs) noexcept;
+    template<class T, class U, std::size_t N>
+    constexpr auto min(const vec<T, N>& lhs, const U& rhs) noexcept;
+    template<class T, class U, std::size_t N>
+    constexpr auto min(const T& lhs, const vec<U, N>& rhs) noexcept;
+    template<class T, class U, std::size_t N>
+    constexpr auto max(const vec<T, N>& lhs, const vec<U, N>& rhs) noexcept;
+    template<class T, class U, std::size_t N>
+    constexpr auto max(const vec<T, N>& lhs, const U& rhs) noexcept;
+    template<class T, class U, std::size_t N>
+    constexpr auto max(const T& lhs, const vec<U, N>& rhs) noexcept;
+
     template<class T, class U, std::size_t N, class Distance = distances::euclidean<T, U>>
     DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric = {}) noexcept;
     template<class T, std::size_t N, class Distance = distances::euclidean<T>>
