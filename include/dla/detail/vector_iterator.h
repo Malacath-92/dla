@@ -12,7 +12,7 @@ namespace dla::detail {
         using value_type = T;
         using pointer = T*;
         using reference = T&;
-        using iterator_category = std::forward_iterator_tag;
+        using iterator_category = std::bidirectional_iterator_tag;
 
         constexpr vec_iterator(T& vec, std::size_t startIdx) noexcept : mVec(&vec), mIdx(startIdx) {}
 
