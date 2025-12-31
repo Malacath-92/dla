@@ -13,12 +13,19 @@ namespace dla {
     constexpr mat<T, N, M>::mat(const T& val) noexcept(std::is_nothrow_copy_constructible_v<T>) :
         mat(val, matrix_default_construct_t<N, M>{}) {}
 	template<class T, std::size_t N, std::size_t M>
-	template<bool C, typename>
+    constexpr mat<T, N, M>::mat(matrix_identity_t) noexcept(std::is_nothrow_copy_constructible_v<T>) :
+        mat(static_cast<T>(1), matrix_diagonal) {}
+	template<class T, std::size_t N, std::size_t M>
     constexpr mat<T, N, M>::mat(const T& val, matrix_diagonal_t) noexcept(std::is_nothrow_copy_constructible_v<T>) :
-        mat(diagonal(vec<T, N>(val))) {}
+        mat(diagonal<N, M>(vec<T, std::min(N, M)>(val))) {}
 	template<class T, std::size_t N, std::size_t M>
 	constexpr mat<T, N, M>::mat(const T& val, matrix_fill_t) noexcept(std::is_nothrow_copy_constructible_v<T>) :
         vec_elements(row_type{val}) {}
+
+	template<class T, std::size_t N, std::size_t M>
+    constexpr auto mat<T, N, M>::identity() noexcept(std::is_nothrow_copy_constructible_v<T>) {
+        return mat<T, N, M>(matrix_identity);
+    }
 
     template<class T, std::size_t N, std::size_t M>
     constexpr typename mat<T, N, M>::const_reference mat<T, N, M>::operator[](std::size_t idx) const noexcept(mat_index_operator_is_noexcept) {
