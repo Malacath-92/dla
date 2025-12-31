@@ -227,9 +227,27 @@ namespace dla {
         return res;
     }
 
+    template<class T, class U, std::size_t N, std::size_t M, std::size_t K>
+    constexpr auto matrix_product(const mat<T, N, M>& lhs, const mat<U, M, K>& rhs) {
+        using res_t = mat<decltype(std::declval<T>() * std::declval<U>()), N, K>;
+        res_t res{};
+        for (std::size_t i = 0; i < res_t::num_row; i++) {
+            for (std::size_t j = 0; j < res_t::num_col; j++) {
+                res[i][j] = dot(lhs[i], rhs.get_col(j));
+            }
+        }
+        return res;
+    }
+
     template<class T, std::size_t N>
-    constexpr auto diagonal(const vec<T, N>& diag) {
-        using res_t = mat<T, N, N>;
+    constexpr auto diagonal(const vec<T, N>& diag)
+    {
+        return diagonal<N, N>(diag);
+    }
+
+    template<std::size_t N, std::size_t M, class T, std::size_t K>
+    constexpr auto diagonal(const vec<T, K>& diag) {
+        using res_t = mat<T, N, M>;
         res_t res{};
 #ifdef _MSC_VER
         for (std::size_t i = 0; i < res_t::num_row; i++) {
@@ -238,7 +256,7 @@ namespace dla {
             }
         }
 #endif
-        for (std::size_t i = 0; i < res_t::num_row; i++) {
+        for (std::size_t i = 0; i < std::min(N, std::min(M, K)); i++) {
             res[i][i] = diag[i];
         }
         return res;
