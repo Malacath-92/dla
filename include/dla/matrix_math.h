@@ -11,25 +11,25 @@ namespace dla {
     struct vec;
 
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator+(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_add(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator-(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_sub(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator*(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_mul(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator/(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_div(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator%(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_mod(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator&(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_and(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator|(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_or(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator^(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_xor(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator<<(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_shl(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
     template<class T, class U, std::size_t N, std::size_t M>
-    constexpr auto operator>>(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
+    constexpr auto element_wise_shr(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept;
 
     template<class T, class U, std::size_t N, std::size_t M, typename = std::enable_if_t<is_scalar_v<U> && overloads_plus_v<T, U>>>
     constexpr auto operator+(const mat<T, N, M>& lhs, const U& rhs) noexcept;
@@ -113,6 +113,8 @@ namespace dla {
 
     template<class T, class U, std::size_t N, std::size_t M, std::size_t K>
     constexpr auto matrix_product(const mat<T, N, M>& lhs, const mat<U, M, K>& rhs);
+    template<class T, class U, std::size_t N, std::size_t M, std::size_t K>
+    constexpr auto operator*(const mat<T, N, M>& lhs, const mat<U, M, K>& rhs);
     
     template<class T, std::size_t N>
     constexpr auto diagonal(const vec<T, N>& diag);

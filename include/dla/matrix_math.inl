@@ -6,9 +6,9 @@
 #include <cmath>
 
 namespace dla {
-#define MAKE_MATRIX_MATRIX_BINARY_OPERATOR(op) \
+#define MAKE_MATRIX_MATRIX_BINARY_OPERATOR(op, op_name) \
     template<class T, class U, std::size_t N, std::size_t M> \
-    constexpr auto operator op(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept { \
+    constexpr auto element_wise_##op_name(const mat<T, N, M>& lhs, const mat<U, N, M>& rhs) noexcept { \
         using res_t = mat<decltype(std::declval<T>() op std::declval<U>()), N, M>; \
         res_t res{}; \
         auto lhs_it = lhs.begin(); \
@@ -23,16 +23,16 @@ namespace dla {
         } \
         return res; \
     }
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(+)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(-)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(*)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(/)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(%)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(&)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(|)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(^)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(<<)
-    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(>>)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(+, add)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(-, sub)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(*, mul)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(/, div)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(%, mod)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(&, and)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(|, or)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(^, xor)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(<<, shl)
+    MAKE_MATRIX_MATRIX_BINARY_OPERATOR(>>, shr)
 #undef MAKE_MATRIX_MATRIX_BINARY_OPERATOR
 
 #define MAKE_MATRIX_SCALAR_BINARY_OPERATOR(op) \
@@ -237,6 +237,10 @@ namespace dla {
             }
         }
         return res;
+    }
+    template<class T, class U, std::size_t N, std::size_t M, std::size_t K>
+    constexpr auto operator*(const mat<T, N, M>& lhs, const mat<U, M, K>& rhs) {
+        return matrix_product(lhs, rhs);
     }
 
     template<class T, std::size_t N>
