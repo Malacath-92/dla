@@ -210,6 +210,39 @@ namespace dla {
     MAKE_ELEMENTWISE_BINARY_MATH_FUNCTION(max)
 #undef MAKE_ELEMENTWISE_BINARY_MATH_FUNCTION
 
+    template<class T, std::size_t N>
+    constexpr decltype(auto) min_element(const vec<T, N>& val) noexcept
+    {
+        auto it = val.begin();
+        const T* res{ &*it };
+        ++it;
+        const auto end = val.end();
+        for (; it != end; ++it)
+        {
+            if (*it < *res)
+            {
+                res = &*it;
+            }
+        }
+        return *res;
+    }
+    template<class T, std::size_t N>
+    constexpr decltype(auto) max_element(const vec<T, N>& val) noexcept
+    {
+        auto it = val.begin();
+        const T* res{ &*it };
+        ++it;
+        const auto end = val.end();
+        for (; it != end; ++it)
+        {
+            if (*it > *res)
+            {
+                res = &*it;
+            }
+        }
+        return *res;
+    }
+
     template<class T, class U, std::size_t N, class Distance>
     DLA_OPTIMISTIC_CONSTEXPR auto distance(const vec<T, N>& lhs, const vec<U, N>& rhs, Distance&& metric) noexcept {
         return metric(lhs, rhs);
