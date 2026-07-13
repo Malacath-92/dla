@@ -22,6 +22,25 @@ string(COMPARE EQUAL "Clang" "${CMAKE_CXX_COMPILER_ID}" CLANG)
 add_library(dla INTERFACE)
 target_include_directories(dla INTERFACE "include")
 
+if(MSVC)
+	file(GLOB_RECURSE dla_natvis_files CONFIGURE_DEPENDS "natvis/*.natvis")
+
+    target_sources(dla INTERFACE
+        "${dla_natvis_files}"
+    )
+
+    if(CMAKE_GENERATOR MATCHES "Visual Studio")
+        # Do not add the /NATVIS link flag.
+        # VS will pick up the raw file via target_sources and hot-reload it.
+    else()
+		foreach(NATVIS_FILE IN LISTS dla_natvis_files)
+			target_link_options(dla INTERFACE
+				"$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/NATVIS:${dla_natvis_files}>"
+			)
+		endforeach()
+    endif()
+endif()
+
 if(CLANG AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "9.0.0")
 	option(DLA_GENERATE_METRICS "Generate metrics for dla headers and tests if enabled" OFF)
 endif()
