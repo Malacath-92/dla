@@ -2,7 +2,7 @@
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
   <Type Name="dla::base_unit&lt;*&gt;">
-    <DisplayString>{value}</DisplayString>
+    <DisplayString>{value,g} {debug_name,sb}</DisplayString>
   </Type>
   
 </AutoVisualizer>

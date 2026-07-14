@@ -5,6 +5,7 @@
 #include <ratio>
 
 #include "type_traits.h"
+#include "to_string.h"
 #include "detail/units_combine.h"
 
 namespace dla {
@@ -19,8 +20,8 @@ namespace dla {
 	namespace unit_name {
 	#define MAKE_UNIT_NAME(unitId, unitSymbol) \
 		struct unitId { \
-			static constexpr const char* id = #unitId; \
-			static constexpr const char* symbol = #unitSymbol; \
+			inline static constexpr char id[]{ #unitId }; \
+			inline static constexpr char symbol[]{ #unitSymbol }; \
 		};
 		MAKE_UNIT_NAME(length, m)
 		MAKE_UNIT_NAME(time, s)
@@ -33,6 +34,36 @@ namespace dla {
 		using ratio_t = std::ratio<Num, Den>;
 		using name_t = Name;
 	};
+
+#if defined(_MSC_VER) and not defined(NDEBUG)
+#define DEFINE_DEBUG_NAME(unit_t)                                             \
+            static inline constexpr const char* debug_name{                   \
+                dla::unit_to_string<unit_t>::value.c_str()                    \
+            };                                                                \
+                                                                              \
+          private:                                                            \
+            /* We force the debug_name to link with the binary in order to */ \
+            /* guarantee that natvis functions as expected */                 \
+            struct DebugNameAnchor {                                          \
+                DebugNameAnchor(){                                            \
+                    auto * ptr{ &unit_t::debug_name };                         \
+					void* raw_ptr{ nullptr };                                 \
+					std::memcpy(&raw_ptr, &ptr, sizeof(ptr));                 \
+																			  \
+					void* volatile barrier;                                   \
+					barrier = raw_ptr;                                        \
+					(void)barrier;                                            \
+				}                                                             \
+            }                                                                 \
+            ;                                                                 \
+                                                                              \
+            inline static const DebugNameAnchor debug_name_anchor{}
+#else
+#define DEFINE_DEBUG_NAME(unit_t)                                             \
+            static inline constexpr const char* debug_name{                   \
+                dla::unit_to_string<unit_t>::value.c_str()                    \
+            }
+#endif
 
 	template<class Tag>
 	struct base_unit {
@@ -57,6 +88,8 @@ namespace dla {
 		constexpr decltype(auto) operator-=(const base_unit& rhs);
 		constexpr decltype(auto) operator*=(underlying_t rhs);
 		constexpr decltype(auto) operator/=(underlying_t rhs);
+
+		DEFINE_DEBUG_NAME(base_unit);
 	};
 
 	template<class... Tags>
@@ -77,6 +110,8 @@ namespace dla {
 		constexpr decltype(auto) operator-=(const comp_unit& rhs);
 		constexpr decltype(auto) operator*=(underlying_t rhs);
 		constexpr decltype(auto) operator/=(underlying_t rhs);
+
+		DEFINE_DEBUG_NAME(comp_unit);
 	};
 	template<class Tag>
 	struct comp_unit<Tag> : base_unit<Tag> {};
@@ -88,6 +123,8 @@ namespace dla {
 
 		constexpr operator underlying_t() const noexcept;
 		constexpr operator underlying_t&() noexcept;
+
+		DEFINE_DEBUG_NAME(comp_unit);
 	};
 
 	// Operations producing base units
