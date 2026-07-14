@@ -1,8 +1,10 @@
 #pragma once
 
 #include "detail/tuple_sort.h"
+#include "detail/static_string.h"
 #include "to_string.h"
 
+#include <charconv>
 #include <numeric>
 
 namespace dla {
@@ -18,49 +20,153 @@ namespace dla {
     template<class T, std::size_t N, std::size_t M>
     struct mat;
 
-    // TODO: Make a clearer implementation for to_string
-
-    template<std::intmax_t Num, std::intmax_t Den>
-    struct ratio_to_string {
-        static std::string call() {
-            return (Num * Den < 0 ? "-" : "")
-                + std::to_string(std::abs(Num))
-                + "/"
-                + std::to_string(std::abs(Den));
+    constexpr std::size_t exact_abs_int_len(std::intmax_t value)
+    {
+        if (value == 0)
+        {
+            return 1;
         }
+        if (value < 0)
+        {
+            value = -value;
+        }
+        std::size_t count = 0;
+        while (value > 0)
+        {
+            count++;
+            value /= 10;
+        }
+        return count;
+    }
+
+    template<std::intmax_t Num>
+    struct int_to_string
+    {
+        inline static constexpr auto NumAbs{
+            Num < 0 ? -Num : Num
+        };
+        inline static constexpr static_string value{
+            []() {
+                constexpr auto buff_len{ exact_abs_int_len(NumAbs) };
+                char buff[buff_len + 1]{};
+
+                if constexpr (Num == 0)
+                {
+                    buff[0] = '0';
+                }
+                else
+                {
+                    auto temp{ NumAbs };
+                    auto idx{ buff_len };
+                    while (temp > 0)
+                    {
+                        buff[--idx] = static_cast<char>('0' + (temp % 10));
+                        temp /= 10;
+                    }
+                }
+
+                return static_string{ buff };
+            }()
+        };
+    };
+    
+    template<std::intmax_t Num, std::intmax_t Den, bool Neg>
+    struct ratio_to_string_impl;
+    template<std::intmax_t Num, std::intmax_t Den>
+    struct ratio_to_string_impl<Num, Den, true> {
+        inline static constexpr static_string value{
+            "-"
+                + int_to_string<Num>::value
+                + "/"
+                + int_to_string<Den>::value
+        };
     };
     template<std::intmax_t Num>
-    struct ratio_to_string<Num, 1> {
-        static std::string call() {
-            return std::to_string(Num);
-        }
+    struct ratio_to_string_impl<Num, 1, true> {
+        inline static constexpr static_string value{
+            "-" + int_to_string<Num>::value
+        };
+    };
+    template<std::intmax_t Num, std::intmax_t Den>
+    struct ratio_to_string_impl<Num, Den, false> {
+        inline static constexpr static_string value{
+            int_to_string<Num>::value
+                + "/"
+                + int_to_string<Den>::value
+        };
+    };
+    template<std::intmax_t Num>
+    struct ratio_to_string_impl<Num, 1, false> {
+        inline static constexpr static_string value{
+            int_to_string<Num>::value
+        };
+    };
+    template<std::intmax_t Num, std::intmax_t Den>
+    struct ratio_to_string
+        : public ratio_to_string_impl<Num, Den, Num * Den < 0> {
     };
 
     template<class T>
     struct tag_to_string;
     template<class Name, std::intmax_t Num, std::intmax_t Den>
     struct tag_to_string<unit_tag<Name, Num, Den>> {
-        static std::string call() {
-            return std::string(Name::symbol)
+        inline static constexpr static_string value{
+            static_string{ Name::symbol }
                 + "^("
-                + ratio_to_string<Num, Den>::call()
-                + ")";
-        }
+                + ratio_to_string<Num, Den>::value
+                + ")"
+        };
     };
     template<class Name, std::intmax_t Num>
     struct tag_to_string<unit_tag<Name, Num, 1>> {
-        static std::string call() {
-            return std::string(Name::symbol)
-            + "^"
-            + ratio_to_string<Num, 1>::call();
-        }
+        inline static constexpr static_string value{
+            static_string{ Name::symbol }
+                + "^"
+                + ratio_to_string<Num, 1>::value
+        };
     };
     template<class Name>
     struct tag_to_string<unit_tag<Name, 1, 1>> {
-        static std::string call() {
-            return std::string(Name::symbol);
-        }
+        inline static constexpr static_string value{
+            Name::symbol
+        };
     };
+
+    template<class T>
+    struct unit_to_string;
+    template<class Tag>
+    struct unit_to_string<base_unit<Tag>>
+    {
+        inline static constexpr static_string value{
+            tag_to_string<Tag>::value
+        };
+    };
+    template<class... Tags>
+    struct unit_to_string<comp_unit<Tags...>>
+    {
+      private:
+        template<class lUnit, class rUnit>
+        struct sorting_predicate
+        {
+            static constexpr bool value = lUnit::ratio_t::num * rUnit::ratio_t::den < rUnit::ratio_t::num * lUnit::ratio_t::den;
+        };
+
+        using sortedTags = detail::tuple_selection_sort_t<sorting_predicate, std::tuple<Tags...>>;
+
+      public:
+        inline static constexpr static_string value{
+            std::apply([](auto... v)
+                       { return ((' ' + tag_to_string<decltype(v)>::value) + ...); },
+                       sortedTags{})
+                .substr<1>()
+        };
+    };
+    template<>
+    struct unit_to_string<comp_unit<>>
+    {
+        inline static constexpr static_string value{ "" };
+    };
+
     template<class T>
     struct to_string_impl {
         static auto call(const T& val) {
@@ -70,22 +176,13 @@ namespace dla {
 	template<class Tag>
     struct to_string_impl<base_unit<Tag>> {
         static auto call(const base_unit<Tag>& val) {
-            return std::to_string(float(val)) + ' ' + tag_to_string<Tag>::call();
+            return std::to_string(float(val)) + ' ' + tag_to_string<Tag>::value;
         }
     };
 	template<class... Tags>
     struct to_string_impl<comp_unit<Tags...>> {
-	private:
-		template<class lUnit, class rUnit>
-		struct sorting_predicate {
-			static constexpr bool value = lUnit::ratio_t::num * rUnit::ratio_t::den < rUnit::ratio_t::num * lUnit::ratio_t::den;
-		};
-
-        using sortedTags = detail::tuple_selection_sort_t<sorting_predicate, std::tuple<Tags...>>;
-    public:
         static auto call(const comp_unit<Tags...>& val) {
-			return std::to_string(float(val))
-				+ std::apply([](auto... v) { return ((' ' + tag_to_string<decltype(v)>::call()) + ...); }, sortedTags{});
+            return std::to_string(float(val)) + ' ' + unit_to_string<comp_unit<Tags...>>::value;
         }
     };
 
