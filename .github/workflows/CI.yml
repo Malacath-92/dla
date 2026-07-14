@@ -11,6 +11,7 @@ jobs:
     name: ${{ matrix.name }} ${{ matrix.compiler }} ${{ matrix.build_type }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest]
         compiler: [GCC, Clang]
