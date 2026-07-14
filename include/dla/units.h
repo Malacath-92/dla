@@ -68,7 +68,9 @@ namespace dla {
 	template<class Tag>
 	struct base_unit {
 		static_assert(is_unit_tag_v<Tag>, "Only unit_tag is allowed as template argument to base_unit");
-		
+		static_assert(std::is_array_v<decltype(Tag::name_t::id)>, "Unit tag id has to be an array of char.");
+		static_assert(std::is_array_v<decltype(Tag::name_t::symbol)>, "Unit tag symbol has to be an array of char.");
+
 		using tag_t = Tag;
 		using ratio_t = typename tag_t::ratio_t;
 		using underlying_t = float;
