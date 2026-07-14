@@ -10,6 +10,16 @@
 
 using namespace dla;
 
+static_assert(unit_to_string<length_unit>::value == static_string{ "m" });
+static_assert(unit_to_string<time_unit>::value == static_string{ "s" });
+static_assert(unit_to_string<frequency_unit>::value == static_string{ "s^-1" });
+static_assert(unit_to_string<weight_unit>::value == static_string{ "kg" });
+
+static_assert(unit_to_string<area_unit>::value == static_string{ "m^2" });
+static_assert(unit_to_string<volume_unit>::value == static_string{ "m^3" });
+static_assert(unit_to_string<velocity_unit>::value == static_string{ "m s^-1" });
+static_assert(unit_to_string<force_unit>::value == static_string{ "kg m s^-2" });
+
 TEST_CASE("Test for string conversion of base unit types", "[to_string_base_unit]") {
 	REQUIRE(to_string(math::sqrt(length_unit{ 5.0f })) == std::to_string(sqrt(5.0f)) + " m^(1/2)");
 	REQUIRE(to_string(length_unit{ 5.0f }) == std::to_string(5.0f) + " m");
