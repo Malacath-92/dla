@@ -222,7 +222,7 @@ class static_string
     {
     }
 
-    std::array<char, Length> mData;
+    std::array<char, Length> mData{};
 };
 
 template<size_t LeftLength, size_t RightLength>
