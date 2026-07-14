@@ -158,7 +158,7 @@ namespace dla {
             std::apply([](auto... v)
                        { return ((' ' + tag_to_string<decltype(v)>::value) + ...); },
                        sortedTags{})
-                .substr<1>()
+                .template substr<1>()
         };
     };
     template<>
