@@ -28,7 +28,7 @@ namespace dla {
             template<typename, typename> \
             static auto test(...) -> std::false_type; \
 			template<class V> \
-			using const_ref_t = std::add_const_t<std::add_lvalue_reference_t<std::decay_t<V>>>; \
+			using const_ref_t = std::add_lvalue_reference_t<std::add_const_t<std::decay_t<V>>>; \
         public: \
             static constexpr bool value = decltype(test<const_ref_t<T>, const_ref_t<U>>(0))::value; \
 	};
